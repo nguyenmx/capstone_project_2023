@@ -1,10 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Button, View, SafeAreaView,
+Text, Alert} from 'react-native';
+
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello from Mary! quack </Text>
+      <Text>Hello from Mary! :O</Text>
+      <Button
+        title="Main Game"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+      <Button
+        title="Story Mode"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+      <Button
+        title="Combat Mode"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+
       <StatusBar style="auto" />
     </View>
   );
