@@ -1,36 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Button, View, SafeAreaView,
-Text, Alert} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MainGameScreen from './Pages/MainGameScreen';
+import ProfileScreen from './Pages/ProfileScreen';
 
-
-
+const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello from Mary! :O</Text>
-      <Button
-        title="Main Game"
-        onPress={() => Alert.alert('Simple Button pressed')}
-      />
-      <Button
-        title="Story Mode"
-        onPress={() => Alert.alert('Simple Button pressed')}
-      />
-      <Button
-        title="Combat Mode"
-        onPress={() => Alert.alert('Simple Button pressed')}
-      />
-
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={MainGameScreen} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
