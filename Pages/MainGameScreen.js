@@ -6,18 +6,17 @@ Text, Alert} from 'react-native';
 function MainGameScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Hello from Mary! :O</Text>
       <Button
         title="Main Game"
         onPress={() => navigation.navigate('ProfileScreen')}
       />
       <Button
         title="Story Mode"
-        onPress={() => Alert.alert('Simple Button pressed')}
+        onPress={() => navigation.navigate('StoryMode')}
       />
       <Button
         title="Combat Mode"
-        onPress={() => Alert.alert('Simple Button pressed')}
+        onPress={() => navigation.navigate('CombatMode')}
       />
 
       <StatusBar style="auto" />
