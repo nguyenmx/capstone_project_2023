@@ -12,8 +12,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={MainGameScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Stack.Screen name="Combat Mode" component={CombatMode} />
-        <Stack.Screen name="Story Mode" component={StoryMode} />
+        <Stack.Screen name="CombatMode" component={CombatMode} />
+        <Stack.Screen name="StoryMode" component={StoryMode} />
       </Stack.Navigator>
     </NavigationContainer>
   );
