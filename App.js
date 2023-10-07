@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import MainGameScreen from './pages/MainGameScreen';
 import StoryModeScreen from './pages/StoryModeScreen';
 import CombatModeScreen from './pages/CombatModeScreen';
+import Animal from './components/Animal';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,7 @@ export function HomeScreen({ navigation }) {
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
             <Text style={[styles.buttonText, styles.buttonTextWithShadow]}>Combat Mode</Text>
           </TouchableOpacity>
+          <Animal style={styles.duck}></Animal>
         </View>
       </ImageBackground>
     </ScrollView>
