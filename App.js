@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MainGameScreen from './pages/MainGameScreen';
 import StoryModeScreen from './pages/StoryModeScreen';
@@ -9,8 +9,8 @@ import CombatModeScreen from './pages/CombatModeScreen';
 import Animal from './components/Animal';
 
 const Stack = createStackNavigator();
+const window = Dimensions.get('window');
 
-// Import your cropped GIF as a local image
 const backgroundImage = require('./images/background.gif');
 
 export default function App() {
@@ -35,18 +35,20 @@ export function HomeScreen({ navigation }) {
     <ScrollView contentContainerStyle={styles.container}>
       <StatusBar style="auto" />
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        <Text style={styles.titleText}>Denwa Petto</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
-            <Text style={[styles.buttonText, styles.buttonTextWithShadow]}>Main Game</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryMode')}>
-            <Text style={[styles.buttonText, styles.buttonTextWithShadow]}>Story Mode</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
-            <Text style={[styles.buttonText, styles.buttonTextWithShadow]}>Combat Mode</Text>
-          </TouchableOpacity>
-          <Animal style={styles.duck}></Animal>
+        <View style={styles.centeredContainer}>
+          <Text style={styles.titleText}>Denwa Petto</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
+              <Text style={styles.buttonText}>Main Game</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryMode')}>
+              <Text style={styles.buttonText}>Story Mode</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
+              <Text style={styles.buttonText}>Combat Mode</Text>
+            </TouchableOpacity>
+            <Animal style={styles.duck} />
+          </View>
         </View>
       </ImageBackground>
     </ScrollView>
@@ -55,11 +57,9 @@ export function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 30,
   },
   backgroundImage: {
     width: '100%',
@@ -67,39 +67,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   titleText: {
-    fontSize: 45,
+    fontSize: window.width * 0.11,
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 30,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
+    marginBottom: window.height * 0.08, // move title text up
   },
   buttonContainer: {
-    marginTop: 60,
-    alignItems: 'center',
+    marginTop: window.height * 0.02,
+    alignItems: 'center', // center the buttons horizontally
   },
   button: {
-    width: 220,
-    height: 80,
+    width: window.width * 0.55,
+    height: window.height * 0.08,
     backgroundColor: '#F4A460',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 60,
+    marginBottom: window.height * 0.05, // increase spacing between buttons
     shadowColor: 'rgba(0, 0, 0, 0.75)',
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 5,
   },
   buttonText: {
-    fontSize: 25,
+    fontSize: window.width * 0.04,
     fontWeight: 'bold',
     color: 'white',
-  },
-  buttonTextWithShadow: {
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
   },
 });
