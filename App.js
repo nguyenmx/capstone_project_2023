@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
@@ -7,6 +7,9 @@ import MainGameScreen from './pages/MainGameScreen';
 import StoryModeScreen from './pages/StoryModeScreen';
 import CombatModeScreen from './pages/CombatModeScreen';
 import Animal from './components/Animal';
+import { ReferenceDataContextProvider } from "./ReferenceDataContext";
+
+
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -15,6 +18,7 @@ const backgroundImage = require('./images/background.gif');
 
 export default function App() {
   return (
+    <ReferenceDataContextProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
@@ -27,6 +31,7 @@ export default function App() {
         <Stack.Screen name="CombatMode" component={CombatModeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </ReferenceDataContextProvider>
   );
 }
 
