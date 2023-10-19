@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../ReferenceDataContext";
-
+import Animal from '../../components/Animal'
+import confusedDuck from '../../images/confusedDuck.gif';
 
 
 const MainGameScreen = () => {
-  
+  const backgroundImage = require('../../images/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
   //sets "PetName" as a key then saves name inside it
   const save = async() => {
@@ -14,7 +15,7 @@ const MainGameScreen = () => {
       await AsyncStorage.setItem("PetName", name)
     } 
     catch (err) {
-      alert("you haven't put a name!");
+      alert("I need a name! quaack");
     }
   }
   //Will retrieve the pet's name from Async Storage.
@@ -54,27 +55,57 @@ const MainGameScreen = () => {
   }
 
   return (
-    <View>
-      <Text>Main Game Screen :p</Text>
-      <TextInput
-        placeholder="Enter your pet's name here"
-        value={name}
-        onChangeText={handleNameChange}
-      />
-      <Button
-      onPress={save}
-      title="Save me!"
-      color="#841584"
-      />
-
-      <Button
-      onPress={remove}
-      title="delete me!"
-      color="#841584"
-      />
-    </View>
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Text style={styles.text}>what's my name? :\</Text>
+        <Image source={confusedDuck} style={styles.duck} />
+        
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your pet's name here"
+          value={name}
+          onChangeText={handleNameChange}
+        />
+        <Button onPress={save} title="Save me!" style={styles.button} />
+        <Button onPress={remove} title="Delete me!" style={styles.button} />
+      </View>
+      </ImageBackground>
+    );
     
-  );
-};
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'top',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  text: {
+    fontSize: 33,
+    marginBottom: 5,
+    fontWeight: 'bold',
+  },
+  input: {
+    width: '80%',
+    height: 50,
+    borderColor: 'black',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    fontSize: 22,
+    backgroundColor: 'white'
+  },
+  button: {
+    backgroundColor: '#841584',
+    color: 'white',
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+});
+
 
 export default MainGameScreen;
