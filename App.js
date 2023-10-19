@@ -3,11 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import MainGameScreen from './pages/MainGameScreen';
-import StoryModeScreen from './pages/StoryModeScreen';
-import CombatModeScreen from './pages/CombatModeScreen';
+import MainGameScreen from './pages/main/MainGameScreen';
+import StoryModeScreen from './pages/story/StoryModeScreen';
+import CombatModeScreen from './pages/combat/CombatModeScreen';
 import Animal from './components/Animal';
-import { ReferenceDataContextProvider } from "./ReferenceDataContext";
+import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
 
 
 

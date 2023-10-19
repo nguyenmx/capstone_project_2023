@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 
 const ReferenceDataContext = createContext({
-  name: undefined,
+  name: "",
   setName: () => {},
 });
 
