@@ -1,14 +1,17 @@
-import React  from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MainGameScreen from './pages/main/MainGameScreen';
+import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import Animal from './components/Animal';
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
-
+import { useEffect } from 'react';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 
 const Stack = createStackNavigator();
@@ -17,6 +20,24 @@ const window = Dimensions.get('window');
 const backgroundImage = require('./images/background.gif');
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "NiceTango-K7XYo": require("./assets/fonts/NiceTango-K7XYo.ttf"),
+    "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf")
+  })
+
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, [])
+
+  if (!fontsLoaded){
+    return undefined;
+  } else {
+    SplashScreen.hideAsync();
+  }
+
   return (
     <ReferenceDataContextProvider>
     <NavigationContainer>
@@ -29,6 +50,7 @@ export default function App() {
         <Stack.Screen name="MainGame" component={MainGameScreen} />
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} />
+        <Stack.Screen name="MG" component={MG} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -78,8 +100,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: window.width * 0.11,
-    fontWeight: 'bold',
+    fontSize: window.width * 0.12,
+    fontFamily: 'NiceTango-K7XYo',
     color: 'white',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 2, height: 2 },
@@ -103,8 +125,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   buttonText: {
-    fontSize: window.width * 0.04,
-    fontWeight: 'bold',
+    fontFamily: 'NiceTango-K7XYo',
+    fontSize: window.width * 0.06,
     color: 'white',
   },
 });
