@@ -3,8 +3,6 @@ import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, Ima
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
-import Animal from '../../components/Animal';
-import MG from '../../pages/main/MG';
 import confusedDuck from '../../images/confusedDuck.gif';
 
 
@@ -86,6 +84,9 @@ const MainGameScreen = () => {
     );
     
 }
+export default MainGameScreen;
+
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -120,6 +121,3 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
-
-
-export default MainGameScreen;

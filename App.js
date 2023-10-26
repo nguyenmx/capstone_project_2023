@@ -12,11 +12,10 @@ import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-
+import FightScreen from './pages/combat/FightScreen';
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
-
 const backgroundImage = require('./images/background.gif');
 
 export default function App() {
@@ -42,15 +41,12 @@ export default function App() {
     <ReferenceDataContextProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerTransparent: true, title: '' }}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
         <Stack.Screen name="MainGame" component={MainGameScreen} />
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
-        <Stack.Screen name="CombatMode" component={CombatModeScreen} />
+        <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="MG" component={MG} />
+        <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -106,11 +102,11 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
-    marginBottom: window.height * 0.08, // move title text up
+    marginBottom: window.height * 0.08,
   },
   buttonContainer: {
     marginTop: window.height * 0.02,
-    alignItems: 'center', // center the buttons horizontally
+    alignItems: 'center',
   },
   button: {
     width: window.width * 0.55,
