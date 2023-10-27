@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, ScrollView } from 'react-native';
-import { generateResponse } from '../../ChatGPTService';
+import { generateResponse } from '../../components/StoryModeBot';
 
 
 const TestChatGPT = () => {

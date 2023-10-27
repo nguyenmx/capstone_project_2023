@@ -8,7 +8,9 @@ import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import Animal from './components/Animal';
+import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
+
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -47,6 +49,9 @@ export default function App() {
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="MG" component={MG} />
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="StoryModeBot" component={StoryModeScreen} />
+        <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
+      
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -64,7 +69,7 @@ export function HomeScreen({ navigation }) {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
               <Text style={styles.buttonText}>Main Game</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryMode')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TestChatGPT')}>
               <Text style={styles.buttonText}>Story Mode</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
