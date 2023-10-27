@@ -49,7 +49,7 @@ export default function App() {
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="MG" component={MG} />
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StoryModeBot" component={StoryModeScreen} />
+        <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
       
       </Stack.Navigator>
