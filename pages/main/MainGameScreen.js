@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../ReferenceDataContext";
-import Animal from '../../components/Animal'
+import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/confusedDuck.gif';
 
 
 const MainGameScreen = () => {
   const backgroundImage = require('../../images/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
+  const navigation = useNavigation(); // Get the navigation object
+
   //sets "PetName" as a key then saves name inside it
   const save = async() => {
     try {
@@ -54,6 +56,10 @@ const MainGameScreen = () => {
     setName(newName);
   }
 
+  const navigateToNewScreen = () => {
+    navigation.navigate('MG');
+  }
+
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={styles.container}>
@@ -68,11 +74,19 @@ const MainGameScreen = () => {
         />
         <Button onPress={save} title="Save me!" style={styles.button} />
         <Button onPress={remove} title="Delete me!" style={styles.button} />
+        <TouchableOpacity onPress={navigateToNewScreen}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Go to New Screen</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       </ImageBackground>
     );
     
 }
+export default MainGameScreen;
+
+// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -83,21 +97,22 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 33,
     marginBottom: 5,
-    fontWeight: 'bold',
+    fontFamily: 'NiceTango-K7XYo'
   },
   input: {
     width: '80%',
     height: 50,
-    borderColor: 'black',
-    borderWidth: 1,
+    borderColor: '#70c2e5',
+    borderRadius: 15,
+    borderWidth: 4,
     marginBottom: 10,
     paddingHorizontal: 10,
     fontSize: 22,
     backgroundColor: 'white'
   },
   button: {
-    backgroundColor: '#841584',
-    color: 'white',
+    backgroundColor: 'pink',
+    color: 'white'
   },
   backgroundImage: {
     width: '100%',
@@ -106,6 +121,3 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
-
-
-export default MainGameScreen;
