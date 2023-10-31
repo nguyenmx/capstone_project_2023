@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import FightScreen from './pages/combat/FightScreen';
+import StepTracker from './pages/tracker/StepTracker';
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -42,6 +43,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
+        <Stack.Screen name="Steps" component={StepTracker} />
         <Stack.Screen name="MainGame" component={MainGameScreen} />
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
@@ -61,6 +63,9 @@ export function HomeScreen({ navigation }) {
         <View style={styles.centeredContainer}>
           <Text style={styles.titleText}>Denwa Petto</Text>
           <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Steps')}>
+              <Text style={styles.buttonText}>Steps</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
               <Text style={styles.buttonText}>Main Game</Text>
             </TouchableOpacity>
