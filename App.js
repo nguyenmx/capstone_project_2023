@@ -7,6 +7,7 @@ import MainGameScreen from './pages/main/MainGameScreen';
 import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
+import StepTracker from './pages/steps/StepTracker';
 import Animal from './components/Animal';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
@@ -43,6 +44,7 @@ export default function App() {
     <ReferenceDataContextProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="StepTracker" component={StepTracker} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
         <Stack.Screen name="MainGame" component={MainGameScreen} />
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
@@ -66,6 +68,9 @@ export function HomeScreen({ navigation }) {
         <View style={styles.centeredContainer}>
           <Text style={styles.titleText}>Denwa Petto</Text>
           <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
+              <Text style={styles.buttonText}>Steps</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
               <Text style={styles.buttonText}>Main Game</Text>
             </TouchableOpacity>
