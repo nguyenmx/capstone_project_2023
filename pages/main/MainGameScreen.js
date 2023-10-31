@@ -68,7 +68,7 @@ const MainGameScreen = () => {
         
         <TextInput
           style={styles.input}
-          placeholder="Enter your pet's name here"
+          placeholder="Enter your pet's name here AHHHHHHHHHH"
           value={name}
           onChangeText={handleNameChange}
         />
