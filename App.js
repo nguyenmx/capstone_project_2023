@@ -44,11 +44,11 @@ export default function App() {
     <ReferenceDataContextProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="StepTracker" component={StepTracker} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
         <Stack.Screen name="MainGame" component={MainGameScreen} />
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="StepTracker" component={StepTracker} />
         <Stack.Screen name="MG" component={MG} />
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
@@ -68,9 +68,6 @@ export function HomeScreen({ navigation }) {
         <View style={styles.centeredContainer}>
           <Text style={styles.titleText}>Denwa Petto</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
-              <Text style={styles.buttonText}>Steps</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
               <Text style={styles.buttonText}>Main Game</Text>
             </TouchableOpacity>
@@ -79,6 +76,9 @@ export function HomeScreen({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
               <Text style={styles.buttonText}>Combat Mode</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
+              <Text style={styles.buttonText}>Steps</Text>
             </TouchableOpacity>
             <Animal style={styles.duck} />
           </View>
