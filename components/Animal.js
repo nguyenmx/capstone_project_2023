@@ -5,7 +5,7 @@ import duck from '../images/ducky.gif';
 const window = Dimensions.get('window');
 
 const Animal = () => {
-  const imageWidth = window.width * 0.6; // adjust the scaling factor as needed
+  const imageWidth = window.width * 0.55; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (
