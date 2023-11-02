@@ -11,11 +11,12 @@ import StepTracker from './pages/steps/StepTracker';
 import Animal from './components/Animal';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
-
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import FightScreen from './pages/combat/FightScreen';
+import WinScreen from './pages/combat/WinScreen';
+import LossScreen from './pages/combat/LossScreen';
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -51,6 +52,8 @@ export default function App() {
         <Stack.Screen name="StepTracker" component={StepTracker} />
         <Stack.Screen name="MG" component={MG} />
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
       
@@ -112,7 +115,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
-    marginBottom: window.height * 0.08,
+    marginBottom: window.height * 0.05,
+    marginTop: window.height * 0.05,
   },
   buttonContainer: {
     marginTop: window.height * 0.02,
