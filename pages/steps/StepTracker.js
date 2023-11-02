@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StopClock from './Stopclock';
 
 const StepTracker = () => {
 
@@ -66,6 +67,12 @@ const StepTracker = () => {
         <Text>You number is: {steps}</Text>
 
         </View>
+        
+
+        <View style={styles.container}>
+          <StopClock/>
+        </View>
+
     </ImageBackground>
   );
 };
@@ -103,7 +110,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   });
+
   
 
 export default StepTracker;
