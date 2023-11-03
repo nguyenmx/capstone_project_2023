@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, 
 import { StatusBar } from 'expo-status-bar';
 import MainGameScreen from './pages/main/MainGameScreen';
 import MG from './pages/main/MG';
+import PetHouse from './pages/main/PetHouse';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
@@ -13,6 +14,7 @@ import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 import * as SplashScreen from 'expo-splash-screen';
 import FightScreen from './pages/combat/FightScreen';
 import WinScreen from './pages/combat/WinScreen';
@@ -26,16 +28,16 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "NiceTango-K7XYo": require("./assets/fonts/NiceTango-K7XYo.ttf"),
     "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf")
-  })
+  });
 
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
-  }, [])
+  }, []);
 
-  if (!fontsLoaded){
+  if (!fontsLoaded) {
     return undefined;
   } else {
     SplashScreen.hideAsync();
@@ -43,22 +45,23 @@ export default function App() {
 
   return (
     <ReferenceDataContextProvider>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-        <Stack.Screen name="MainGame" component={MainGameScreen} />
-        <Stack.Screen name="StoryMode" component={StoryModeScreen} />
-        <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StepTracker" component={StepTracker} />
-        <Stack.Screen name="MG" component={MG} />
-        <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }} />
+          <Stack.Screen name="MainGame" component={MainGameScreen} />
+          <Stack.Screen name="StoryMode" component={StoryModeScreen} />
+          <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="StepTracker" component={StepTracker} />
+          <Stack.Screen name="MG" component={MG} options={{ headerShown: false }}/>
+          <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false }} />
         <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
       
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
     </ReferenceDataContextProvider>
   );
 }
