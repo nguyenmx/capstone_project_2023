@@ -18,6 +18,7 @@ import FightScreen from './pages/combat/FightScreen';
 import WinScreen from './pages/combat/WinScreen';
 import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
+import PetHouse from './pages/main/PetHouse';
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -58,6 +59,7 @@ export default function App() {
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
         <Stack.Screen name="BattleScreen" component={BattleScreen} />
+        <Stack.Screen name="PetHouse" component={PetHouse} />
       
       </Stack.Navigator>
     </NavigationContainer>
