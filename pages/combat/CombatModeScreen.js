@@ -17,6 +17,7 @@ const CombatModeScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('FightScreen')}
+          //I'll have this navigate to the battle screen -- make sure to have buttons that navigate to win/loss page
         >
           <Text style={styles.buttonText}>Fight!</Text>
         </TouchableOpacity>
