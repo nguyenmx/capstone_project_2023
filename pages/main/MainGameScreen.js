@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/confusedDuck.gif';
 
-
+const window = Dimensions.get('window');
 const MainGameScreen = () => {
   const backgroundImage = require('../../images/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
@@ -62,13 +62,16 @@ const MainGameScreen = () => {
 
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding" // or behavior="position"
+      >
         <Text style={styles.text}>what's my name? :\</Text>
         <Image source={confusedDuck} style={styles.duck} />
-        
+
         <TextInput
           style={styles.input}
-          placeholder="Enter your pet's name here AHHHHHHHHHH"
+          placeholder="Enter your pet's name here"
           value={name}
           onChangeText={handleNameChange}
         />
@@ -79,25 +82,29 @@ const MainGameScreen = () => {
             <Text style={styles.buttonText}>Go to New Screen</Text>
           </View>
         </TouchableOpacity>
-      </View>
-      </ImageBackground>
-    );
-    
-}
+      </KeyboardAvoidingView>
+    </ImageBackground>
+  );
+};
 export default MainGameScreen;
 
 // Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'top',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: -55
   },
   text: {
-    fontSize: 33,
+    color: 'darkblue',
+    fontSize: 35,
     marginBottom: 5,
     fontFamily: 'NiceTango-K7XYo'
+  },
+  duck: {
+    width: window.width,
+    height: window.width
   },
   input: {
     width: '80%',

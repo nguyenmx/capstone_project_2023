@@ -5,7 +5,7 @@ import duck from '../images/combatDuck.gif';
 const window = Dimensions.get('window');
 
 const OpponentDuck = () => {
-  const imageWidth = window.width * 0.55; // adjust the scaling factor as needed
+  const imageWidth = window.width * 0.7; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (

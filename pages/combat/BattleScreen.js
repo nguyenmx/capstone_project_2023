@@ -21,9 +21,13 @@ return (
   <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
   <View style= {styles.playerOppContainer}>
     <HealthBar></HealthBar>
+    <View style={styles.animalContainer}>
     <Animal></Animal>
-    <HealthBar></HealthBar>
+    </View>
+    <View style={styles.oppContainer}>
     <OpponentDuck></OpponentDuck>
+    </View>
+    <HealthBar></HealthBar>
   </View>
     <View style={styles.imageContainer}>
       <Image source={rock} style={styles.image}/>
@@ -62,6 +66,15 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 10,
   },
+  animalContainer: {
+    marginRight: 180,
+    marginTop: 10
+  },
+  oppContainer: {
+    marginLeft: 180,
+    transform: [{ scaleX: -1 }],
+    marginTop: -80
+  }
 });
 
 export default BattleScreen;
