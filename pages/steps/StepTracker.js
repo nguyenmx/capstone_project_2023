@@ -6,6 +6,12 @@ import StopClock from './Stopclock';
 
 const StepTracker = () => {
 
+  const timerID=setTimeout(function callback(){
+    steps = "0";
+  },3000);
+  clearTimeout(timerID)
+
+
     const backgroundImage = require('../../images/clouds.png');
     const { steps, setSteps } = useContext(ReferenceDataContext);
     const save = async() => {
