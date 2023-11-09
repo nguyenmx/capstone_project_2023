@@ -33,12 +33,14 @@ const MG = () => {
         <View style={styles.slide}>
           <View style={styles.slideInner}>
             <Text style={styles.text}>Slide 2</Text>
+            <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
           </View>
         </View>
 
         <View style={styles.slide}>
           <View style={styles.slideInner}>
             <Text style={styles.text}>Slide 3</Text>
+            <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PetHouse')}>
               <Text style={styles.buttonText}>OK</Text>
             </TouchableOpacity>
@@ -139,10 +141,6 @@ const styles = StyleSheet.create({
     marginTop: 20, 
     borderWidth: 5, 
     borderColor: 'white',
-    ShadowColor: 'rgba(0, 0, 0, 0.48)',
-    ShadowOffset: { width: 1, height: 1 },
-    ShadowRadius: 5,
-    marginBottom: window.height * 0.35,
   },
   desc: {
     fontSize: window.width * 0.08,
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'NiceTango-K7XYo',
     textAlign: 'center', 
-    textShadowColor: 'rgba(0, 0, 0, 0.48)',
+    textShadowColor: 'rgba(219,112,147, 0.9)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },

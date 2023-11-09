@@ -74,6 +74,7 @@ const PetHouse = () => {
         <Modal
           transparent={true}
           visible={modalVisible}
+          
         >
           <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
             <View style={styles.popUp}>

@@ -25,6 +25,7 @@ import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
 import RizzDuck from './modules/RizzDuck';
+import Title from './images/Denwa_Petto.png'
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -79,7 +80,7 @@ export function HomeScreen({ navigation }) {
       <StatusBar style="auto" />
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.centeredContainer}>
-          <Text style={styles.titleText}>Denwa Petto</Text>
+          <Image source={Title} style={styles.titleText} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
               <Text style={styles.buttonText}>Main Game</Text>
@@ -138,14 +139,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: window.width * 0.12,
-    fontFamily: 'NiceTango-K7XYo',
-    color: 'white',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
-    marginBottom: window.height * 0.05,
-    marginTop: window.height * 0.05,
+    marginTop: window.height * 0.04,
+    width: 275,
+    height: 130,
+    position: 'relative',
   },
   buttonContainer: {
     marginTop: window.height * 0.02,
