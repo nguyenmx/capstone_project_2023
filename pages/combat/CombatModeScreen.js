@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOp
 import WaveDuck from '../../modules/WaveDuck';
 import BananaDuck from '../../modules/BananaDuck';
 import RizzDuck from '../../modules/RizzDuck';
+import CoffeeDuck from '../../modules/CoffeeDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
@@ -17,10 +18,18 @@ const CombatModeScreen = ({ navigation }) => {
 
   if (selectedDuck === 0) {
     playerDuck = <WaveDuck />;
-  } else if (selectedDuck === 1) {
+  } 
+  else if (selectedDuck === 1) {
     playerDuck = <BananaDuck />;
-  } else if (selectedDuck === 2) {
+  } 
+  else if (selectedDuck === 2) {
     playerDuck = <RizzDuck />;
+  }
+  else if(selectedDuck === 3){
+    playerDuck = <CoffeeDuck />;
+  }
+  else{
+    playerDuck = <WaveDuck />;
   }
 
   return (

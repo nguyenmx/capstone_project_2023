@@ -28,6 +28,7 @@ import RizzDuck from './modules/RizzDuck';
 import Title from './images/Denwa_Petto.png'
 import { ReferenceDataContext } from './pages/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CoffeeDuck from './modules/CoffeeDuck';
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -138,6 +139,9 @@ export function HomeScreen({ navigation }) {
             </View>
             <View style={styles.swiperSlide}>
               <RizzDuck />
+            </View>
+            <View style={styles.swiperSlide}>
+              <CoffeeDuck />
             </View>
           </Swiper>
         </View>
