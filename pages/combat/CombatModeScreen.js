@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import duckWave from '../../images/duckWave.gif';
+import WaveDuck from '../../modules/WaveDuck';
+import BananaDuck from '../../modules/BananaDuck';
+import RizzDuck from '../../modules/RizzDuck';
+import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/combatModeBackground.png');
 const swordIcon = require('../../images/swordIcon.png');
 
 const CombatModeScreen = ({ navigation }) => {
+  // Access the selectedDuck value from the context
+  const { selectedDuck } = useContext(ReferenceDataContext);
+
+  let playerDuck;
+
+  if (selectedDuck === 0) {
+    playerDuck = <WaveDuck />;
+  } else if (selectedDuck === 1) {
+    playerDuck = <BananaDuck />;
+  } else if (selectedDuck === 2) {
+    playerDuck = <RizzDuck />;
+  }
+
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -17,7 +33,6 @@ const CombatModeScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('FightScreen')}
-          //I'll have this navigate to the battle screen -- make sure to have buttons that navigate to win/loss page
         >
           <Text style={styles.buttonText}>Fight!</Text>
         </TouchableOpacity>
@@ -27,7 +42,7 @@ const CombatModeScreen = ({ navigation }) => {
         >
           <Text style={homeButtonStyles.buttonText}>Back To Home</Text>
         </TouchableOpacity>
-        <Image source={duckWave} style={styles.duck} />
+        {playerDuck}
       </ImageBackground>
     </View>
   );

@@ -12,7 +12,7 @@ import BananaDuck from './modules/BananaDuck';
 import WaveDuck from './modules/WaveDuck';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useFonts } from 'expo-font';
 import Swiper from 'react-native-swiper';
 import { Image } from 'react-native';
@@ -26,10 +26,13 @@ import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
 import RizzDuck from './modules/RizzDuck';
 import Title from './images/Denwa_Petto.png'
+import { ReferenceDataContext } from './pages/ReferenceDataContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
 const backgroundImage = require('./images/background.gif');
+var selectedDuck = 0;
 
 
 export default function App() {
@@ -39,6 +42,20 @@ export default function App() {
   })
 
   useEffect(() => {
+    async function getSelectedDuck() {
+      try {
+        const value = await AsyncStorage.getItem('selectedDuck');
+        if (value !== null) {
+          // Convert the retrieved value to a number
+          saveSelectedDuck(parseInt(value, 10));
+        }
+      } catch (error) {
+        console.error('Error getting selectedDuck from AsyncStorage:', error);
+      }
+    }
+  
+    getSelectedDuck();
+
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
@@ -75,6 +92,13 @@ export default function App() {
 }
 
 export function HomeScreen({ navigation }) {
+  const { selectedDuck, setSelectedDuck } = useContext(ReferenceDataContext);
+
+  function saveSelectedDuck(index) {
+    setSelectedDuck(index);
+    console.log(index);
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -104,6 +128,7 @@ export function HomeScreen({ navigation }) {
             nextButton={
               <Image source={RightArrow} style={styles.arrowButton} />
             }
+            onIndexChanged={(swiper) => saveSelectedDuck(swiper)}
           >
             <View style={styles.swiperSlide}>
               <WaveDuck />

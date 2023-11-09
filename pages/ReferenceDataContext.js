@@ -5,11 +5,15 @@ const ReferenceDataContext = createContext({
   setName: () => {},
   steps: "",
   setSteps: () => {},
+  selectedDuck: 0,  // Add selectedDuck to the context
+  setSelectedDuck: () => {},  // Add a function to set selectedDuck
 });
+
 
 const ReferenceDataContextProvider = ({ children }) => {
   const [name, setName] = useState(undefined);
   const [steps, setSteps] = useState(undefined);
+  const [selectedDuck, setSelectedDuck] = useState(0);  // Initialize selectedDuck
 
   return (
     <ReferenceDataContext.Provider
@@ -17,7 +21,9 @@ const ReferenceDataContextProvider = ({ children }) => {
         name,
         setName,
         steps,
-        setSteps
+        setSteps,
+        selectedDuck,
+        setSelectedDuck,
       }}
     >
       {children}
