@@ -4,8 +4,8 @@ import duck from '../images/ducky.gif';
 
 const window = Dimensions.get('window');
 
-const Animal = () => {
-  const imageWidth = window.width * 0.55; // adjust the scaling factor as needed
+const BananaDuck = () => {
+  const imageWidth = window.width * 0.50; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (
@@ -15,4 +15,4 @@ const Animal = () => {
   );
 };
 
-export default Animal;
+export default BananaDuck;

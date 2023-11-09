@@ -8,21 +8,28 @@ import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
-import Animal from './modules/Animal';
+import BananaDuck from './modules/BananaDuck';
+import WaveDuck from './modules/WaveDuck';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import Swiper from 'react-native-swiper';
+import { Image } from 'react-native';
+import LeftArrow from './images/LeftArrow.png';
+import RightArrow from './images/RightArrow.png';
 import * as SplashScreen from 'expo-splash-screen';
 import FightScreen from './pages/combat/FightScreen';
 import WinScreen from './pages/combat/WinScreen';
 import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
+import RizzDuck from './modules/RizzDuck';
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
 const backgroundImage = require('./images/background.gif');
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -60,7 +67,6 @@ export default function App() {
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
         <Stack.Screen name="BattleScreen" component={BattleScreen} />
         <Stack.Screen name="PetHouse" component={PetHouse} />
-      
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -69,7 +75,7 @@ export default function App() {
 
 export function HomeScreen({ navigation }) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="auto" />
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.centeredContainer}>
@@ -87,11 +93,30 @@ export function HomeScreen({ navigation }) {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
               <Text style={styles.buttonText}>Steps</Text>
             </TouchableOpacity>
-            <Animal style={styles.duck} />
           </View>
+          <Swiper
+            style={styles.swiperContainer}
+            showsButtons={true}
+            prevButton={
+              <Image source={LeftArrow} style={styles.arrowButton} />
+            }
+            nextButton={
+              <Image source={RightArrow} style={styles.arrowButton} />
+            }
+          >
+            <View style={styles.swiperSlide}>
+              <WaveDuck />
+            </View>
+            <View style={styles.swiperSlide}>
+              <BananaDuck />
+            </View>
+            <View style={styles.swiperSlide}>
+              <RizzDuck />
+            </View>
+          </Swiper>
         </View>
       </ImageBackground>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -142,5 +167,20 @@ const styles = StyleSheet.create({
     fontFamily: 'NiceTango-K7XYo',
     fontSize: window.width * 0.06,
     color: 'white',
+  },
+  swiperSlide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  gif: {
+    width: window.width,
+    height: window.height,
+  },
+  arrowButton: {
+    width: window.width * 0.05,
+    height: window.height * 0.05,
+    aspectRatio: 1,
   },
 });

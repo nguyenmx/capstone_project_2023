@@ -8,7 +8,7 @@ import player from '../../images/combatDuck2.gif';
 import healthBar from '../../images/healthBar.png';
 import opponent from '../../images/combatDuck.gif';
 import HealthBar from '../../modules/HealthBar';
-import Animal from '../../modules/Animal';
+import Animal from '../../modules/BananaDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
 //import CombatModeLogic from "../../components/CombatModeLogic";
 
