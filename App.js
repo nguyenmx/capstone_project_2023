@@ -74,7 +74,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-        <Stack.Screen name="MainGame" component={MainGameScreen} />
+        <Stack.Screen name="MainGame" component={MainGameScreen}/>
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StepTracker" component={StepTracker} />
@@ -84,7 +84,7 @@ export default function App() {
         <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
-        <Stack.Screen name="BattleScreen" component={BattleScreen} />
+        <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
         <Stack.Screen name="PetHouse" component={PetHouse} />
       </Stack.Navigator>
     </NavigationContainer>

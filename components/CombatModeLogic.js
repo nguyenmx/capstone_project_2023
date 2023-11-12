@@ -1,36 +1,59 @@
-import React, { useState, Component } from 'react';
-import { Modal } from 'react';
+import React, { Component } from 'react';
+import CombatModeBot from './CombatModeBot';
 
+const CombatBot = new CombatModeBot();
 class CombatModeLogic extends Component {
+  // Create private variables in the constructor
   constructor() {
     super();
-    this.state = {
-      playerMove: "",
-    };
+      let playerMove = "";
+      let oppMove = "";
+      let playerHealth = 100;
+      let oppHealth = 100;
+  }
+  
+  setPlayerMove(move) {
+    playerMove = move;
+    console.log("The players current move is " + playerMove);
+  };
+
+  setOppMove() {
+    oppMove = CombatBot.generateRandomMove();
+    console.log("The opponents current move is " + oppMove);
   }
 
-  handlePaperClick = () => {
-    this.setMove("paper");
-  };
+  getPlayerMove() {
+    return playerMove;
+  }
 
-  handleRockClick = () => {
-    this.setMove("rock");
-  };
-
-  handleScissorClick = () => {
-    this.setMove("scissor");
-  };
-
-  setMove = (move) => {
-    this.setState({ playerMove: move });
-  };
-
+  playerWon() {
+    if (playerMove == "scissors" && oppMove == "paper" || playerMove == "paper" && oppMove == "rock" 
+    || playerMove == "rock" && oppMove == "scissors") {
+      return true;
+    }
+    if (playerMove == "scissors" && oppMove == "rock" || playerMove == "paper" && oppMove == "scissors" 
+    || playerMove == "rock" && oppMove == "paper") {
+    return false;
+    }
+    if (playerMove == oppMove) {
+    return 0;
+    }
+  }
+  
   updateOppHealth() {
-    // Update the opponent's health after they've received a hit from the player.
+  
   }
 
-  updatePlayerHealth() {
-    // Update the player's health after they've received a hit from the opponent.
+  updateHealth() {
+    if (this.playerWon() == true) {
+      oppHealth-=25;
+    }
+    if (this.playerWon() == false) {
+      playerHealth-=25;
+    }
+    if (this.playerWon() == 0) {
+      console.log("It was a tie.");
+    }
   }
 
   getW() {
