@@ -18,7 +18,7 @@ export default function Time({time}){
         return formattedValue
     }
     const transformMilliseconds=()=>{
-        const convertedValue= Math.floor((time / 10) % 100);
+        const convertedValue= Math.floor((time) % 100);
         const formattedValue=("0" +convertedValue).slice(-2)
         return formattedValue
     }

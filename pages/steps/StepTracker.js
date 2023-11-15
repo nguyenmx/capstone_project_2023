@@ -3,13 +3,11 @@ import { View, Text, StyleSheet, ImageBackground, TextInput, Button } from 'reac
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StopClock from './Stopclock';
+import timer from './timer';
 
 const StepTracker = () => {
 
-  const timerID=setTimeout(function callback(){
-    steps = "0";
-  },3000);
-  clearTimeout(timerID)
+  timer();
 
 
     const backgroundImage = require('../../images/clouds.png');
@@ -61,10 +59,11 @@ const StepTracker = () => {
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
 
+        <Text style={styles.text}>EnTeR yOuR nUmBeR of sTePs you wAlKeD tOdAy  😁 </Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter your number of Steps you walked today: "
           value={steps}
+          
           onChangeText={handleStepsChange}
         />
         <Button onPress={save} title="Submit" style={styles.button} />
@@ -92,19 +91,23 @@ const styles = StyleSheet.create({
     },
     text: {
       fontSize: 33,
-      marginBottom: 5,
+      color: "darkblue",
+      margin: 15,
+      textAlign: 'center',
+      marginBottom: 30,
       fontFamily: 'NiceTango-K7XYo'
     },
     input: {
-      width: '80%',
+      width: 150,
       height: 50,
       borderColor: '#70c2e5',
-      borderRadius: 15,
+      borderRadius: 20,
       borderWidth: 4,
       marginBottom: 10,
       paddingHorizontal: 10,
       fontSize: 22,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      textAlign: "center"
     },
     button: {
       backgroundColor: 'pink',
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-    },
+    }
   });
 
   
