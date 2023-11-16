@@ -23,7 +23,7 @@ const Duck = ({ duckType }) => {
       break;
   }
 
-  const imageWidth = window.width * 0.45; // adjust the scaling factor as needed
+  const imageWidth = window.width * 0.47; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (

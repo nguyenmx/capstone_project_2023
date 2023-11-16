@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
-import duckCoffee from '../../images/duckCoffee.gif';
+import Duck from '../../modules/CharDuck';
+import { ReferenceDataContext } from '../ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
 
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-
+  const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
@@ -67,7 +68,7 @@ const PetHouse = () => {
           Living room
         </Animated.Text>
 
-        <Image source={duckCoffee} style={styles.duckCoffeeImage} />
+        <Duck duckType={selectedDuck} style={styles.duckCoffeeImage} />
 
         <Button title="Play Sound" onPress={playSound} />
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import duckWave from '../../images/duckWave.gif';
+import Duck from '../../modules/CharDuck';
+import { ReferenceDataContext } from '../ReferenceDataContext';
 import healthBar from '../../images/healthBar.png';
 
 const window = Dimensions.get('window');
@@ -8,13 +9,15 @@ const backgroundImage = require('../../images/background.gif');
 const defeatBanner = require('../../images/defeatBanner.png');
 
 const LossScreen = ({ navigation }) => {
+  const { selectedDuck } = useContext(ReferenceDataContext);
+
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.bannerContainer}>
           <Image source={defeatBanner} style={styles.banner} />
         </View>
-        <Image source={duckWave} style={styles.duck} />
+        <Duck duckType={selectedDuck} />
         <View style={styles.barContainer}>
           <Image source={healthBar} style={styles.bar} />
         </View>
@@ -60,13 +63,6 @@ const styles = StyleSheet.create({
   banner: {
     width: '100%',
     height: '100%',
-  },
-  duck: {
-    marginTop: window.height * 0.025,
-    width: window.width * 0.5,
-    height: window.height * 0.25,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   backgroundImage: {
     width: '100%',
