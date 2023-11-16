@@ -5,7 +5,7 @@ import rock from '../../images/rock.png';
 import scissor from '../../images/scissor.png';
 import paper from '../../images/paper.png';
 import HealthBar from '../../modules/HealthBar';
-import Animal from '../../modules/BananaDuck';
+import Animal from '../../modules/CharDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
 import explosion from '../../images/explosion.gif';
 import BackArrow from  '../../modules/BackArrow';

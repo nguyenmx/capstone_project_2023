@@ -8,8 +8,6 @@ import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
-import BananaDuck from './modules/BananaDuck';
-import WaveDuck from './modules/WaveDuck';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
 import { useEffect, useContext } from 'react';
@@ -24,11 +22,10 @@ import WinScreen from './pages/combat/WinScreen';
 import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
-import RizzDuck from './modules/RizzDuck';
 import Title from './images/Denwa_Petto.png'
 import { ReferenceDataContext } from './pages/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CoffeeDuck from './modules/CoffeeDuck';
+import Duck from './modules/CharDuck';
 //import {AppleHealthKit} from 'react-native-health';
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
@@ -93,12 +90,19 @@ export default function App() {
 }
 
 export function HomeScreen({ navigation }) {
-  const { selectedDuck, setSelectedDuck } = useContext(ReferenceDataContext);
+  const { setSelectedDuck } = useContext(ReferenceDataContext);
 
   function saveSelectedDuck(index) {
     setSelectedDuck(index);
     console.log(index);
   }
+
+  const duckImages = [
+    require('./images/duckWave.gif'),
+    require('./images/ducky.gif'),
+    require('./images/duckRizz.gif'),
+    require('./images/duckCoffee.gif'),
+  ];
 
   return (
     <View style={styles.container}>
@@ -129,20 +133,13 @@ export function HomeScreen({ navigation }) {
             nextButton={
               <Image source={RightArrow} style={styles.arrowButton} />
             }
-            onIndexChanged={(swiper) => saveSelectedDuck(swiper)}
+            onIndexChanged={(index) => saveSelectedDuck(index)}
           >
-            <View style={styles.swiperSlide}>
-              <WaveDuck />
-            </View>
-            <View style={styles.swiperSlide}>
-              <BananaDuck />
-            </View>
-            <View style={styles.swiperSlide}>
-              <RizzDuck />
-            </View>
-            <View style={styles.swiperSlide}>
-              <CoffeeDuck />
-            </View>
+            {duckImages.map((duckImage, index) => (
+              <View style={styles.swiperSlide} key={index}>
+                <Duck duckType={index} image={duckImage} />
+              </View>
+            ))}
           </Swiper>
         </View>
       </ImageBackground>

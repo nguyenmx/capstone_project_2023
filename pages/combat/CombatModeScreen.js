@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import WaveDuck from '../../modules/WaveDuck';
-import BananaDuck from '../../modules/BananaDuck';
-import RizzDuck from '../../modules/RizzDuck';
-import CoffeeDuck from '../../modules/CoffeeDuck';
+import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
@@ -13,24 +10,6 @@ const swordIcon = require('../../images/swordIcon.png');
 const CombatModeScreen = ({ navigation }) => {
   // Access the selectedDuck value from the context
   const { selectedDuck } = useContext(ReferenceDataContext);
-
-  let playerDuck;
-
-  if (selectedDuck === 0) {
-    playerDuck = <WaveDuck />;
-  } 
-  else if (selectedDuck === 1) {
-    playerDuck = <BananaDuck />;
-  } 
-  else if (selectedDuck === 2) {
-    playerDuck = <RizzDuck />;
-  }
-  else if(selectedDuck === 3){
-    playerDuck = <CoffeeDuck />;
-  }
-  else{
-    playerDuck = <WaveDuck />;
-  }
 
   return (
     <View>
@@ -51,7 +30,7 @@ const CombatModeScreen = ({ navigation }) => {
         >
           <Text style={homeButtonStyles.buttonText}>Back To Home</Text>
         </TouchableOpacity>
-        {playerDuck}
+        <Duck duckType={selectedDuck} />
       </ImageBackground>
     </View>
   );
