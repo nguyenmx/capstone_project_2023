@@ -7,10 +7,10 @@ const Duck = ({ duckType }) => {
   let duckImage;
   switch (duckType) {
     case 0:
-      duckImage = require('../images/duckWave.gif');
+      duckImage = require('../images/ducky.gif');
       break;
     case 1:
-      duckImage = require('../images/ducky.gif');
+      duckImage = require('../images/capyKnife.gif');
       break;
     case 2:
       duckImage = require('../images/duckRizz.gif');
@@ -23,7 +23,7 @@ const Duck = ({ duckType }) => {
       break;
   }
 
-  const imageWidth = window.width * 0.47; // adjust the scaling factor as needed
+  const imageWidth = window.width * 0.58; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (

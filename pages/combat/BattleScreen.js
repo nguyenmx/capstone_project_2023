@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext}  from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal} from 'react-native';
 import backgroundImage from '../../images/background.gif';
 import rock from '../../images/rock.png';
@@ -13,13 +13,14 @@ import CombatModeLogic from '../../components/CombatModeLogic';
 import paperBubble from '../../images/cartoon-thought-paper.png';
 import rockBubble from '../../images/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/cartoon-thought-scissors.png';
+import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
 
 //IMPORTANT: create an instance of the CombatModeLogic here
 const combatMode = new CombatModeLogic();
-
 const BattleScreen = ({ navigation}) => {
+const { selectedDuck } = useContext(ReferenceDataContext);
 
 const [playerExplode, setPlayerExplodeVisible] = useState(false);
 const [oppExplode, setOppExplodeVisible] = useState(false);
@@ -110,12 +111,12 @@ const playerBubbleAnimation = (move) => {
         </TouchableOpacity>
           <HealthBar></HealthBar>
           <View style={styles.oppContainer}>
-            <Animal></Animal>
+          <OpponentDuck></OpponentDuck>
             {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
             {oppExplode && <Image source={explosion} style={styles.explosionImageYou}></Image>}
           </View>
           <View style={styles.playerContainer}>
-            <OpponentDuck></OpponentDuck>
+            <Animal duckType={selectedDuck}></Animal>
             {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
             {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}
           </View>
@@ -166,11 +167,11 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   oppContainer: {
-    marginRight: 200,
+    marginRight: 170,
     marginTop: 10
   },
   playerContainer: {
-    marginLeft: 200,
+    marginLeft: 150,
     transform: [{ scaleX: -1 }],
     marginBottom: -50
   },
@@ -185,15 +186,14 @@ const styles = StyleSheet.create({
   explosionImageYou: {
     position: 'absolute',
     top: 0,
-    left: 5,
-    right: 0,
+    left: 40,
     bottom: 0,
     resizeMode: 'contain',
   },
   bubbleImage: {
     position: 'absolute',
     top: 0,
-    right: -130,
+    right: -128,
     width: 150, // Adjust the width as needed
     height: 150, // Adjust the height as needed
     resizeMode: 'contain',
