@@ -23,7 +23,7 @@ const MG = () => {
       >
         <View style={styles.slide}>
           <View style={styles.slideInner}>
-            <Text style={styles.text}>Slide 1</Text>
+            <Text style={styles.text}>1</Text>
             <Image source={lvlUp} style={styles.lvlUp} />
             <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
           </View>
@@ -32,17 +32,20 @@ const MG = () => {
 
         <View style={styles.slide}>
           <View style={styles.slideInner}>
-            <Text style={styles.text}>Slide 2</Text>
+            <Text style={styles.text}>2</Text>
             <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
           </View>
         </View>
 
         <View style={styles.slide}>
           <View style={styles.slideInner}>
-            <Text style={styles.text}>Slide 3</Text>
+            <Text style={styles.text}>3</Text>
             <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PetHouse')}>
+            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('PetHouse')}>
               <Text style={styles.buttonText}>OK</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('Home')}>
+              <Text style={styles.buttonText}>Go Back</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   },
   slideInner: {
     width: '80%',
-    height: '80%', 
+    height: '72%', 
     borderWidth: 10, 
     borderColor: 'rgba(156, 130, 176, 0.8)',
     alignItems: 'center',
@@ -102,13 +105,7 @@ const styles = StyleSheet.create({
   lvlUp: {
     width:  500,
     height: 290,
-    //borderWidth: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    //top: window.height * -0.2,
     marginBottom: 20,
-
-    //position: 'absolute',
     transform: [{ scale: .5 }]
   },
   text: {
@@ -135,27 +132,47 @@ const styles = StyleSheet.create({
     marginBottom: window.height * 0.83,
   },
   button: {
+    width: window.width * 0.5,
+    height: window.height * 0.08,
     backgroundColor: '#e9f1ff',
     padding: 10,
     borderRadius: 5,
-    marginTop: 20, 
     borderWidth: 5, 
     borderColor: 'white',
+    marginBottom: window.height * -0.1,
+    position: 'absolute'
+
+  },
+  Backbutton: {
+    width: window.width * 0.4,
+    height: window.height * 0.065,
+    backgroundColor: '#e9f1ff',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: window.height * 0.02, // Adjust the marginBottom value to move the button down
+    shadowColor: 'rgba(0, 0, 0, 0.75)',
+    shadowOffset: { width: 2, height: 2 },
+    shadowRadius: 5,
+    position: 'relative',
   },
   desc: {
     fontSize: window.width * 0.08,
-    marginBottom: 20,
     top: -75,
     color: '#ffffff',
     fontFamily: 'NiceTango-K7XYo',
     textAlign: 'center', 
-    textShadowColor: 'rgba(219,112,147, 0.9)',
+    textShadowColor: 'rgba(0,0,0, 0.7)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
   buttonText: {
     color: '#91adfa',
     fontFamily: 'NiceTango-K7XYo',
+    position: 'relative',
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: window.width * 0.08,
   },
 });
 

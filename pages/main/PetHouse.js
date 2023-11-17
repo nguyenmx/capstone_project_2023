@@ -5,15 +5,18 @@ import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
+import MainGameLogic from '../../components/MainGameLogic';
 
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
+
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+
 
   async function playSound() {
     console.log('Loading Sound');
@@ -70,12 +73,9 @@ const PetHouse = () => {
 
         <Duck duckType={selectedDuck} style={styles.duckCoffeeImage} />
 
-        <Button title="Play Sound" onPress={playSound} />
-
         <Modal
           transparent={true}
           visible={modalVisible}
-          
         >
           <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
             <View style={styles.popUp}>
@@ -89,6 +89,9 @@ const PetHouse = () => {
                 onValueChange={onVolumeChange}
               />
               <Button title="Exit" onPress={hideModal} />
+
+              {/* Move the "Play Sound" button into the modal */}
+              <Button title="Play Sound" onPress={playSound} />
             </View>
           </View>
         </Modal>
@@ -96,7 +99,8 @@ const PetHouse = () => {
         <TouchableOpacity onPress={toggleModal}>
           <Image source={settingButton} style={styles.settingButtonImage} />
         </TouchableOpacity>
-
+        
+        <MainGameLogic /> 
       </View>
     </ImageBackground>
   );
@@ -121,8 +125,10 @@ const styles = StyleSheet.create({
   duckCoffeeImage: {
     width: 200,
     height: 200,
-    top: window.height * 0.1,
+    marginBottom: window.height * 0.5,
+    top: window.height * 0.095,
     left: window.width * -0.05,
+    zIndex: 999,
   },
   settingButtonImage: {
     position: 'absolute',
@@ -148,3 +154,4 @@ const styles = StyleSheet.create({
 });
 
 export default PetHouse;
+

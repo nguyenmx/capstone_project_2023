@@ -75,14 +75,14 @@ export default function App() {
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StepTracker" component={StepTracker} />
-        <Stack.Screen name="MG" component={MG} />
+        <Stack.Screen name="MG" component={MG} options={{ headerShown: false}}/>
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
         <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
-        <Stack.Screen name="PetHouse" component={PetHouse} />
+        <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>

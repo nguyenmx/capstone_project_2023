@@ -10,6 +10,7 @@ const MainGameScreen = () => {
   const backgroundImage = require('../../images/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
   const navigation = useNavigation(); // Get the navigation object
+  const MAX_NAME_LENGTH = 20; // Set your desired character limit
 
   //sets "PetName" as a key then saves name inside it
   const save = async() => {
@@ -53,7 +54,9 @@ const MainGameScreen = () => {
   }
 
   const handleNameChange = (newName) => {
-    setName(newName);
+    if (newName.length <= MAX_NAME_LENGTH) {
+      setName(newName);
+    }
   }
 
   const navigateToNewScreen = () => {
@@ -74,14 +77,19 @@ const MainGameScreen = () => {
           placeholder="Enter your pet's name here"
           value={name}
           onChangeText={handleNameChange}
+          maxLength={MAX_NAME_LENGTH} // Set the character limit
         />
         <Button onPress={save} title="Save me!" style={styles.button} />
         <Button onPress={remove} title="Delete me!" style={styles.button} />
-        <TouchableOpacity onPress={navigateToNewScreen}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Go to New Screen</Text>
-          </View>
+        
+      
+
+        <TouchableOpacity style={styles.button} onPress={navigateToNewScreen}>
+              <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
+            
+        
+
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -118,8 +126,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   button: {
-    backgroundColor: 'pink',
-    color: 'white'
+    backgroundColor: '#e9f1ff',
+    top: 10,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 5, 
+    borderColor: 'white',
+  },
+  buttonText: {
+    color: '#91adfa',
+    fontFamily: 'NiceTango-K7XYo',
   },
   backgroundImage: {
     width: '100%',
