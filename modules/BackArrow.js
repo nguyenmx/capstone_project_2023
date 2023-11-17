@@ -7,7 +7,7 @@ const window = Dimensions.get('window');
 const BackArrow = () => {
   const imageWidth = window.width * 0.13; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
-  const topCorner = 0;
+  const topCorner = 48;
   const leftCorner = -140;
 
   return (

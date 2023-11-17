@@ -15,11 +15,15 @@ class CombatModeLogic extends Component {
   setPlayerMove(move) {
     playerMove = move;
     console.log("The players current move is " + playerMove);
-  };
+  }
 
   setOppMove() {
     oppMove = CombatBot.generateRandomMove();
     console.log("The opponents current move is " + oppMove);
+  }
+
+  getOppMove() {
+    return oppMove;
   }
 
   getPlayerMove() {
@@ -27,16 +31,18 @@ class CombatModeLogic extends Component {
   }
 
   playerWon() {
-    if (playerMove == "scissors" && oppMove == "paper" || playerMove == "paper" && oppMove == "rock" 
+    if (playerMove == "scissors" && oppMove == "paper" 
+    || playerMove == "paper" && oppMove == "rock" 
     || playerMove == "rock" && oppMove == "scissors") {
       return true;
     }
-    if (playerMove == "scissors" && oppMove == "rock" || playerMove == "paper" && oppMove == "scissors" 
+    if (playerMove == "scissors" && oppMove == "rock" 
+    || playerMove == "paper" && oppMove == "scissors" 
     || playerMove == "rock" && oppMove == "paper") {
     return false;
     }
     if (playerMove == oppMove) {
-    return 0;
+    return null;
     }
   }
   
