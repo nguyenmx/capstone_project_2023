@@ -3,7 +3,7 @@ import { View, Image, Dimensions } from 'react-native';
 
 const window = Dimensions.get('window');
 
-const Duck = ({ duckType }) => {
+const Duck = ({ duckType, Optional: customStyle }) => {
   let duckImage;
   switch (duckType) {
     case 0:
@@ -27,7 +27,7 @@ const Duck = ({ duckType }) => {
   const imageHeight = imageWidth; // maintain aspect ratio
 
   return (
-    <View>
+    <View style={[{ position: 'relative' }, customStyle]}>
       <Image source={duckImage} style={{ width: imageWidth, height: imageHeight }} />
     </View>
   );

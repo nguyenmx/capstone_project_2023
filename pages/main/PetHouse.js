@@ -71,7 +71,7 @@ const PetHouse = () => {
           Living room
         </Animated.Text>
 
-        <Duck duckType={selectedDuck} style={styles.duckCoffeeImage} />
+        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
 
         <Modal
           transparent={true}
@@ -125,8 +125,7 @@ const styles = StyleSheet.create({
   duckCoffeeImage: {
     width: 200,
     height: 200,
-    marginBottom: window.height * 0.5,
-    top: window.height * 0.095,
+    bottom: window.height * -0.033,
     left: window.width * -0.05,
     zIndex: 999,
   },

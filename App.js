@@ -181,14 +181,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: window.height * 0.05, // increase spacing between buttons
+    marginBottom: window.height * 0.045, // increase spacing between buttons
     shadowColor: 'rgba(0, 0, 0, 0.75)',
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 5,
   },
   buttonText: {
     fontFamily: 'NiceTango-K7XYo',
-    fontSize: window.width * 0.06,
+    fontSize: window.width * 0.065,
     color: 'white',
   },
   swiperSlide: {
