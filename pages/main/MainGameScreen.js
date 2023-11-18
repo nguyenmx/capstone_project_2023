@@ -79,6 +79,7 @@ const MainGameScreen = () => {
           onChangeText={handleNameChange}
           maxLength={MAX_NAME_LENGTH} // Set the character limit
         />
+        <Text style={styles.text}> {name.length}/{MAX_NAME_LENGTH}</Text>
         <Button onPress={save} title="Save me!" style={styles.button} />
         <Button onPress={remove} title="Delete me!" style={styles.button} />
         
