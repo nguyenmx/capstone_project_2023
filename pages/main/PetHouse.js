@@ -149,16 +149,15 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   duckCoffeeImage: {
-    width: 200,
-    height: 200,
-    bottom: window.height * -0.033,
+
+    bottom: window.height * -0.01,
     left: window.width * -0.05,
     zIndex: 999,
   },
   settingButtonImage: {
     position: 'absolute',
-    marginLeft: window.width * 0.3,
-    marginTop: window.height * -0.63,
+    left: window.width * 0.3,
+    top: window.height * -0.63,
     width: 75,
     height: 75,
     zIndex: 999,
@@ -175,8 +174,50 @@ const styles = StyleSheet.create({
     padding: 40,
     borderRadius: 10,
     flex: 0.80,
-  }
+  },
+
+  healthBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    top: window.height * -0.2,
+    left: window.width * -0.2,
+    position: 'relative',
+  },
+  heartIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 5, // Adjust the margin as needed
+  },
+  healthBar: {
+    height: 90,
+    width: 200,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 4,
+    overflow: 'hidden',
+  },
+  healthBarInner: {
+    backgroundColor: '#ff1a1a',
+    height: '100%',
+    borderRadius: 3,
+  },
+  healthText: {
+    marginLeft: 5, // Adjust the margin as needed
+    fontSize: 16,
+    color: 'white',
+  },
+  healthButton: {
+    marginTop: 10,
+    backgroundColor: 'lightblue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+  },
 });
+
+
 
 export default PetHouse;
 
