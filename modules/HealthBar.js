@@ -1,38 +1,78 @@
-import React from 'react';
-import { View, Image, Dimensions, StyleSheet } from 'react-native';
-import healthBar from '../images/healthBar.png';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 const window = Dimensions.get('window');
 
+
 const HealthBar = () => {
-    const imageWidth = window.width * 0.7;
-    const imageHeight = imageWidth;
+
+  const [health, setHealth] = useState(100);
+  const maxHealth = 100;
+
+  const decreaseHealth = () => {
+    const newHealth = Math.max(0, health - 10); // Ensure health doesn't go below 0
+    setHealth(newHealth);
+  };
+
+  const increaseHealth = () => {
+    const newHealth = Math.min(maxHealth, health + 10); // Ensure health doesn't exceed maxHealth
+    setHealth(newHealth);
+  };
 
 
   return (
-    <View>
-        <View style={styles.barContainer}>
-          <Image source={healthBar} style={styles.bar} />
-        </View>
+    <View style={styles.healthBarContainer}>
+      <View style={styles.healthBar}>
+        <View style={[styles.healthBarInner, { width: `${(health / maxHealth) * 100}%` }]} />
+      </View>
+      <Text style={styles.healthText}>{health}/{maxHealth}</Text>
+
+      <TouchableOpacity style={styles.healthButton} onPress={decreaseHealth}>
+        <Text style={styles.buttonText}>Decrease Health</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.healthButton} onPress={increaseHealth}>
+        <Text style={styles.buttonText}>Increase Health</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    barContainer: {
-        width: window.width * 0.6,
-        aspectRatio: 384 / 96, // Adjust the aspect ratio to fit the health bar image
-        marginTop: window.height * 0.05,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      bar: {
-        width: '100%',
-        height: '100%',
-      },
 
-})
+const styles = StyleSheet.create({
+  healthBarContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    top: window.height * -.2,
+    left: window.width * -.2,
+    position: 'relative',
+  },
+  healthBar: {
+    height: 20,
+    width: 200,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 4,
+    overflow: 'hidden',
+  },
+  healthBarInner: {
+    backgroundColor: '#ff1a1a',
+    height: '100%',
+    borderRadius: 10,
+  },
+  healthText: {
+    marginTop: 5,
+    fontSize: 16,
+    color: 'white',
+  },
+  healthButton: {
+    marginTop: 10,
+    backgroundColor: 'lightblue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+  },
+});
 
 export default HealthBar;

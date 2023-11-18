@@ -6,6 +6,8 @@ import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
+import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure
+
 
 const window = Dimensions.get('window');
 
@@ -16,6 +18,19 @@ const PetHouse = () => {
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [health, setHealth] = useState(100);
+  const maxHealth = 100;
+
+  const decreaseHealth = () => {
+    const newHealth = Math.max(0, health - 10); // Ensure health doesn't go below 0
+    setHealth(newHealth);
+  };
+
+  const increaseHealth = () => {
+    const newHealth = Math.min(maxHealth, health + 10); // Ensure health doesn't exceed maxHealth
+    setHealth(newHealth);
+  };
 
 
   async function playSound() {
@@ -67,9 +82,20 @@ const PetHouse = () => {
   return (
     <ImageBackground source={require('../../images/livingRoom.jpg')} style={styles.backgroundImage}>
       <View style={styles.container}>
+
+      <HealthBar
+          health={health}
+          maxHealth={maxHealth}
+          decreaseHealth={decreaseHealth}
+          increaseHealth={increaseHealth}
+        />
+
+
+
         <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
           Living room
         </Animated.Text>
+
 
         <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
 
