@@ -92,7 +92,6 @@ const PetHouse = () => {
         />
 
 
-
         <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
           Living room
         </Animated.Text>

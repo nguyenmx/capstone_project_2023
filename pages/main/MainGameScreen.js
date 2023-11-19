@@ -77,9 +77,9 @@ const MainGameScreen = () => {
           placeholder="Enter your pet's name here"
           value={name}
           onChangeText={handleNameChange}
-          maxLength={MAX_NAME_LENGTH} // Set the character limit
+          maxLength={MAX_NAME_LENGTH} 
         />
-        <Text style={styles.text}> {name.length}/{MAX_NAME_LENGTH}</Text>
+        <Text style={styles.text}> {name ? `${name.length}/${MAX_NAME_LENGTH}` : '0/20'}</Text>
         <Button onPress={save} title="Save me!" style={styles.button} />
         <Button onPress={remove} title="Delete me!" style={styles.button} />
         

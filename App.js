@@ -26,7 +26,10 @@ import Title from './images/Denwa_Petto.png'
 import { ReferenceDataContext } from './pages/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
+import Sprite from './modules/SpriteAnimation';
+import SpriteAnimation from './modules/SpriteAnimation';
 //import {AppleHealthKit} from 'react-native-health';
+
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
 const backgroundImage = require('./images/background.gif');
@@ -83,6 +86,7 @@ export default function App() {
         <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
         <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
         <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
+        <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>

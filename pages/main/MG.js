@@ -43,7 +43,7 @@ const MG = () => {
           <View style={styles.slideInner}>
             <Text style={styles.text}>3</Text>
             <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
-            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('PetHouse')}>
+            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('SpriteAnimation')}>
               <Text style={styles.buttonText}>OK</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('Home')}>
