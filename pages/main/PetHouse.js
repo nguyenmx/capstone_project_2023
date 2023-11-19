@@ -84,6 +84,7 @@ const PetHouse = () => {
       <View style={styles.container}>
 
       <HealthBar
+          Optional={styles.healthPosition}
           health={health}
           maxHealth={maxHealth}
           decreaseHealth={decreaseHealth}
@@ -149,7 +150,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   duckCoffeeImage: {
-
     bottom: window.height * -0.01,
     left: window.width * -0.05,
     zIndex: 999,
@@ -161,6 +161,10 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     zIndex: 999,
+  },
+  healthPosition: {
+    top: window.height * -0.2, 
+    left: window.width * -0.1
   },
   settingsText: {
     fontSize: 50,
@@ -175,46 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 0.80,
   },
-
-  healthBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    top: window.height * -0.2,
-    left: window.width * -0.2,
-    position: 'relative',
-  },
-  heartIcon: {
-    width: 30,
-    height: 30,
-    marginRight: 5, // Adjust the margin as needed
-  },
-  healthBar: {
-    height: 90,
-    width: 200,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    borderWidth: 4,
-    overflow: 'hidden',
-  },
-  healthBarInner: {
-    backgroundColor: '#ff1a1a',
-    height: '100%',
-    borderRadius: 3,
-  },
-  healthText: {
-    marginLeft: 5, // Adjust the margin as needed
-    fontSize: 16,
-    color: 'white',
-  },
-  healthButton: {
-    marginTop: 10,
-    backgroundColor: 'lightblue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-  },
+  
 });
 
 

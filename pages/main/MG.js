@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { Shadow } from 'react-native-shadow-2';
 import { useNavigation } from '@react-navigation/native';
 import lvlUp from '../../images/themducks.png'
 
@@ -22,6 +23,7 @@ const MG = () => {
         horizontal={true}
       >
         <View style={styles.slide}>
+        
           <View style={styles.slideInner}>
             <Text style={styles.text}>1</Text>
             <Image source={lvlUp} style={styles.lvlUp} />
@@ -155,6 +157,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 5,
     position: 'relative',
+    borderWidth: 2,
+    borderColor: '#91adfa'
   },
   desc: {
     fontSize: window.width * 0.08,
