@@ -102,6 +102,10 @@ const StepTracker = () => {
     setSteps(newStepNumber);
   }
   
+  const change = () => {
+    save_steps()
+    
+  }
 
 
   return (
@@ -116,7 +120,9 @@ const StepTracker = () => {
           onChangeText={handleStepsChange}
         />
         <Button onPress={save} title="Submit" style={styles.button} />
+        <Button onPress={change} title="Edit" style={styles.button} />
         <Button onPress={remove} title="Erase" style={styles.button} />
+
 
         <Text>You number is: {steps}</Text>
 
