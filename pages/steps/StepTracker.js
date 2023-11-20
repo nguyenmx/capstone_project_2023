@@ -1,57 +1,100 @@
-import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, ImageBackground, TextInput, Button, TouchableOpacity  } from 'react-native';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import StopClock from './Stopclock';
-import timer from './timer';
+
+
+ 
 
 const StepTracker = () => {
 
-  timer();
+
+  const backgroundImage = require('../../images/clouds.png');
+  const { steps, setSteps } = useContext(ReferenceDataContext);
 
 
-    const backgroundImage = require('../../images/clouds.png');
-    const { steps, setSteps } = useContext(ReferenceDataContext);
-    const save = async() => {
-      try {
-        await AsyncStorage.setItem("NumberOfSteps", steps)
-      } 
-      catch (err) {
-        alert("I need a number! quaack");
+    // State and refs to manage time and stopwatch status 
+  const [time, setTime] = useState(0); 
+  const [running, setRunning] = useState(false); 
+  const intervalRef = useRef(null); 
+  const startTimeRef = useRef(0); 
+  // Function to start the stopwatch 
+  const startStopwatch = () => { 
+      startTimeRef.current = Date.now() - time * 1000; 
+      intervalRef.current = setInterval(() => { 
+          setTime(Math.floor((Date.now() -  
+          startTimeRef.current) / 1000)); 
+      }, 1000); 
+      setRunning(true); 
+  }; 
+  // Function to pause the stopwatch 
+  const pauseStopwatch = () => { 
+      clearInterval(intervalRef.current); 
+      setRunning(false); 
+  }; 
+  // Function to reset the stopwatch 
+  const resetStopwatch = () => { 
+      clearInterval(intervalRef.current); 
+      setTime(0); 
+      setRunning(false); 
+  }; 
+  // Function to resume the stopwatch 
+  const resumeStopwatch = () => { 
+      startTimeRef.current = Date.now() - time * 1000; 
+      intervalRef.current = setInterval(() => { 
+          setTime(Math.floor( 
+              (Date.now() - startTimeRef.current) / 1000)); 
+      }, 1000); 
+      setRunning(true); 
+  }
+
+
+  const save_steps = async() => {
+    try {
+      await AsyncStorage.setItem("NumberOfSteps", steps);
+    } 
+    catch (err) {
+      alert("I need a number! quaack");
+    }
+  }
+
+  const save = () => {
+    if (save_steps()){
+      startStopwatch();
+    }
+  }
+
+  const load = async () => {
+    try {
+      let steps = await AsyncStorage.getItem("NumberOfSteps")
+
+      if (steps != "") {
+        setSteps(steps);
       }
     }
-
-    const load = async () => {
-      try {
-        let steps = await AsyncStorage.getItem("NumberOfSteps")
-  
-        if (steps != "") {
-          setSteps(steps);
-        }
-      }
-      catch (err) {
-        alert(err);
-      }
+    catch (err) {
+      alert(err);
     }
+  }
 
-    useEffect(() => {
-      load();
-    }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
-    const remove = async () => {
-      try {
-        await AsyncStorage.removeItem("NumberOfSteps")
-      }
-      catch (err) {
-        alert(err);
-      } finally {
-        setSteps("");
-      }
+  const remove = async () => {
+    try {
+      await AsyncStorage.removeItem("NumberOfSteps")
     }
-
-    const handleStepsChange = (newStepNumber) => {
-      setSteps(newStepNumber);
+    catch (err) {
+      alert(err);
+    } finally {
+      setSteps("");
     }
+  }
+
+  const handleStepsChange = (newStepNumber) => {
+    setSteps(newStepNumber);
+  }
   
 
 
@@ -73,10 +116,46 @@ const StepTracker = () => {
 
         </View>
         
-
-        <View style={styles.container}>
-          <StopClock/>
-        </View>
+        <View style={styles.container_1}> 
+          <Text style={styles.timeText}>{time}s</Text> 
+          <View style={styles.buttonContainer}> 
+              {running ? ( 
+                  <TouchableOpacity 
+                      style={[styles.button_1, styles.pauseButton]} 
+                      onPress={pauseStopwatch} 
+                  > 
+                      <Text style={styles.buttonText}>Pause</Text> 
+                  </TouchableOpacity> 
+              ) : ( 
+                  <> 
+                      <TouchableOpacity 
+                          style={[styles.button, styles.startButton]} 
+                          onPress={startStopwatch} 
+                      > 
+                          <Text style={styles.buttonText}>Start</Text> 
+                      </TouchableOpacity> 
+                      <TouchableOpacity 
+                          style={[styles.button, styles.resetButton]} 
+                          onPress={resetStopwatch} 
+                      > 
+                          <Text style={styles.buttonText}> 
+                              Reset 
+                          </Text> 
+                      </TouchableOpacity> 
+                  </> 
+              )} 
+              {!running && ( 
+                  <TouchableOpacity 
+                      style={[styles.button, styles.resumeButton]} 
+                      onPress={resumeStopwatch} 
+                  > 
+                      <Text style={styles.buttonText}> 
+                          Resume 
+                      </Text> 
+                  </TouchableOpacity> 
+              )} 
+          </View> 
+      </View> 
 
     </ImageBackground>
   );
@@ -123,8 +202,54 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-    }
-  });
+    },
+    container_1: { 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    }, 
+    header_1: { 
+        fontSize: 30, 
+        color: "green", 
+        marginBottom: 10, 
+    }, 
+    subHeader: { 
+        fontSize: 18, 
+        marginBottom: 10, 
+        color: "blue", 
+    }, 
+    timeText: { 
+        fontSize: 48, 
+    }, 
+    buttonContainer: { 
+        flexDirection: 'row', 
+        marginTop: 20, 
+    }, 
+    button_1: { 
+        paddingVertical: 10, 
+        paddingHorizontal: 20, 
+        borderRadius: 5, 
+    }, 
+    startButton: { 
+        backgroundColor: '#2ecc71', 
+        marginRight: 10, 
+    }, 
+    resetButton: { 
+        backgroundColor: '#e74c3c', 
+        marginRight: 10, 
+    }, 
+    pauseButton: { 
+        backgroundColor: '#f39c12', 
+    }, 
+    resumeButton: { 
+        backgroundColor: '#3498db', 
+    }, 
+    buttonText: { 
+        color: 'white', 
+        fontSize: 16, 
+    }, 
+}); 
+
 
   
 
