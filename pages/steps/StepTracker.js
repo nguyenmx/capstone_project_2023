@@ -48,8 +48,7 @@ const StepTracker = () => {
       setRunning(true); 
   }
 
-
-  const save_steps = async() => {
+  const save_steps = async(steps) => {
     try {
       await AsyncStorage.setItem("NumberOfSteps", steps);
     } 
@@ -58,10 +57,10 @@ const StepTracker = () => {
     }
   }
 
-  const save = () => {
-    if (save_steps()){
-      startStopwatch();
-    }
+
+  const save = async () => {
+    save_steps();
+    startStopwatch();
   }
 
   const load = async () => {
@@ -98,6 +97,10 @@ const StepTracker = () => {
     }
   }
 
+  const remove_two = () => {
+    resetStopwatch();
+  }
+
   const handleStepsChange = (newStepNumber) => {
     setSteps(newStepNumber);
   }
@@ -130,43 +133,7 @@ const StepTracker = () => {
         
         <View style={styles.container_1}> 
           <Text style={styles.timeText}>{time}s</Text> 
-          <View style={styles.buttonContainer}> 
-              {running ? ( 
-                  <TouchableOpacity 
-                      style={[styles.button_1, styles.pauseButton]} 
-                      onPress={pauseStopwatch} 
-                  > 
-                      <Text style={styles.buttonText}>Pause</Text> 
-                  </TouchableOpacity> 
-              ) : ( 
-                  <> 
-                      <TouchableOpacity 
-                          style={[styles.button, styles.startButton]} 
-                          onPress={startStopwatch} 
-                      > 
-                          <Text style={styles.buttonText}>Start</Text> 
-                      </TouchableOpacity> 
-                      <TouchableOpacity 
-                          style={[styles.button, styles.resetButton]} 
-                          onPress={resetStopwatch} 
-                      > 
-                          <Text style={styles.buttonText}> 
-                              Reset 
-                          </Text> 
-                      </TouchableOpacity> 
-                  </> 
-              )} 
-              {!running && ( 
-                  <TouchableOpacity 
-                      style={[styles.button, styles.resumeButton]} 
-                      onPress={resumeStopwatch} 
-                  > 
-                      <Text style={styles.buttonText}> 
-                          Resume 
-                      </Text> 
-                  </TouchableOpacity> 
-              )} 
-          </View> 
+          <Button onPress={remove_two} title="Emergency Stop for Stopwatch 😬" style={styles.button} />
       </View> 
 
     </ImageBackground>
