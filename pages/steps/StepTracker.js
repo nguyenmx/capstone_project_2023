@@ -81,7 +81,7 @@ const StepTracker = () => {
     load();
   }, []);
 
-  const remove = async () => {
+  const remove_steps = async () => {
     try {
       await AsyncStorage.removeItem("NumberOfSteps")
     }
@@ -89,6 +89,12 @@ const StepTracker = () => {
       alert(err);
     } finally {
       setSteps("");
+    }
+  }
+
+  const remove = () => {
+    if (remove_steps()){
+      resetStopwatch();
     }
   }
 
