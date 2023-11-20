@@ -54,20 +54,25 @@ const StepTracker = () => {
     } 
     catch (err) {
       alert("I need a number! quaack");
+      throw err;
     }
   }
 
 
   const save = async () => {
-    save_steps();
-    startStopwatch();
+    try {
+      await save_steps(steps);
+      startStopwatch();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const load = async () => {
     try {
       let steps = await AsyncStorage.getItem("NumberOfSteps")
 
-      if (steps != "") {
+      if (steps !== null && steps !== "") {
         setSteps(steps);
       }
     }
