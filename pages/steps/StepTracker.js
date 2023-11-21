@@ -62,7 +62,9 @@ const StepTracker = () => {
   const save = async () => {
     try {
       await save_steps(steps);
-      startStopwatch();
+      if (parseInt(steps)){
+        startStopwatch();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -111,37 +113,35 @@ const StepTracker = () => {
       setSteps(newStepNumber);
     }
   }
-  
-  const change = () => {
-    save_steps()
-    
-  }
 
 
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
 
-        <Text style={styles.text}>EnTeR yOuR nUmBeR of sTePs you wAlKeD tOdAy  😁 </Text>
-        <TextInput
-          style={styles.input}
-          value={steps}
-          
-          onChangeText={handleStepsChange}
-        />
-        <Button onPress={save} title="Submit" style={styles.button} />
-        <Button onPress={change} title="Edit" style={styles.button} />
-        <Button onPress={remove} title="Erase" style={styles.button} />
+          <Text style={styles.text}>EnTeR yOuR nUmBeR of sTePs you wAlKeD tOdAy  😁 </Text>
+          <TextInput
+            style={styles.input}
+            value={steps}
+            
+            onChangeText={handleStepsChange}
+          />
+          <View className = "buttonC">
+            <Button onPress={save} title="Submit" style={styles.button} />
+            <Button onPress={remove} title="Erase" style={styles.button} />
+          </View>
 
 
-        <Text>You number is: {steps}</Text>
+          <Text>You number is: {steps}</Text>
+
+          <View style={styles.container_1}> 
+            <Text style={styles.timeText}>{time}s</Text> 
+            <Button onPress={remove_two} title="Emergency Stop for Stopwatch 😬" style={styles.button} />
+          </View> 
 
         </View>
         
-        <View style={styles.container_1}> 
-          <Text style={styles.timeText}>{time}s</Text> 
-          <Button onPress={remove_two} title="Emergency Stop for Stopwatch 😬" style={styles.button} />
-      </View> 
+      
 
     </ImageBackground>
   );
@@ -174,66 +174,30 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       textAlign: "center"
     },
-    button: {
-      backgroundColor: 'pink',
-      color: 'white'
-    },
+    // button: {
+    //   backgroundColor: 'red',
+    //   color: 'red',
+    //   marginHorizontal: 5,
+    // },
     backgroundImage: {
       width: '100%',
       height: '100%',
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     container_1: { 
         flex: 1, 
         justifyContent: 'center', 
         alignItems: 'center', 
-    }, 
-    header_1: { 
-        fontSize: 30, 
-        color: "green", 
-        marginBottom: 10, 
-    }, 
-    subHeader: { 
-        fontSize: 18, 
-        marginBottom: 10, 
-        color: "blue", 
-    }, 
+    },
     timeText: { 
         fontSize: 48, 
     }, 
-    buttonContainer: { 
-        flexDirection: 'row', 
-        marginTop: 20, 
-    }, 
-    button_1: { 
-        paddingVertical: 10, 
-        paddingHorizontal: 20, 
-        borderRadius: 5, 
-    }, 
-    startButton: { 
-        backgroundColor: '#2ecc71', 
-        marginRight: 10, 
-    }, 
-    resetButton: { 
-        backgroundColor: '#e74c3c', 
-        marginRight: 10, 
-    }, 
-    pauseButton: { 
-        backgroundColor: '#f39c12', 
-    }, 
-    resumeButton: { 
-        backgroundColor: '#3498db', 
-    }, 
-    buttonText: { 
-        color: 'white', 
-        fontSize: 16, 
-    }, 
+    buttonC: {
+      flexDirection: 'row', // Arrange children horizontally
+      justifyContent: 'space-between', // Space evenly between children
+      margin: 17,
+    }
 }); 
 
 
