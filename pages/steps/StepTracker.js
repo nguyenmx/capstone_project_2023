@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TextInput, Button, TouchableOpacity  } from 'react-native';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Duck from '../../modules/CharDuck';
 
 
  
@@ -39,14 +40,14 @@ const StepTracker = () => {
       setRunning(false); 
   }; 
   // Function to resume the stopwatch 
-  const resumeStopwatch = () => { 
-      startTimeRef.current = Date.now() - time * 1000; 
-      intervalRef.current = setInterval(() => { 
-          setTime(Math.floor( 
-              (Date.now() - startTimeRef.current) / 1000)); 
-      }, 1000); 
-      setRunning(true); 
-  }
+  // const resumeStopwatch = () => { 
+  //     startTimeRef.current = Date.now() - time * 1000; 
+  //     intervalRef.current = setInterval(() => { 
+  //         setTime(Math.floor( 
+  //             (Date.now() - startTimeRef.current) / 1000)); 
+  //     }, 1000); 
+  //     setRunning(true); 
+  // }
 
   const save_steps = async(steps) => {
     try {
@@ -132,12 +133,19 @@ const StepTracker = () => {
           </View>
 
 
-          <Text>You number is: {steps}</Text>
+          <Text>Your Dayily steps number is:    {steps}</Text>
+          <Duck></Duck>
+
+          <View style={styles.container_1}>
+            <Text>Hours     Minutes    Seconds</Text>
+          </View>
 
           <View style={styles.container_1}> 
-            <Text style={styles.timeText}>{time}s</Text> 
-            <Button onPress={remove_two} title="Emergency Stop for Stopwatch 😬" style={styles.button} />
+            <Text style={styles.timeText}>{String(Math.floor((time / 3600) % 24)).padStart(2, '0')} : </Text>
+            <Text style={styles.timeText}>{String(Math.floor((time / 60) % 60)).padStart(2, '0')} : </Text> 
+            <Text style={styles.timeText}>{String(time % 60).padStart(2, '0')} </Text> 
           </View> 
+          <Button onPress={remove_two} title="Emergency Stop for Stopwatch 😬" style={styles.button} />
 
         </View>
         
@@ -189,6 +197,8 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: 'center', 
         alignItems: 'center', 
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     timeText: { 
         fontSize: 48, 
@@ -197,6 +207,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row', // Arrange children horizontally
       justifyContent: 'space-between', // Space evenly between children
       margin: 17,
+    },
+    Duck:{
+      width: 2
     }
 }); 
 
