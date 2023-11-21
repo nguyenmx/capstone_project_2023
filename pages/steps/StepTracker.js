@@ -107,7 +107,9 @@ const StepTracker = () => {
   }
 
   const handleStepsChange = (newStepNumber) => {
-    setSteps(newStepNumber);
+    if(parseInt(newStepNumber)){
+      setSteps(newStepNumber);
+    }
   }
   
   const change = () => {
