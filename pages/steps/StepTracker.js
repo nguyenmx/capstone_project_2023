@@ -15,7 +15,7 @@ const StepTracker = () => {
 
 
     // State and refs to manage time and stopwatch status 
-  const [time, setTime] = useState(0); 
+  const [time, setTime] = useState(86399); 
   const [running, setRunning] = useState(false); 
   const intervalRef = useRef(null); 
   const startTimeRef = useRef(0); 
@@ -39,15 +39,6 @@ const StepTracker = () => {
       setTime(0); 
       setRunning(false); 
   }; 
-  // Function to resume the stopwatch 
-  // const resumeStopwatch = () => { 
-  //     startTimeRef.current = Date.now() - time * 1000; 
-  //     intervalRef.current = setInterval(() => { 
-  //         setTime(Math.floor( 
-  //             (Date.now() - startTimeRef.current) / 1000)); 
-  //     }, 1000); 
-  //     setRunning(true); 
-  // }
 
   const save_steps = async(steps) => {
     try {
