@@ -15,16 +15,22 @@ const StepTracker = () => {
 
 
     // State and refs to manage time and stopwatch status 
-  const [time, setTime] = useState(86399); 
+  const [time, setTime] = useState(86400); 
   const [running, setRunning] = useState(false); 
   const intervalRef = useRef(null); 
   const startTimeRef = useRef(0); 
   // Function to start the stopwatch 
   const startStopwatch = () => { 
-      startTimeRef.current = Date.now() - time * 1000; 
+      startTimeRef.current = Date.now() + time * 1000; 
       intervalRef.current = setInterval(() => { 
-          setTime(Math.floor((Date.now() -  
-          startTimeRef.current) / 1000)); 
+          const remainingTime = Math.floor((startTimeRef.current - Date.now()) / 1000);
+          setTime(remainingTime); 
+          if (remainingTime <= 0){
+            clearInterval(intervalRef.current);
+            setRunning(false);
+            setTime(10);
+            setSteps("");
+          }
       }, 1000); 
       setRunning(true); 
   }; 
@@ -36,7 +42,7 @@ const StepTracker = () => {
   // Function to reset the stopwatch 
   const resetStopwatch = () => { 
       clearInterval(intervalRef.current); 
-      setTime(0); 
+      setTime(86400); 
       setRunning(false); 
   }; 
 
