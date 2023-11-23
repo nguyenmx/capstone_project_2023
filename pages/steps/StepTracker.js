@@ -28,7 +28,7 @@ const StepTracker = () => {
           if (remainingTime <= 0){
             clearInterval(intervalRef.current);
             setRunning(false);
-            setTime(10);
+            setTime(86400);
             setSteps("");
           }
       }, 1000); 
