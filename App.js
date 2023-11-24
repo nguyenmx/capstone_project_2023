@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import MainGameScreen from './pages/main/MainGameScreen';
+import NameScreen from './pages/main/NameScreen';
 import MG from './pages/main/MG';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
@@ -28,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
 import Sprite from './modules/SpriteAnimation';
 import SpriteAnimation from './modules/SpriteAnimation';
+import TinderPage from './pages/story/TinderSwipePage';
 //import {AppleHealthKit} from 'react-native-health';
 
 const Stack = createStackNavigator();
@@ -74,10 +75,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-        <Stack.Screen name="MainGame" component={MainGameScreen}/>
+        <Stack.Screen name="NameScreen" component={NameScreen}/>
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StepTracker" component={StepTracker} />
+        <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
         <Stack.Screen name="MG" component={MG} options={{ headerShown: false}}/>
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
@@ -87,6 +88,7 @@ export default function App() {
         <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
         <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
         <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
+        <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -115,10 +117,10 @@ export function HomeScreen({ navigation }) {
         <View style={styles.centeredContainer}>
           <Image source={Title} style={styles.titleText} />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainGame')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NameScreen')}>
               <Text style={styles.buttonText}>Main Game</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TestChatGPT')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryModeScreen')}>
               <Text style={styles.buttonText}>Story Mode</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>

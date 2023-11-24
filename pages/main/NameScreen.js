@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/confusedDuck.gif';
 
 const window = Dimensions.get('window');
-const MainGameScreen = () => {
+const NameScreen = () => {
   const backgroundImage = require('../../images/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
   const navigation = useNavigation(); // Get the navigation object
@@ -95,7 +95,7 @@ const MainGameScreen = () => {
     </ImageBackground>
   );
 };
-export default MainGameScreen;
+export default NameScreen;
 
 // Styling
 const styles = StyleSheet.create({

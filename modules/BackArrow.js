@@ -1,18 +1,16 @@
 import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
-import arrow from '../images/LeftArrow.png';
+import back from '../images/back.png';
 
 const window = Dimensions.get('window');
 
 const BackArrow = () => {
-  const imageWidth = window.width * 0.13; // adjust the scaling factor as needed
+  const imageWidth = window.width * 0.10; // adjust the scaling factor as needed
   const imageHeight = imageWidth; // maintain aspect ratio
-  const topCorner = 48;
-  const leftCorner = -140;
 
   return (
     <View>
-      <Image source={arrow} style={{ width: imageWidth, height: imageHeight, top: topCorner, left: leftCorner}} />
+      <Image source={back} style={{ width: imageWidth, height: imageHeight}} />
     </View>
   );
 };
