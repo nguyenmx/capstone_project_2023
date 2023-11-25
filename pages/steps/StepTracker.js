@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
       marginTop: 60
     },
     text: {
-      fontSize: 50,
+      fontSize: 48,
       color: "darkblue",
       textAlign: 'center',
       fontFamily: 'NiceTango-K7XYo'
@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
       textAlign: "center"
     },
     inputContainer: {
-      flexDirection: 'row', // Set flexDirection to 'row' for horizontal layout
-      justifyContent: 'space-between', // Adjust the spacing between items
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       padding: 10,
     },
     headerContainer: {

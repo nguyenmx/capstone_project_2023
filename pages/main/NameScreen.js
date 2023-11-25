@@ -5,6 +5,7 @@ import { ReferenceDataContext } from "../ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/confusedDuck.gif';
 
+
 const window = Dimensions.get('window');
 const NameScreen = () => {
   const backgroundImage = require('../../images/clouds.png');
