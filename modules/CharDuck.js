@@ -7,7 +7,7 @@ const Duck = ({ duckType, Optional: customStyle }) => {
   let duckImage;
   switch (duckType) {
     case 0:
-      duckImage = require('../images/ducky.gif');
+      duckImage = require('../images/duckWave.gif');
       break;
     case 1:
       duckImage = require('../images/capyKnife.gif');
@@ -17,6 +17,9 @@ const Duck = ({ duckType, Optional: customStyle }) => {
       break;
     case 3:
       duckImage = require('../images/duckCoffee.gif');
+      break;
+    case 4:
+      duckImage = require('../images/ducky.gif');
       break;
     default:
       duckImage = require('../images/duckWave.gif');
