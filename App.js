@@ -26,7 +26,6 @@ import Title from './images/Denwa_Petto.png'
 import { ReferenceDataContext } from './pages/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
-import Sprite from './modules/SpriteAnimation';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 //import {AppleHealthKit} from 'react-native-health';
