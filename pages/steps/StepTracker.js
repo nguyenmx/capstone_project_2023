@@ -51,7 +51,7 @@ const StepTracker = ({navigation}) => {
     try {
       const storedTime = await AsyncStorage.getItem(ASYNC_KEYS.time);
   
-      if (storedTime !== null) {
+      if (storedTime !== null & parseInt(steps) != "") {
         const parsedTime = parseInt(storedTime);
         setTime(parsedTime);
         startTimeRef.current = Date.now() + parsedTime * 1000;
