@@ -47,7 +47,9 @@ const StepTracker = ({navigation}) => {
       setRunning(true); 
   }; 
 
-
+  useEffect(()=>{
+    save();
+  },[])
 
 
   
@@ -143,12 +145,6 @@ const StepTracker = ({navigation}) => {
       persist()
     }
   }, [running, time] )
-
-
-
-
-
-
 
 
 
