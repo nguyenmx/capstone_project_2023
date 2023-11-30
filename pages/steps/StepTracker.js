@@ -9,6 +9,12 @@ import BackArrow from '../../modules/BackArrow';
 
 const window = Dimensions.get('window');
  
+const ASYNC_KEYS = {
+  running: "StepTracker::running",
+  time: "StepTracker::time",
+}
+
+
 
 const StepTracker = ({navigation}) => {
 
@@ -21,7 +27,10 @@ const StepTracker = ({navigation}) => {
   const [time, setTime] = useState(86400); 
   const [running, setRunning] = useState(false); 
   const intervalRef = useRef(null); 
-  const startTimeRef = useRef(0); 
+  const startTimeRef = useRef(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  
+  
   // Function to start the stopwatch 
   const startStopwatch = () => { 
       startTimeRef.current = Date.now() + time * 1000; 
@@ -37,6 +46,11 @@ const StepTracker = ({navigation}) => {
       }, 1000); 
       setRunning(true); 
   }; 
+
+
+
+
+  
   // Function to pause the stopwatch 
   const pauseStopwatch = () => { 
       clearInterval(intervalRef.current); 
@@ -83,6 +97,60 @@ const StepTracker = ({navigation}) => {
       alert(err);
     }
   }
+
+
+
+
+  useEffect(() => {
+    const loadData = async () =>{
+      try{
+        const persistValues = await AsyncStorage.multiGet([
+          ASYNC_KEYS.running,
+          ASYNC_KEYS.time,
+        ])
+
+        const [
+          persistedRunning,
+          persistedTime,
+        ] = persistValues
+
+
+        setRunning(persistedRunning[1]=== "true")
+        setTime(persistedTime[1] ? parseInt(persistedTime[1]) :0)
+        setDataLoaded(true)
+
+      }catch (e) {
+        console.log("error loading persisted data", e)
+        setDataLoaded(true)
+      }
+
+    }
+    loadData()
+  }, [])
+
+  useEffect(() => {
+    const persist =async () => {
+      try{
+        await AsyncStorage.multiSet([
+          [ASYNC_KEYS.running, running.toString()],
+          [ASYNC_KEYS.time, time.toString()],
+        ])
+      }catch (e) {
+        console.log("error persisting data")
+      }
+    }
+    if (dataLoaded) {
+      persist()
+    }
+  }, [running, time] )
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     load();
