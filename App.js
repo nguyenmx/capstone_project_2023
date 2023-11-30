@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import NameScreen from './pages/main/NameScreen';
-import MG from './pages/main/MG';
+import HowToPlay from './pages/main/HowToPlay';
 import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
@@ -78,7 +78,7 @@ export default function App() {
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
-        <Stack.Screen name="MG" component={MG} options={{ headerShown: false}}/>
+        <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
         <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>

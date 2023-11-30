@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { Shadow } from 'react-native-shadow-2';
 import { useNavigation } from '@react-navigation/native';
 import lvlUp from '../../images/themducks.png'
 
@@ -27,7 +26,7 @@ const MG = () => {
           <View style={styles.slideInner}>
             <Text style={styles.text}>1</Text>
             <Image source={lvlUp} style={styles.lvlUp} />
-            <Text style={styles.desc}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique id ipsum non tristique!</Text>
+            <Text style={styles.desc}>Level up your pet by partaking in real-world activity with step-tracker, unlocking exciting milestones and ensuring a healthier, more active digital companion!</Text>
           </View>
 
         </View>
@@ -47,7 +46,7 @@ const MG = () => {
               <Text style={styles.buttonText}>OK</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('Home')}>
-              <Text style={styles.buttonText}>Go Back</Text>
+              <Text style={styles.buttonText}>Home</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
     borderColor: '#91adfa'
   },
   desc: {
-    fontSize: window.width * 0.08,
+    fontSize: window.width * 0.07,
     top: -75,
     color: '#ffffff',
     fontFamily: 'NiceTango-K7XYo',

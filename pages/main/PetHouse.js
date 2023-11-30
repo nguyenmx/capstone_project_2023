@@ -7,31 +7,30 @@ import { ReferenceDataContext } from '../ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure
-
+import petFood from '../../images/petFood.png';
 
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
 
   const decreaseHealth = () => {
-    const newHealth = Math.max(0, health - 10); // Ensure health doesn't go below 0
+    const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
   };
 
   const increaseHealth = () => {
-    const newHealth = Math.min(maxHealth, health + 10); // Ensure health doesn't exceed maxHealth
+    const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
   };
-
 
   async function playSound() {
     console.log('Loading Sound');
@@ -41,8 +40,8 @@ const PetHouse = () => {
     setSound(sound);
 
     console.log('Playing Sound');
-    await sound.playAsync({ isLooping: true });
-    await sound.setVolumeAsync(volume);
+    sound.playAsync({ isLooping: true });
+    sound.setVolumeAsync(volume);
   }
 
   useEffect(() => {
@@ -79,11 +78,15 @@ const PetHouse = () => {
     setModalVisible(false);
   };
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
     <ImageBackground source={require('../../images/livingRoom.jpg')} style={styles.backgroundImage}>
       <View style={styles.container}>
 
-      <HealthBar
+        <HealthBar
           Optional={styles.healthPosition}
           health={health}
           maxHealth={maxHealth}
@@ -91,11 +94,19 @@ const PetHouse = () => {
           increaseHealth={increaseHealth}
         />
 
+        <HealthBar
+          Optional={styles.healthPosition}
+          health={health}
+          maxHealth={maxHealth}
+          decreaseHealth={decreaseHealth}
+          increaseHealth={increaseHealth}
+          heartIconSource={petFood}
+          healthBarColor="blue"
+        />
 
         <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
           Living room
         </Animated.Text>
-
 
         <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
 
@@ -115,8 +126,6 @@ const PetHouse = () => {
                 onValueChange={onVolumeChange}
               />
               <Button title="Exit" onPress={hideModal} />
-
-              {/* Move the "Play Sound" button into the modal */}
               <Button title="Play Sound" onPress={playSound} />
             </View>
           </View>
@@ -125,8 +134,21 @@ const PetHouse = () => {
         <TouchableOpacity onPress={toggleModal}>
           <Image source={settingButton} style={styles.settingButtonImage} />
         </TouchableOpacity>
-        
-        <MainGameLogic /> 
+
+        {/* Sidebar Trigger Button */}
+        <TouchableOpacity onPress={toggleSidebar} style={styles.sidebarTrigger}>
+          <Image source={settingButton} style={styles.settingButtonImage} />
+        </TouchableOpacity>
+
+        {/* Sidebar */}
+        {sidebarVisible && (
+          <View style={styles.sidebar}>
+            {/* Add your sidebar content here */}
+            <Text>Sidebar Content</Text>
+          </View>
+        )}
+
+        <MainGameLogic />
       </View>
     </ImageBackground>
   );
@@ -178,6 +200,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 0.80,
   },
+
+    // New styles for sidebar
+    sidebarTrigger: {
+      position: 'absolute',
+      left: 10,
+      top: 10,
+      zIndex: 999,
+    },
+    sidebar: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '70%', // Adjust width as needed
+      height: '100%',
+      backgroundColor: 'white',
+      zIndex: 998,
+    },
   
 });
 
