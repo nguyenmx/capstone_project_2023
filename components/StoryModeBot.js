@@ -12,11 +12,11 @@ const instance = axios.create({
 export const generateResponse = async (message) => {
   try {
     const response = await instance.post('', {
-      prompt: `The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
+      prompt: `The following is a conversation with a video game character. The assistant is flirty, creative, clever, and very friendly.
       Human: ${message}
       AI:`,
-      max_tokens: 150,
-      temperature: 0.7,
+      max_tokens: 200,
+      temperature: 0.8,
       n: 1,
       stop: 'Human:',
     });
