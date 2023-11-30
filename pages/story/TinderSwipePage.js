@@ -1,8 +1,8 @@
-import React, { useContext, navigation } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useContext, navigation, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import storyModeLogo from '../../images/StoryModeLogo.png';
-import forestBackground from '../../images/forest_pfp.jpg';
+import forestBackground from '../../images/forest_pfp.jpg'; //not used but a good example of image import
 import Duck from '../../modules/CharDuck';
 import swipeLeft from '../../images/cancel.png';
 import swipeRight from '../../images/green-heart-button.png';
@@ -12,50 +12,87 @@ import BackArrow from '../../modules/BackArrow'
 import verify from '../../images/verify.png'
 
 const window = Dimensions.get('window');
-const TinderSwipePage = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-      <View style= {styles.headerContainer}>
-      <View style={styles.backContainer}>
-      <TouchableOpacity
-        style={styles.backContainer}
-        onPress={() => navigation.goBack()} // Use navigation.goBack() to go back
-      >
-        <BackArrow/>
-      </TouchableOpacity>
+
+const profiles = [
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/forest_pfp.jpg'), verified: true },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/duckPond.png'), verified: true },
+  // Add more profiles as needed...
+];
+
+const TinderSwipePage = ({ navigation }) => {
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+
+  const handleSwipeLeft = () => {
+    setCurrentProfileIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+  };
+
+   // Dummy function for handling right swipe (like) for now
+  const handleSwipeRight = () => {
+    // Do nothing for now
+  };
+
+  const renderCurrentProfile = () => {
+    const currentProfile = profiles[currentProfileIndex];
+  
+    return (
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <View style={styles.backContainer}>
+            <TouchableOpacity
+              style={styles.backContainer}
+              onPress={() => navigation.goBack()} // Use navigation.goBack() to go back
+            >
+              <BackArrow />
+            </TouchableOpacity>
+          </View>
+          <Image source={storyModeLogo} style={styles.imageLogo} />
         </View>
-        <Image source={storyModeLogo} style={styles.imageLogo} />
-      </View>
-      <View style={styles.profileContainer}>
-          <Image source={forestBackground} style={styles.pfpBackground} />
-          
+        <View style={styles.profileContainer}>
+          <Image source={currentProfile.image} style={styles.pfpBackground} />
+  
           <View style={styles.duckContainer}>
             <Duck />
           </View>
-
+  
           <View style={styles.buttonContainer}>
-            <Image source={swipeLeft} style={styles.swipeLeftButton} />
-            <Image source={swipeRight} style={styles.swipeRightButton} />
+            <TouchableOpacity onPress={handleSwipeLeft}>
+              <Image source={swipeLeft} style={styles.swipeLeftButton} />
+            </TouchableOpacity>
+            {/* Right swipe button (like) */}
+            <TouchableOpacity onPress={handleSwipeRight}>
+              <Image source={swipeRight} style={styles.swipeRightButton} />
+            </TouchableOpacity>
+          </View>
+        </View>
+  
+        <View style={styles.textContainer}>
+          <View style={styles.nameContainer}>
+            <View style={styles.nameInfoContainer}>
+              <Text style={styles.animalName}>{`${currentProfile.name}, ${currentProfile.age}`}</Text>
+              {currentProfile.verified && <Image source={verify} style={styles.verifyIcon} />}
+            </View>
+            <TouchableOpacity style={styles.informationButtonContainer}>
+              <Image source={iButton} style={styles.informationButton} />
+            </TouchableOpacity>
+          </View>
+  
+          <View style={styles.occupationContainer}>
+            <Image source={briefCase} style={styles.briefCase} />
+            <Text style={styles.occText}>{currentProfile.occupation}</Text>
+          </View>
+  
+          <View style={styles.bioContainer}>
+            <Text style={styles.bioText}>
+              {currentProfile.bio}
+            </Text>
+          </View>
         </View>
       </View>
+    );
+  };
+  
 
-      <View style= {styles.textContainer}>
-        <View style= {styles.nameContainer}>
-          <Text style={styles.animalName}>Quaxly, 25</Text>
-          <Image source={verify} style={styles.verifyIcon} />
-          <Image source={iButton} style={styles.informationButton} />
-        </View>
-
-        <View style={styles.occupationContainer}>
-          <Image source={briefCase} style={styles.briefCase} />
-          <Text style={styles.occText}>Professional Sleeper</Text>
-        </View>
-
-        <Text style={styles.bioText}>are you a 2 cuz that's a 10 in binary</Text>
-      </View>
-
-    </View>
-  );
+  return renderCurrentProfile();
 };
 
 const styles = StyleSheet.create({
@@ -66,18 +103,19 @@ const styles = StyleSheet.create({
   },
   animalName: {
     fontWeight: 'bold',
-    fontSize: 34,
+    fontSize: 30,
     marginBottom: 5
   },
   swipeLeftButton: {
     width: 80,
     height: 80,
+    marginBottom: 15,
   },
   occText: {
     fontSize: 20
   },
   bioText: {
-    fontSize: 22
+    fontSize: 20,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -89,18 +127,16 @@ const styles = StyleSheet.create({
     width: window.width,
     padding: 15,
   },
-  backContainer: {
-    
-  },
   informationButton: {
     width: 30,
     height: 30,
-    marginLeft: window.width * 0.32
+    marginLeft: window.width * 0.35
   },
   swipeRightButton: {
     width: 80,
     height: 80,
-    marginLeft: 190
+    marginLeft: 190,
+    marginBottom: 15,
   },
   verifyIcon: {
     width: 30,
@@ -158,7 +194,25 @@ const styles = StyleSheet.create({
     height: window.height * 0.7,
     width: 380,
     borderRadius: 10,
-  }
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10, // Add spacing between name and other details if needed
+  },
+  nameInfoContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  informationButtonContainer: {
+    position: 'absolute',
+    right: 10, // Adjust as needed
+  },
+  informationButton: {
+    width: 30,
+    height: 30,
+  },
 });
 
 export default TinderSwipePage;
