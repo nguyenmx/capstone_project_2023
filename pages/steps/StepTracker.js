@@ -47,9 +47,32 @@ const StepTracker = ({navigation}) => {
       setRunning(true); 
   }; 
 
-  useEffect(()=>{
-    save();
-  },[])
+  useEffect(async () => {
+    try {
+      const storedTime = await AsyncStorage.getItem(ASYNC_KEYS.time);
+  
+      if (storedTime !== null) {
+        const parsedTime = parseInt(storedTime);
+        setTime(parsedTime);
+        startTimeRef.current = Date.now() + parsedTime * 1000;
+  
+        intervalRef.current = setInterval(() => {
+          const remainingTime = Math.floor((startTimeRef.current - Date.now()) / 1000);
+          setTime(remainingTime);
+          if (remainingTime <= 0) {
+            clearInterval(intervalRef.current);
+            setRunning(false);
+            setTime(86400);
+            setSteps("");
+          }
+        }, 1000);
+  
+        setRunning(true);
+      }
+    } catch (error) {
+      console.error("Error retrieving time from AsyncStorage:", error);
+    }
+  }, []);
 
 
   
