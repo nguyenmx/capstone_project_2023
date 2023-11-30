@@ -7,6 +7,7 @@ const ReferenceDataContext = createContext({
   setSteps: () => {},
   selectedDuck: 0,  // Add selectedDuck to the context
   setSelectedDuck: () => {},  // Add a function to set selectedDuck
+  
 });
 
 
