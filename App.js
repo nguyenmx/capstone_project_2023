@@ -104,9 +104,10 @@ export function HomeScreen({ navigation }) {
 
   const duckImages = [
     require('./images/duckWave.gif'),
-    require('./images/ducky.gif'),
+    require('./images/capyKnife.gif'),
     require('./images/duckRizz.gif'),
     require('./images/duckCoffee.gif'),
+    require('./images/ducky.gif'),
   ];
 
   return (

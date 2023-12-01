@@ -14,10 +14,21 @@ import verify from '../../images/verify.png'
 const window = Dimensions.get('window');
 
 const profiles = [
-  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/forest_pfp.jpg'), verified: true },
-  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/duckPond.png'), verified: true },
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/forest_pfp.jpg'), animalType: 'animals', verified: true },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/duckPond.png'), animalType: 'animals', verified: true },
   // Add more profiles as needed...
 ];
+
+const animalImages = {
+  animals: [
+    require('../../images/duckRizz.gif'),
+    require('../../images/duckCoffee.gif'),
+    require('../../images/combatDuck2.gif'),
+    require('../../images/duckWave.gif'),
+    require('../../images/capyKnife.gif'),
+    require('../../images/combatDuck.gif'),
+  ],
+};
 
 const TinderSwipePage = ({ navigation }) => {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
@@ -33,6 +44,9 @@ const TinderSwipePage = ({ navigation }) => {
 
   const renderCurrentProfile = () => {
     const currentProfile = profiles[currentProfileIndex];
+    const availableImages = animalImages[currentProfile.animalType];
+    const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+
   
     return (
       <View style={styles.container}>
@@ -50,9 +64,10 @@ const TinderSwipePage = ({ navigation }) => {
         <View style={styles.profileContainer}>
           <Image source={currentProfile.image} style={styles.pfpBackground} />
   
-          <View style={styles.duckContainer}>
+          {/* <View style={styles.duckContainer}>
             <Duck />
-          </View>
+          </View> */}
+          <Image source={randomImage} style={styles.duckContainer} />
   
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleSwipeLeft}>
@@ -164,13 +179,15 @@ const styles = StyleSheet.create({
   },
   duckContainer: {
     position: 'absolute',
-    top: 180,
+    top: window.width * 0.5,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1, // Ensure Duck is on top
+    zIndex: 1,
+    width: 390,
+    height: 390,
   },
   nameContainer: {
     flexDirection: 'row', // Set items horizontally
