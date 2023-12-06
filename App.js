@@ -10,7 +10,7 @@ import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useFonts } from 'expo-font';
 import Swiper from 'react-native-swiper';
 import { Image } from 'react-native';
@@ -28,6 +28,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
+import { Audio } from 'expo-av';
+
 //import {AppleHealthKit} from 'react-native-health';
 
 const Stack = createStackNavigator();
@@ -96,10 +98,10 @@ export default function App() {
 
 export function HomeScreen({ navigation }) {
   const { setSelectedDuck } = useContext(ReferenceDataContext);
+  const [isAnimated, setIsAnimated] = useState(false);
 
   function saveSelectedDuck(index) {
     setSelectedDuck(index);
-    console.log(index);
   }
 
   const duckImages = [
@@ -108,7 +110,9 @@ export function HomeScreen({ navigation }) {
     require('./images/duckRizz.gif'),
     require('./images/duckCoffee.gif'),
     require('./images/ducky.gif'),
+    SpriteAnimation
   ];
+
 
   return (
     <View style={styles.container}>
@@ -133,17 +137,21 @@ export function HomeScreen({ navigation }) {
           <Swiper
             style={styles.swiperContainer}
             showsButtons={true}
-            prevButton={
-              <Image source={LeftArrow} style={styles.arrowButton} />
-            }
-            nextButton={
-              <Image source={RightArrow} style={styles.arrowButton} />
-            }
+            prevButton={<Image source={LeftArrow} style={styles.arrowButton} />}
+            nextButton={<Image source={RightArrow} style={styles.arrowButton} />}
             onIndexChanged={(index) => saveSelectedDuck(index)}
           >
             {duckImages.map((duckImage, index) => (
               <View style={styles.swiperSlide} key={index}>
-                <Duck duckType={index} image={duckImage} />
+                {isAnimated ? (
+                  index === selectedDuck ? (
+                    <Duck duckType={index} image={duckImage} />
+                  ) : (
+                    <SpriteAnimation duckType={index} image={duckImage} />
+                  )
+                ) : (
+                  <Duck duckType={index} image={duckImage} />
+                )}
               </View>
             ))}
           </Swiper>

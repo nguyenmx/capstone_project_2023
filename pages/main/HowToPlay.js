@@ -6,7 +6,7 @@ import lvlUp from '../../images/themducks.png'
 
 const window = Dimensions.get('window');
 
-const MG = () => {
+const HowToPlay = () => {
 
   const navigation = useNavigation(); // Get the navigation object
 
@@ -179,4 +179,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MG;
+export default HowToPlay;

@@ -135,19 +135,6 @@ const PetHouse = () => {
           <Image source={settingButton} style={styles.settingButtonImage} />
         </TouchableOpacity>
 
-        {/* Sidebar Trigger Button */}
-        <TouchableOpacity onPress={toggleSidebar} style={styles.sidebarTrigger}>
-          <Image source={settingButton} style={styles.settingButtonImage} />
-        </TouchableOpacity>
-
-        {/* Sidebar */}
-        {sidebarVisible && (
-          <View style={styles.sidebar}>
-            {/* Add your sidebar content here */}
-            <Text>Sidebar Content</Text>
-          </View>
-        )}
-
         <MainGameLogic />
       </View>
     </ImageBackground>
@@ -178,7 +165,7 @@ const styles = StyleSheet.create({
   settingButtonImage: {
     position: 'absolute',
     left: window.width * 0.3,
-    top: window.height * -0.63,
+    top: window.height * -0.78,
     width: 75,
     height: 75,
     zIndex: 999,
@@ -200,23 +187,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 0.80,
   },
-
-    // New styles for sidebar
-    sidebarTrigger: {
-      position: 'absolute',
-      left: 10,
-      top: 10,
-      zIndex: 999,
-    },
-    sidebar: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '70%', // Adjust width as needed
-      height: '100%',
-      backgroundColor: 'white',
-      zIndex: 998,
-    },
   
 });
 

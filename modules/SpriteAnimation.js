@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ImageBackground, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const SpriteAnimation = () => {
+const SpriteAnimation = ({ onIdleAnimationFinish }) => {
   const [frameIndex, setFrameIndex] = useState(0); // Initial frame index
   const [animationType, setAnimationType] = useState('idle');
 
@@ -12,13 +12,10 @@ const SpriteAnimation = () => {
   ];
 
   const walkFrames = [
-    require('../images/CharacterSheet/CharacterSheet-2.png'),
-    require('../images/CharacterSheet/CharacterSheet-3.png'),
-    require('../images/CharacterSheet/CharacterSheet-4.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-
+    require('../images/CharacterSheet/CharacterSheet-6.png'),
+    require('../images/CharacterSheet/CharacterSheet-7.png'),
+    require('../images/CharacterSheet/CharacterSheet-8.png'),
+    require('../images/CharacterSheet/CharacterSheet-9.png'),
     // Add more walk frames as needed
   ];
 
@@ -27,15 +24,19 @@ const SpriteAnimation = () => {
       setFrameIndex((prevIndex) => (prevIndex + 1) % spriteFrames.length);
     }, 150);
 
-    return () => {
+    const cleanup = () => {
       clearInterval(intervalId);
+      onIdleAnimationFinish && onIdleAnimationFinish();
     };
+
+    return cleanup;
   };
+
 
   const walkAnimation = () => {
     const intervalId = setInterval(() => {
       setFrameIndex((prevIndex) => (prevIndex + 1) % walkFrames.length);
-    }, 100);
+    }, 150);
 
     return () => {
       clearInterval(intervalId);
@@ -56,7 +57,7 @@ const SpriteAnimation = () => {
   }, [animationType]);
 
   return (
-      <View style={styles.container}>
+      <View>
         <Image source={animationType === 'idle' ? spriteFrames[frameIndex] : walkFrames[frameIndex]} style={styles.sprite} />
         <TouchableOpacity onPress={handleAnimationSwitch} style={styles.button}>
           <Text>Switch Animation</Text>
@@ -70,21 +71,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
   sprite: {
     width: 200,
     height: 200,
+    position: 'relative',
   },
   backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
+    position: 'relative'
   },
   button: {
-    marginTop: 20,
+    top: 20,
     padding: 10,
     backgroundColor: 'lightblue',
     borderRadius: 5,
+    position: 'relative'
   },
 });
 
