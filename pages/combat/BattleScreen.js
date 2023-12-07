@@ -1,4 +1,4 @@
-import React, {useState, useContext}  from 'react';
+import React, {useState, useContext, useRef}  from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal} from 'react-native';
 import backgroundImage from '../../images/background.gif';
 import rock from '../../images/rock.png';
@@ -21,7 +21,8 @@ const window = Dimensions.get('window');
 const combatMode = new CombatModeLogic();
 const BattleScreen = ({ navigation}) => {
 const { selectedDuck } = useContext(ReferenceDataContext);
-
+const playerHealthRef = useRef(null);
+const enemyHealthRef = useRef(null);
 const [playerExplode, setPlayerExplodeVisible] = useState(false);
 const [oppExplode, setOppExplodeVisible] = useState(false);
 const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
@@ -75,15 +76,43 @@ const playerBubbleAnimation = (move) => {
   }, 2800);
 };
 
-  const handlePress = (move) => {
-    combatMode.setPlayerMove(move);
-    combatMode.setOppMove();
-    const playerWon = combatMode.playerWon();
-    playerBubbleAnimation(move);
-    oppBubbleAnimation(combatMode.getOppMove());
-    explosionAnimation(playerWon);
-    console.log(combatMode.playerWon());
+const handlePress = (move) => {
+  combatMode.setPlayerMove(move);
+  combatMode.setOppMove();
+  const playerWon = combatMode.playerWon();
+  
+  playerBubbleAnimation(move);
+  oppBubbleAnimation(combatMode.getOppMove());
+  explosionAnimation(playerWon);
+  console.log(combatMode.playerWon());
+
+  if (playerWon === null) {
+    // If it's a tie
+    console.log("It's a tie!");
+  } else if (playerWon) {
+    // If player wins, introduce a delay before updating the opponent's health bar
+    setTimeout(() => {
+      enemyHealthRef.current.decreaseHealth();
+      if (enemyHealthRef.current.getHealth() <= 0) {
+        // Navigate to WinScreen when enemy health reaches zero
+        navigation.navigate('WinScreen');
+      }
+      console.log("Player wins!");
+    }, 2500); // Adjust the delay timing as needed
+  } else {
+    // If player loses, introduce a delay before updating the player's health bar
+    setTimeout(() => {
+      playerHealthRef.current.decreaseHealth();
+      if (playerHealthRef.current.getHealth() <= 0) {
+        // Navigate to LossScreen when player health reaches zero
+        navigation.navigate('LossScreen');
+      }
+      console.log("Player loses!");
+    }, 2500); // Adjust the delay timing as needed
   }
+};
+
+
 
   const getImageForMove = (move) => {
     switch (move) {
@@ -109,7 +138,7 @@ const playerBubbleAnimation = (move) => {
         <TouchableOpacity onPress={() => navigation.navigate('CombatMode')}>
         <BackArrow></BackArrow>
         </TouchableOpacity>
-          <HealthBar></HealthBar>
+        <HealthBar ref={enemyHealthRef} barName="EnemyHealth" />
           <View style={styles.oppContainer}>
           <OpponentDuck></OpponentDuck>
             {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
@@ -120,7 +149,7 @@ const playerBubbleAnimation = (move) => {
             {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
             {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}
           </View>
-          <HealthBar></HealthBar>
+          <HealthBar ref={playerHealthRef} barName="PlayerHealth" />
         </View>
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={() => handlePress("rock")}>
