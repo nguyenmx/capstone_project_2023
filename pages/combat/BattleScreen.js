@@ -64,7 +64,7 @@ const oppBubbleAnimation = (move) => {
     // Reset the opponent's move bubble after a timeout
     setTimeout(() => {
       setOppMoveBubble(null);
-    }, 2800);
+    }, 1900);
   }, 800); // Adjust the delay according to your needs
 };
 
