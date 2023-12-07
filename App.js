@@ -28,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
+import Shop from './pages/main/Shop';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -89,6 +90,7 @@ export default function App() {
         <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
         <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
         <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
+        <Stack.Screen name="Shop" component={Shop} />
         <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
