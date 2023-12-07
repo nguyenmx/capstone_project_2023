@@ -5,7 +5,7 @@ import { ReferenceDataContext } from "../ReferenceDataContext";
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/background.gif');
 
-const FightScreen = ({ navigation }) => {
+const TestingScreen = ({ navigation }) => {
   const { name, setName } = useContext(ReferenceDataContext);
   return (
     <View style={styles.container}>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FightScreen;
+export default TestingScreen;

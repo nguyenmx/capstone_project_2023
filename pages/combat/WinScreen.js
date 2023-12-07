@@ -19,7 +19,7 @@ const WinScreen = ({ navigation }) => {
         <Duck duckType={selectedDuck} />
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('FightScreen')}
+          onPress={() => navigation.navigate('TestingScreen')}
         >
           <Text style={styles.buttonText}>Back To Menu</Text>
         </TouchableOpacity>
