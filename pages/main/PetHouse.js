@@ -8,6 +8,9 @@ import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure
 import petFood from '../../images/petFood.png';
+import shop from '../../images/Shop.png';
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+
 
 const window = Dimensions.get('window');
 
@@ -43,6 +46,9 @@ const PetHouse = () => {
     sound.playAsync({ isLooping: true });
     sound.setVolumeAsync(volume);
   }
+
+  const navigation = useNavigation(); // Initialize the navigation hook
+
 
   useEffect(() => {
     const fadeOut = Animated.timing(fadeAnim, {
@@ -82,6 +88,10 @@ const PetHouse = () => {
     setSidebarVisible(!sidebarVisible);
   };
 
+  const navigateToShop = () => {
+    navigation.navigate('Shop');
+  };
+
   return (
     <ImageBackground source={require('../../images/livingRoom.jpg')} style={styles.backgroundImage}>
       <View style={styles.container}>
@@ -108,7 +118,7 @@ const PetHouse = () => {
           Living room
         </Animated.Text>
 
-        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
+       
 
         <Modal
           transparent={true}
@@ -131,8 +141,14 @@ const PetHouse = () => {
           </View>
         </Modal>
 
+        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
+
         <TouchableOpacity onPress={toggleModal}>
           <Image source={settingButton} style={styles.settingButtonImage} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
+          <Image source={shop} style={styles.shopIcon} />
         </TouchableOpacity>
 
         <MainGameLogic />
@@ -154,11 +170,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: window.width * 0.09,
+    top: -130,
     fontFamily: 'NiceTango-K7XYo',
     color: 'white',
   },
   duckCoffeeImage: {
-    bottom: window.height * 0.08,
+    bottom: window.height * 0.1,
     left: window.width * -0.05,
     zIndex: 999,
   },
@@ -171,7 +188,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   healthPosition: {
-    top: window.height * -0.2, 
+    top: window.height * -0.19, 
     left: window.width * -0.1
   },
   settingsText: {
@@ -187,7 +204,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 0.80,
   },
-  
+  shopButton: {
+    position: 'absolute',
+    bottom: 20, // Adjust the position as needed
+    right: 20, // Adjust the position as needed
+    zIndex: 999,
+  },
+  shopIcon: {
+    width: 50,
+    height: 50,
+    // Adjust the size and styles as needed
+  },
 });
 
 
