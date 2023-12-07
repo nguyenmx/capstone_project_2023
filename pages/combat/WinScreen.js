@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
-import healthBar from '../../images/healthBar.png';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
@@ -18,12 +17,9 @@ const WinScreen = ({ navigation }) => {
           <Image source={victoryBanner} style={styles.banner} />
         </View>
         <Duck duckType={selectedDuck} />
-        <View style={styles.barContainer}>
-          <Image source={healthBar} style={styles.bar} />
-        </View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('FightScreen')}
+          onPress={() => navigation.navigate('TestingScreen')}
         >
           <Text style={styles.buttonText}>Back To Menu</Text>
         </TouchableOpacity>
@@ -42,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: window.height * 0.06,
+    marginVertical: window.height * 0.1,
   },
   buttonText: {
     fontFamily: 'NiceTango-K7XYo',
@@ -53,10 +49,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   bannerContainer: {
-    width: window.width * 0.8,
-    aspectRatio: 676/618, // Adjust the aspect ratio to fit the banner image
-    marginTop: window.height * 0.035,
-    marginBottom: window.height * 0.001,
+    width: window.width * 0.7,
+    aspectRatio: 702 / 614, // Adjust the aspect ratio to fit the banner image
+    marginTop: window.height * 0.04,
+    marginBottom: window.height * 0.1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -79,15 +75,5 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     marginTop: window.height * 0.06,
   },
-  barContainer: {
-    width: window.width * 0.7,
-    aspectRatio: 384 / 96, // Adjust the aspect ratio to fit the health bar image
-    marginTop: window.height * 0.05,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bar: {
-    width: '100%',
-    height: '100%',
-  },
 });
+
