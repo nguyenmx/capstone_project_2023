@@ -1,15 +1,13 @@
-import React, { useContext, navigation, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions, Animated } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import storyModeLogo from '../../images/StoryModeLogo.png';
-import forestBackground from '../../images/forest_pfp.jpg'; //not used but a good example of image import
-import Duck from '../../modules/CharDuck';
 import swipeLeft from '../../images/cancel.png';
 import swipeRight from '../../images/green-heart-button.png';
 import briefCase from '../../images/briefcase.png';
 import iButton from '../../images/i-button.png';
-import BackArrow from '../../modules/BackArrow'
-import verify from '../../images/verify.png'
+import BackArrow from '../../modules/BackArrow';
+import verify from '../../images/verify.png';
 
 const window = Dimensions.get('window');
 
@@ -32,14 +30,50 @@ const animalImages = {
 
 const TinderSwipePage = ({ navigation }) => {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+  const translateX = new Animated.Value(0);
 
-  const handleSwipeLeft = () => {
-    setCurrentProfileIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+  const onSwipeEvent = Animated.event(
+    [{ nativeEvent: { translationX: translateX } }],
+    { useNativeDriver: true }
+  );
+
+  const onSwipeRelease = (event) => {
+    const { translationX, velocityX } = event.nativeEvent;
+
+    if (Math.abs(translationX) > 50) {
+      if (translationX > 0 && velocityX > 0.5) {
+        animateSwipe('right');
+      } else if (translationX < 0 && velocityX < -0.5) {
+        animateSwipe('left');
+      }
+    } else {
+      resetPosition();
+    }
   };
 
-   // Dummy function for handling right swipe (like) for now
-  const handleSwipeRight = () => {
-    // Do nothing for now
+  const animateSwipe = (direction) => {
+    if (direction === 'left') {
+      Animated.timing(translateX, {
+        toValue: -window.width,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentProfileIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+        translateX.setValue(0);
+      });
+    } else if (direction === 'right') {
+      // No action for right swipe
+      resetPosition(); // Reset position to prevent moving right
+    }
+  };
+
+  const resetPosition = () => {
+    Animated.spring(translateX, {
+      toValue: 0,
+      speed: 15,
+      bounciness: 5,
+      useNativeDriver: true,
+    }).start();
   };
 
   const renderCurrentProfile = () => {
@@ -47,7 +81,6 @@ const TinderSwipePage = ({ navigation }) => {
     const availableImages = animalImages[currentProfile.animalType];
     const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
 
-  
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -61,51 +94,50 @@ const TinderSwipePage = ({ navigation }) => {
           </View>
           <Image source={storyModeLogo} style={styles.imageLogo} />
         </View>
-        <View style={styles.profileContainer}>
-          <Image source={currentProfile.image} style={styles.pfpBackground} />
-  
-          {/* <View style={styles.duckContainer}>
-            <Duck />
-          </View> */}
-          <Image source={randomImage} style={styles.duckContainer} />
-  
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleSwipeLeft}>
-              <Image source={swipeLeft} style={styles.swipeLeftButton} />
-            </TouchableOpacity>
-            {/* Right swipe button (like) */}
-            <TouchableOpacity onPress={handleSwipeRight}>
-              <Image source={swipeRight} style={styles.swipeRightButton} />
-            </TouchableOpacity>
-          </View>
-        </View>
-  
-        <View style={styles.textContainer}>
-          <View style={styles.nameContainer}>
-            <View style={styles.nameInfoContainer}>
-              <Text style={styles.animalName}>{`${currentProfile.name}, ${currentProfile.age}`}</Text>
-              {currentProfile.verified && <Image source={verify} style={styles.verifyIcon} />}
+        <PanGestureHandler
+          onGestureEvent={onSwipeEvent}
+          onHandlerStateChange={(event) => {
+            if (event.nativeEvent.state === State.END) {
+              onSwipeRelease(event);
+            }
+          }}
+        >
+          <Animated.View style={[styles.swipeContainer, { transform: [{ translateX }] }]}>
+            <View style={styles.profileContainer}>
+              <Image source={currentProfile.image} style={styles.pfpBackground} />
+              <Image source={randomImage} style={styles.duckContainer} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => animateSwipe('left')}>
+                  <Image source={swipeLeft} style={styles.swipeLeftButton} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => animateSwipe('right')}>
+                  <Image source={swipeRight} style={styles.swipeRightButton} />
+                </TouchableOpacity>
+              </View>
             </View>
-            <TouchableOpacity style={styles.informationButtonContainer}>
-              <Image source={iButton} style={styles.informationButton} />
-            </TouchableOpacity>
-          </View>
-  
-          <View style={styles.occupationContainer}>
-            <Image source={briefCase} style={styles.briefCase} />
-            <Text style={styles.occText}>{currentProfile.occupation}</Text>
-          </View>
-  
-          <View style={styles.bioContainer}>
-            <Text style={styles.bioText}>
-              {currentProfile.bio}
-            </Text>
-          </View>
-        </View>
+            <View style={styles.textContainer}>
+              <View style={styles.nameContainer}>
+                <View style={styles.nameInfoContainer}>
+                  <Text style={styles.animalName}>{`${currentProfile.name}, ${currentProfile.age}`}</Text>
+                  {currentProfile.verified && <Image source={verify} style={styles.verifyIcon} />}
+                </View>
+                <TouchableOpacity style={styles.informationButtonContainer}>
+                  <Image source={iButton} style={styles.informationButton} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.occupationContainer}>
+                <Image source={briefCase} style={styles.briefCase} />
+                <Text style={styles.occText}>{currentProfile.occupation}</Text>
+              </View>
+              <View style={styles.bioContainer}>
+                <Text style={styles.bioText}>{currentProfile.bio}</Text>
+              </View>
+            </View>
+          </Animated.View>
+        </PanGestureHandler>
       </View>
     );
   };
-  
 
   return renderCurrentProfile();
 };
@@ -211,6 +243,7 @@ const styles = StyleSheet.create({
     height: window.height * 0.7,
     width: 380,
     borderRadius: 10,
+    marginLeft: 15,
   },
   nameContainer: {
     flexDirection: 'row',

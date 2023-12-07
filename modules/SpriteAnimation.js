@@ -59,9 +59,6 @@ const SpriteAnimation = ({ onIdleAnimationFinish }) => {
   return (
       <View>
         <Image source={animationType === 'idle' ? spriteFrames[frameIndex] : walkFrames[frameIndex]} style={styles.sprite} />
-        <TouchableOpacity onPress={handleAnimationSwitch} style={styles.button}>
-          <Text>Switch Animation</Text>
-        </TouchableOpacity>
       </View>
   );
 };

@@ -17,7 +17,7 @@ import { Image } from 'react-native';
 import LeftArrow from './images/LeftArrow.png';
 import RightArrow from './images/RightArrow.png';
 import * as SplashScreen from 'expo-splash-screen';
-import FightScreen from './pages/combat/FightScreen';
+import TestingScreen from './pages/combat/TestingScreen';
 import WinScreen from './pages/combat/WinScreen';
 import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
@@ -81,7 +81,7 @@ export default function App() {
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
         <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
-        <Stack.Screen name="FightScreen" component={FightScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />

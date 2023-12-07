@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   duckCoffeeImage: {
-    bottom: window.height * -0.01,
+    bottom: window.height * 0.08,
     left: window.width * -0.05,
     zIndex: 999,
   },
