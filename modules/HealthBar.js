@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Heart from '../images/Heart.png';
 
 const window = Dimensions.get('window');
 
-const HealthBar = ({ Optional: customStyle }) => {
+const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }, ref) => {
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
 
   const healthPercentage = (health / maxHealth) * 100;
-
-  const healthColor = healthPercentage > 30 ? 'green' : 'red';
+  const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
 
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
@@ -18,36 +17,41 @@ const HealthBar = ({ Optional: customStyle }) => {
   };
 
   const increaseHealth = () => {
-    const newHealth = Math.min(maxHealth, health + 10); // Ensure health doesn't exceed maxHealth
+    const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
   };
 
+  const getHealth = () => {
+    return health;
+  }
+
+  // Exposing methods through ref
+  useImperativeHandle(ref, () => ({
+    decreaseHealth,
+    increaseHealth,
+    getHealth,
+  }));
+
   return (
     <View style={[styles.healthBarContainer, customStyle]}>
-      {/* Heart Icon (Part of healthBarContainer) */}
       <Image source={Heart} style={styles.heartIcon} />
-
-      {/* Health Bar and Text (Part of healthBarContainer) */}
       <View style={styles.healthRow}>
         <View style={styles.healthBar}>
-          <View style={[styles.healthBarInner, { width: `${healthPercentage}%`, backgroundColor: healthColor }]} />
+          <View style={[styles.healthBarInner, { width: `${healthPercentage}%`, backgroundColor: healthBarColor }]} />
         </View>
         <Text style={styles.healthText}> {health}/{maxHealth}</Text>
       </View>
-
-      {/* Buttons (Part of healthBarContainer) */}
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.healthButton} onPress={decreaseHealth}>
           <Text style={styles.buttonText}>Decrease Health</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.healthButton} onPress={increaseHealth}>
           <Text style={styles.buttonText}>Increase Health</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   healthBarContainer: {

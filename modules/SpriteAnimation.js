@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ImageBackground, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const SpriteAnimation = () => {
+const SpriteAnimation = ({ onIdleAnimationFinish }) => {
   const [frameIndex, setFrameIndex] = useState(0); // Initial frame index
   const [animationType, setAnimationType] = useState('idle');
 
@@ -12,14 +12,18 @@ const SpriteAnimation = () => {
   ];
 
   const walkFrames = [
-    require('../images/CharacterSheet/CharacterSheet-2.png'),
-    require('../images/CharacterSheet/CharacterSheet-3.png'),
-    require('../images/CharacterSheet/CharacterSheet-4.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-    require('../images/CharacterSheet/CharacterSheet-5.png'),
-
+    require('../images/CharacterSheet/CharacterSheet-6.png'),
+    require('../images/CharacterSheet/CharacterSheet-7.png'),
+    require('../images/CharacterSheet/CharacterSheet-8.png'),
+    require('../images/CharacterSheet/CharacterSheet-9.png'),
     // Add more walk frames as needed
+  ];
+
+  const celebrateFrames = [
+    require('../images/CharacterSheet/CharacterSheet-10.png'),
+    require('../images/CharacterSheet/CharacterSheet-11.png'),
+    require('../images/CharacterSheet/CharacterSheet-12.png'),
+    require('../images/CharacterSheet/CharacterSheet-13.png'),
   ];
 
   const idleAnimation = () => {
@@ -27,15 +31,28 @@ const SpriteAnimation = () => {
       setFrameIndex((prevIndex) => (prevIndex + 1) % spriteFrames.length);
     }, 150);
 
-    return () => {
+    const cleanup = () => {
       clearInterval(intervalId);
+      onIdleAnimationFinish && onIdleAnimationFinish();
     };
+
+    return cleanup;
   };
 
   const walkAnimation = () => {
     const intervalId = setInterval(() => {
       setFrameIndex((prevIndex) => (prevIndex + 1) % walkFrames.length);
-    }, 100);
+    }, 150);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  };
+
+  const celebrateAnimation = () => {
+    const intervalId = setInterval(() => {
+      setFrameIndex((prevIndex) => (prevIndex + 1) % celebrateFrames.length);
+    }, 150);
 
     return () => {
       clearInterval(intervalId);
@@ -43,8 +60,24 @@ const SpriteAnimation = () => {
   };
 
   const handleAnimationSwitch = () => {
-    // Switch between idle and walk animations
-    setAnimationType((prevType) => (prevType === 'idle' ? 'walk' : 'idle'));
+    // Switch between idle, walk, and celebrate animations
+    setAnimationType((prevType) => {
+      if (prevType === 'idle') {
+        return 'walk';
+      } else if (prevType === 'walk') {
+        return 'celebrate';
+      } else {
+        return 'idle';
+      }
+    });
+  };
+
+  const handleSpritePress = () => {
+    // Play celebrate animation twice when sprite is clicked
+    handleAnimationSwitch();
+    setTimeout(() => {
+      handleAnimationSwitch();
+    }, celebrateFrames.length * 150); // Adjust the timeout based on the celebrate animation length
   };
 
   useEffect(() => {
@@ -52,16 +85,26 @@ const SpriteAnimation = () => {
       return idleAnimation();
     } else if (animationType === 'walk') {
       return walkAnimation();
+    } else if (animationType === 'celebrate') {
+      return celebrateAnimation();
     }
   }, [animationType]);
 
   return (
-      <View style={styles.container}>
-        <Image source={animationType === 'idle' ? spriteFrames[frameIndex] : walkFrames[frameIndex]} style={styles.sprite} />
-        <TouchableOpacity onPress={handleAnimationSwitch} style={styles.button}>
-          <Text>Switch Animation</Text>
-        </TouchableOpacity>
-      </View>
+    <View>
+      <TouchableOpacity onPress={handleSpritePress}>
+        <Image
+          source={
+            animationType === 'idle'
+              ? spriteFrames[frameIndex]
+              : animationType === 'walk'
+              ? walkFrames[frameIndex]
+              : celebrateFrames[frameIndex]
+          }
+          style={styles.sprite}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -70,21 +113,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
   sprite: {
     width: 200,
     height: 200,
-  },
-  backgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
+    position: 'relative',
   },
   button: {
-    marginTop: 20,
+    top: 20,
     padding: 10,
     backgroundColor: 'lightblue',
     borderRadius: 5,
+    position: 'relative'
   },
 });
 

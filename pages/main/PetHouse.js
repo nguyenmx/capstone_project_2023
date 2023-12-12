@@ -7,31 +7,33 @@ import { ReferenceDataContext } from '../ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure
+import petFood from '../../images/petFood.png';
+import shop from '../../images/Shop.png';
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 
 
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
 
   const decreaseHealth = () => {
-    const newHealth = Math.max(0, health - 10); // Ensure health doesn't go below 0
+    const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
   };
 
   const increaseHealth = () => {
-    const newHealth = Math.min(maxHealth, health + 10); // Ensure health doesn't exceed maxHealth
+    const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
   };
-
 
   async function playSound() {
     console.log('Loading Sound');
@@ -41,9 +43,12 @@ const PetHouse = () => {
     setSound(sound);
 
     console.log('Playing Sound');
-    await sound.playAsync({ isLooping: true });
-    await sound.setVolumeAsync(volume);
+    sound.playAsync({ isLooping: true });
+    sound.setVolumeAsync(volume);
   }
+
+  const navigation = useNavigation(); // Initialize the navigation hook
+
 
   useEffect(() => {
     const fadeOut = Animated.timing(fadeAnim, {
@@ -79,11 +84,19 @@ const PetHouse = () => {
     setModalVisible(false);
   };
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
+  const navigateToShop = () => {
+    navigation.navigate('Shop');
+  };
+
   return (
     <ImageBackground source={require('../../images/livingRoom.jpg')} style={styles.backgroundImage}>
       <View style={styles.container}>
 
-      <HealthBar
+        <HealthBar
           Optional={styles.healthPosition}
           health={health}
           maxHealth={maxHealth}
@@ -91,13 +104,21 @@ const PetHouse = () => {
           increaseHealth={increaseHealth}
         />
 
+        <HealthBar
+          Optional={styles.healthPosition}
+          health={health}
+          maxHealth={maxHealth}
+          decreaseHealth={decreaseHealth}
+          increaseHealth={increaseHealth}
+          heartIconSource={petFood}
+          healthBarColor="blue"
+        />
 
         <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
           Living room
         </Animated.Text>
 
-
-        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
+       
 
         <Modal
           transparent={true}
@@ -115,18 +136,22 @@ const PetHouse = () => {
                 onValueChange={onVolumeChange}
               />
               <Button title="Exit" onPress={hideModal} />
-
-              {/* Move the "Play Sound" button into the modal */}
               <Button title="Play Sound" onPress={playSound} />
             </View>
           </View>
         </Modal>
 
+        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
+
         <TouchableOpacity onPress={toggleModal}>
           <Image source={settingButton} style={styles.settingButtonImage} />
         </TouchableOpacity>
-        
-        <MainGameLogic /> 
+
+        <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
+          <Image source={shop} style={styles.shopIcon} />
+        </TouchableOpacity>
+
+        <MainGameLogic />
       </View>
     </ImageBackground>
   );
@@ -145,24 +170,25 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: window.width * 0.09,
+    top: -130,
     fontFamily: 'NiceTango-K7XYo',
     color: 'white',
   },
   duckCoffeeImage: {
-    bottom: window.height * -0.01,
+    bottom: window.height * 0.1,
     left: window.width * -0.05,
     zIndex: 999,
   },
   settingButtonImage: {
     position: 'absolute',
     left: window.width * 0.3,
-    top: window.height * -0.63,
+    top: window.height * -0.78,
     width: 75,
     height: 75,
     zIndex: 999,
   },
   healthPosition: {
-    top: window.height * -0.2, 
+    top: window.height * -0.19, 
     left: window.width * -0.1
   },
   settingsText: {
@@ -178,7 +204,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 0.80,
   },
-  
+  shopButton: {
+    position: 'absolute',
+    bottom: 20, // Adjust the position as needed
+    right: 20, // Adjust the position as needed
+    zIndex: 999,
+  },
+  shopIcon: {
+    width: 50,
+    height: 50,
+    // Adjust the size and styles as needed
+  },
 });
 
 

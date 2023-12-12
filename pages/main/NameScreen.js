@@ -61,7 +61,7 @@ const NameScreen = () => {
   }
 
   const navigateToNewScreen = () => {
-    navigation.navigate('MG');
+    navigation.navigate('HowToPlay');
   }
 
   return (
