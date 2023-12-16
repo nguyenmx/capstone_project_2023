@@ -3,12 +3,12 @@ import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, Ima
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
-import confusedDuck from '../../images/confusedDuck.gif';
+import confusedDuck from '../../images/AnimalVisuals/confusedDuck.gif';
 
 
 const window = Dimensions.get('window');
 const NameScreen = () => {
-  const backgroundImage = require('../../images/clouds.png');
+  const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
   const navigation = useNavigation(); // Get the navigation object
   const MAX_NAME_LENGTH = 20; // Set your desired character limit

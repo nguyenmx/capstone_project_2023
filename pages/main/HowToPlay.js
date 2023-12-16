@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-import lvlUp from '../../images/themducks.png'
+import lvlUp from '../../images/HowToPlay/themducks.png'
 
 const window = Dimensions.get('window');
 
@@ -12,7 +12,7 @@ const HowToPlay = () => {
 
   return (
     <ImageBackground
-      source={require('../../images/zkx9_iwg1_210415.jpg')}
+      source={require('../../images/Backgrounds/zkx9_iwg1_210415.jpg')}
       style={styles.backgroundImage}
     >
       <Swiper

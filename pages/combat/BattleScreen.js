@@ -1,18 +1,18 @@
 import React, {useState, useContext, useRef}  from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal} from 'react-native';
-import backgroundImage from '../../images/background.gif';
-import rock from '../../images/rock.png';
-import scissor from '../../images/scissor.png';
-import paper from '../../images/paper.png';
+import backgroundImage from '../../images/Backgrounds/background.gif';
+import rock from '../../images/CombatScreen/rock.png';
+import scissor from '../../images/CombatScreen/scissor.png';
+import paper from '../../images/CombatScreen/paper.png';
 import HealthBar from '../../modules/HealthBar';
 import Animal from '../../modules/CharDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
-import explosion from '../../images/explosion.gif';
+import explosion from '../../images/CombatScreen/explosion.gif';
 import BackArrow from  '../../modules/BackArrow';
 import CombatModeLogic from '../../components/CombatModeLogic';
-import paperBubble from '../../images/cartoon-thought-paper.png';
-import rockBubble from '../../images/cartoon-thought-rock.png';
-import scissorsBubble from '../../images/cartoon-thought-scissors.png';
+import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
+import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
+import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');

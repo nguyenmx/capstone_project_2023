@@ -4,8 +4,8 @@ import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
-const backgroundImage = require('../../images/background.gif');
-const victoryBanner = require('../../images/victoryBanner.png');
+const backgroundImage = require('../../images/Backgrounds/background.gif');
+const victoryBanner = require('../../images/CombatScreen/victoryBanner.png');
 
 const WinScreen = ({ navigation }) => {
   const { selectedDuck } = useContext(ReferenceDataContext);

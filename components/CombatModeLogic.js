@@ -62,14 +62,6 @@ class CombatModeLogic extends Component {
     }
   }
 
-  getW() {
-    return true;
-  }
-
-  getL() {
-    return false;
-  }
-
   getFinalWinner() {
     // Implement the logic for determining the final winner here.
     return this.finalResult; // Placeholder, replace with actual logic

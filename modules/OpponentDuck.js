@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
-import duck from '../images/combatDuck.gif';
+import duck from '../images/PlayableAnimals/combatDuck.gif';
 
 const window = Dimensions.get('window');
 

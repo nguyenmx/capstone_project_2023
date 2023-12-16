@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState, useEffect, navigation } from 'reac
 import { View, Text, StyleSheet, ImageBackground, TextInput, Button, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { ReferenceDataContext } from "../ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import buddies from '../../images/CapyAndDuck.gif';
-import cancel from '../../images/cancel.png';
+import buddies from '../../images/AnimalVisuals/CapyAndDuck.gif';
+import cancel from '../../images/TinderPage/cancel.png';
 import submit from '../../images/submitButton.png';
 import BackArrow from '../../modules/BackArrow';
 
@@ -11,7 +11,7 @@ const window = Dimensions.get('window');
 
 const TimerComponent = () => {
 
-  const backgroundImage = require('../../images/clouds.png');
+  const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { steps, setSteps } = useContext(ReferenceDataContext);
 
   const { time, setTime } = useContext(ReferenceDataContext);

@@ -4,8 +4,8 @@ import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../ReferenceDataContext';
 
 const window = Dimensions.get('window');
-const backgroundImage = require('../../images/combatModeBackground.png');
-const swordIcon = require('../../images/swordIcon.png');
+const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
+const swordIcon = require('../../images/CombatScreen/swordIcon.png');
 
 const CombatModeScreen = ({ navigation }) => {
   // Access the selectedDuck value from the context

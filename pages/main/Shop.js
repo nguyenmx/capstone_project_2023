@@ -4,7 +4,7 @@ import { View, ImageBackground, Text, Image, StyleSheet } from 'react-native';
 class Shop extends React.Component {
     render() {
         return (
-          <ImageBackground source={require('../../images/CoinShop.png')} style={styles.backgroundImage}>
+          <ImageBackground source={require('../../images/Backgrounds/CoinShop.png')} style={styles.backgroundImage}>
             <View style={styles.container}>
     
               {/* Example: Display an item with an image and price */}

@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions, Animated } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import storyModeLogo from '../../images/StoryModeLogo.png';
-import swipeLeft from '../../images/cancel.png';
-import swipeRight from '../../images/green-heart-button.png';
-import briefCase from '../../images/briefcase.png';
-import iButton from '../../images/i-button.png';
+import storyModeLogo from '../../images/Logos/StoryModeLogo.png';
+import swipeLeft from '../../images/TinderPage/cancel.png';
+import swipeRight from '../../images/TinderPage/green-heart-button.png';
+import briefCase from '../../images/TinderPage/briefcase.png';
+import iButton from '../../images/TinderPage/i-button.png';
 import BackArrow from '../../modules/BackArrow';
-import verify from '../../images/verify.png';
+import verify from '../../images/TinderPage/verify.png';
 
 const window = Dimensions.get('window');
 
 const profiles = [
-  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/forest_pfp.jpg'), animalType: 'animals', verified: true },
-  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/duckPond.png'), animalType: 'animals', verified: true },
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: 'animals', verified: true },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: 'animals', verified: true },
   // Add more profiles as needed...
 ];
 
 const animalImages = {
   animals: [
-    require('../../images/duckRizz.gif'),
-    require('../../images/duckCoffee.gif'),
-    require('../../images/combatDuck2.gif'),
-    require('../../images/duckWave.gif'),
-    require('../../images/capyKnife.gif'),
-    require('../../images/combatDuck.gif'),
+    require('../../images/PlayableAnimals/duckRizz.gif'),
+    // require('../../images/duckCoffee.gif'),
+    // require('../../images/combatDuck2.gif'),
+    // require('../../images/duckWave.gif'),
+    // require('../../images/capyKnife.gif'),
+    require('../../images/PlayableAnimals/combatDuck.gif'),
   ],
 };
 

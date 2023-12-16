@@ -41,7 +41,7 @@ import * as Animatable from 'react-native-animatable';
 
 // export default TestChatGPT;
 
-const backgroundImage = require('../../images/combatModeBackground.png');
+const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
 
 const TestChatGPT = () => {
   const [messages, setMessages] = useState([]);
@@ -56,8 +56,8 @@ const TestChatGPT = () => {
     ]);
 
     try {
-      // const botResponse = await generateResponse(userInput); // Hardcoded the response for now
-      const botResponse = "quackquack";
+      const botResponse = await generateResponse(userInput); // Hardcoded the response for now
+      // const botResponse = "quackquack";
 
       setMessages((previousMessages) => [
         ...previousMessages,

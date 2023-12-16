@@ -22,7 +22,7 @@ import WinScreen from './pages/combat/WinScreen';
 import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
-import Title from './images/Denwa_Petto.png'
+import Title from './images/Logos/Denwa_Petto.png'
 import { ReferenceDataContext } from './pages/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
@@ -35,7 +35,7 @@ import { Audio } from 'expo-av';
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
-const backgroundImage = require('./images/background.gif');
+const backgroundImage = require('./images/Backgrounds/background.gif');
 var selectedDuck = 0;
 
 
@@ -107,11 +107,11 @@ export function HomeScreen({ navigation }) {
   }
 
   const duckImages = [
-    require('./images/duckWave.gif'),
-    require('./images/capyKnife.gif'),
-    require('./images/duckRizz.gif'),
-    require('./images/duckCoffee.gif'),
-    require('./images/ducky.gif'),
+    require('./images/PlayableAnimals/duckWave.gif'),
+    require('./images/PlayableAnimals/capyKnife.gif'),
+    require('./images/PlayableAnimals/duckRizz.gif'),
+    require('./images/PlayableAnimals/duckCoffee.gif'),
+    require('./images/PlayableAnimals/ducky.gif'),
     SpriteAnimation
   ];
 

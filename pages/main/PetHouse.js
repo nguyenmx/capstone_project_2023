@@ -93,7 +93,7 @@ const PetHouse = () => {
   };
 
   return (
-    <ImageBackground source={require('../../images/livingRoom.jpg')} style={styles.backgroundImage}>
+    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={styles.backgroundImage}>
       <View style={styles.container}>
 
         <HealthBar

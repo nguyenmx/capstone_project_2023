@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Dimensions }
 import { ReferenceDataContext } from "../ReferenceDataContext";
 
 const window = Dimensions.get('window');
-const backgroundImage = require('../../images/background.gif');
+const backgroundImage = require('../../images/Backgrounds/background.gif');
 
 const TestingScreen = ({ navigation }) => {
   const { name, setName } = useContext(ReferenceDataContext);

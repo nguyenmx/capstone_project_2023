@@ -9,25 +9,25 @@ const Duck = ({ duckType, Optional: customStyle }) => {
 
   switch (duckType) {
     case 0:
-      duckContent = <Image source={require('../images/duckWave.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/duckWave.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
     case 1:
-      duckContent = <Image source={require('../images/capyKnife.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/capyKnife.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
     case 2:
-      duckContent = <Image source={require('../images/duckRizz.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/duckRizz.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
     case 3:
-      duckContent = <Image source={require('../images/duckCoffee.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/duckCoffee.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
     case 4:
-      duckContent = <Image source={require('../images/ducky.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/ducky.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
     case 5:
       duckContent = <SpriteAnimation />;
       break;
     default:
-      duckContent = <Image source={require('../images/duckWave.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
+      duckContent = <Image source={require('../images/PlayableAnimals/duckWave.gif')} style={{ width: window.width * 0.58, height: window.width * 0.58 }} />;
       break;
   }
 
