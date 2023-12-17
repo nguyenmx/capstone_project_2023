@@ -7,16 +7,19 @@ import box from '../../images/ItemShop/box.png';
 import meat from '../../images/ItemShop/meat.png';
 import carrot from '../../images/ItemShop/carrot.png'
 import salad from '../../images/ItemShop/Salad.png'
+import UseOrientation from '../../components/UseOrientation';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/ItemShop/pawsBackground.png');
 
 const ItemShop = ({ navigation }) => {
+  const orientation = UseOrientation();
 
+  console.log(orientation)
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        <View style = {styles.rectangleContainer}> 
+        <View style = {styles.rectangleContainer} isPortrait={orientation.isPortrait}> 
             <Image source={shopPic}></Image>
             <Image source={shopIcon}></Image>
             <Image source={rectangle} style= {styles.rectangle}></Image>
