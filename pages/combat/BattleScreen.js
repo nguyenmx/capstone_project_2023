@@ -27,9 +27,6 @@ const [playerExplode, setPlayerExplodeVisible] = useState(false);
 const [oppExplode, setOppExplodeVisible] = useState(false);
 const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
 const [oppMoveBubble, setOppMoveBubble] = useState(false);
-// const [rockMove, setRockMoveVisible] = useState(false);
-// const [paperMove, setPaperMoveVisible] = useState(false);
-// const [scissorsMove, setScissorsMoveVisible] = useState(false);
 
 
 explosionAnimation = (playerWon) => {

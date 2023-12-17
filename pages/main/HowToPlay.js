@@ -48,6 +48,9 @@ const HowToPlay = () => {
             <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('Home')}>
               <Text style={styles.buttonText}>Home</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('ItemShop')}>
+              <Text style={styles.buttonText}>ItemShop</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Swiper>

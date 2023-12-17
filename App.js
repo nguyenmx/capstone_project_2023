@@ -29,6 +29,7 @@ import Duck from './modules/CharDuck';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 import Shop from './pages/main/Shop';
+import ItemShop from './pages/main/ItemShop';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -92,6 +93,7 @@ export default function App() {
         <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
         <Stack.Screen name="Shop" component={Shop} />
         <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
+        <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
