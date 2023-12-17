@@ -10,6 +10,7 @@ import HealthBar from '../../modules/HealthBar'; // Adjust the path based on you
 import petFood from '../../images/petFood.png';
 import shop from '../../images/Shop.png';
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import UseOrientation from '../../components/UseOrientation';
 
 
 const window = Dimensions.get('window');
@@ -91,6 +92,10 @@ const PetHouse = () => {
   const navigateToShop = () => {
     navigation.navigate('Shop');
   };
+
+  const orientation = UseOrientation();
+
+  //console.log(orientation)
 
   return (
     <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={styles.backgroundImage}>

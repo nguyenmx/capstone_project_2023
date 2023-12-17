@@ -51,9 +51,9 @@ const HowToPlay = () => {
             <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('ItemShop')}>
               <Text style={styles.buttonText}>ItemShop</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('PetHouseLandscape')}>
+            {/* <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('PetHouseLandscape')}>
               <Text style={styles.buttonText}>PetHouseLandscape</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </Swiper>
