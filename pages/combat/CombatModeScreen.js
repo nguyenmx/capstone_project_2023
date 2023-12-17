@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
-import { ReferenceDataContext } from '../ReferenceDataContext';
+import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');

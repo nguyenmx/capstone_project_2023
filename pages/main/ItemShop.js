@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   },
   item: {
     margin: 32,
-    marginLeft: -160
+    marginLeft: -190
   },
 });

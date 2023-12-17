@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useEffect, navigation } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TextInput, Button, TouchableOpacity, Image, Dimensions } from 'react-native';
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import { ReferenceDataContext } from "../../components/ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import buddies from '../../images/AnimalVisuals/CapyAndDuck.gif';
 import cancel from '../../images/TinderPage/cancel.png';

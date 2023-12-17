@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import { ReferenceDataContext } from "../../components/ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/AnimalVisuals/confusedDuck.gif';
 

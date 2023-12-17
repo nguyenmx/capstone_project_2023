@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import { ReferenceDataContext } from "../../components/ReferenceDataContext";
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');

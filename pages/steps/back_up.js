@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import { ReferenceDataContext } from "../components/ReferenceDataContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TimerComponent = () => {

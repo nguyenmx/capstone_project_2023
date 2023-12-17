@@ -13,7 +13,7 @@ import CombatModeLogic from '../../components/CombatModeLogic';
 import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
 import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
-import { ReferenceDataContext } from '../ReferenceDataContext';
+import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 
 const window = Dimensions.get('window');
 

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimen
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
-import { ReferenceDataContext } from '../ReferenceDataContext';
+import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure

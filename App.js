@@ -9,7 +9,7 @@ import StoryModeScreen from './pages/story/StoryModeScreen';
 import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
 import TestChatGPT from "./pages/story/TestChatGPT";
-import { ReferenceDataContextProvider } from "./pages/ReferenceDataContext";
+import { ReferenceDataContextProvider } from "./components/ReferenceDataContext";
 import { useEffect, useContext, useState } from 'react';
 import { useFonts } from 'expo-font';
 import Swiper from 'react-native-swiper';
@@ -23,13 +23,14 @@ import LossScreen from './pages/combat/LossScreen';
 import BattleScreen from './pages/combat/BattleScreen';
 import PetHouse from './pages/main/PetHouse';
 import Title from './images/Logos/Denwa_Petto.png'
-import { ReferenceDataContext } from './pages/ReferenceDataContext';
+import { ReferenceDataContext } from './components/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Duck from './modules/CharDuck';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 import Shop from './pages/main/Shop';
 import ItemShop from './pages/main/ItemShop';
+import PetHouseLandscape from './pages/main/PetHouseLandscape';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -94,6 +95,7 @@ export default function App() {
         <Stack.Screen name="Shop" component={Shop} />
         <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
         <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
+        <Stack.Screen name="PetHouseLandscape" component={PetHouseLandscape} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>

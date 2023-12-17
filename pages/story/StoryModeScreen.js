@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { ReferenceDataContext } from "../ReferenceDataContext";
+import { ReferenceDataContext } from "../../components/ReferenceDataContext";
 
 const StoryModeScreen = ({ navigation }) => {
   const { name, setName } = useContext(ReferenceDataContext);
