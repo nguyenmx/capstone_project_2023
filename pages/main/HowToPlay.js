@@ -27,8 +27,10 @@ const HowToPlay = () => {
         
           <View style={styles.slideInner}>
             <Text style={styles.text}>1</Text>
-            <Image source={lvlUp} style={styles.lvlUp} />
-            <Text style={styles.desc}>Level up your gremlin by partaking in real-world activity with step-tracker, unlocking exciting milestones and ensuring a healthier, more active digital companion!</Text>
+            <View style={styles.iconDescription}>
+              <Image source={lvlUp} style={styles.lvlUp} />
+              <Text style={styles.desc}>Level up your gremlin by partaking in real-world activity with step-tracker, unlocking exciting milestones and ensuring a healthier, more active pet!</Text>
+            </View>
           </View>
 
         </View>
@@ -36,16 +38,20 @@ const HowToPlay = () => {
         <View style={styles.slide}>
           <View style={styles.slideInner}>
             <Text style={styles.text}>2</Text>
-            <Image source={feedDuck} style={styles.feedDuck} />
-            <Text style={styles.desc}> Buy and feed your gremlin some food to increase his/her's happiness!</Text>
+            <View style={styles.iconDescription}>
+              <Image source={feedDuck} style={styles.feedDuck} />
+              <Text style={styles.desc}> Buy and feed your gremlin some food to increase his/her's happiness!</Text>
+            </View>
           </View>
         </View>
 
         <View style={styles.slide}>
           <View style={styles.slideInner}>
             <Text style={styles.text}>3</Text>
-            <Image source={fightDuck} style={styles.fightDuck} />
-            <Text style={styles.desc}> Your gremlin wants to engage in Combat Mode. Increase your daily steps to make your gremlin the best fighter!</Text>
+            <View style={styles.iconDescription}>
+              <Image source={fightDuck} style={styles.fightDuck} />
+              <Text style={styles.desc}> Your gremlin wants to engage in Combat Mode. Increase your daily steps to make your gremlin the best fighter!</Text>
+            </View>
           </View>
         </View>
 
@@ -54,7 +60,7 @@ const HowToPlay = () => {
           <View style={styles.slideInner}>
           <Text style={styles.text}>4</Text>
           <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('PetHouse')}>
-              <Text style={styles.buttonText}>OK</Text>
+              <Text style={styles.buttonText}>PetHouse</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Backbutton} onPress={() => navigation.navigate('Home')}>
               <Text style={styles.buttonText}>Home</Text>
@@ -93,13 +99,13 @@ const styles = StyleSheet.create({
     backgroundColor : "#0000" 
   },
   slideInner: {
-    width: '80%',
+    width: '85%',
     height: '65%', 
     borderWidth: 10, 
     borderColor: 'rgba(147, 124, 191, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(191, 176, 217, 0.90)',
+    backgroundColor: 'rgba(191, 167, 220, 0.8)',
     borderRadius: 20,
     elevation: 7,
   },
@@ -107,12 +113,18 @@ const styles = StyleSheet.create({
     top: window.height * -0.1
   },
   fightDuck: {
-    top: window.height * -0.1
+    top: window.height * -0.10
   },
   backgroundImage: {
     zIndex: 1,
     width: '100%',
     height: '100%',
+  },
+
+  iconDescription: {
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   howToPlayText: {
     fontSize: window.width * 0.074,
@@ -184,7 +196,6 @@ const styles = StyleSheet.create({
   },
   desc: {
     fontSize: window.width * 0.07,
-    top: -70,
     color: '#ffffff',
     fontWeight: 'light',
     fontFamily: 'NiceTango-K7XYo',
