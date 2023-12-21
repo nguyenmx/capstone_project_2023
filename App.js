@@ -79,7 +79,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-        <Stack.Screen name="NameScreen" component={NameScreen}/>
+        <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StoryMode" component={StoryModeScreen} />
         <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
