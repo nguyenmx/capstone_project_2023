@@ -106,20 +106,21 @@ const PetHouse = () => {
 
   //custom styles start here -- should put these in their own class
   const duckPosition = {
-    left: isLandscape ? 35 : 10,
-    top: isLandscape ? 55 : 80,
+    left: isLandscape ? 10 : 10,
+    top: isLandscape ? -220 : 80,
+    zIndex: 400
   };
 
   const topNavContainer = {
     flexDirection: isLandscape ? 'column': 'row',
     left: isLandscape ? window.width * -0.35 : window.width * -0.05,
-    marginTop: isLandscape ? -130 : 65,
+    marginTop: isLandscape ? -130 : 70,
   };
 
   const bottomNavContainer = {
     flexDirection: 'row',
-    marginBottom: isLandscape ? 40 : -100,
-    marginTop: 175
+    marginBottom: isLandscape ? -500 : -100,
+    marginTop: isLandscape ? -50: 175
   };
 
   //const orientation = UseOrientation();
@@ -164,7 +165,7 @@ const PetHouse = () => {
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         
           <View style={bottomNavContainer}>
-
+    
             <Image source={diamond}></Image>
 
             <View style={styles.currencyContainer}>
@@ -370,8 +371,8 @@ const styles = StyleSheet.create({
   //   zIndex: 999,
   // },
   healthPosition: {
-    top: window.height * -0.08, 
-    left: window.width * -0.1
+    top: window.height * -0.07, 
+    left: window.width * -0.08
   },
   // settingsText: {
   //   fontSize: 50,
