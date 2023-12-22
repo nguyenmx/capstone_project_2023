@@ -107,28 +107,82 @@ const PetHouse = () => {
   //custom styles start here -- should put these in their own class
   const duckPosition = {
     left: isLandscape ? 10 : 10,
-    top: isLandscape ? -220 : 80,
-    zIndex: 400
+    top: isLandscape ? -140 : 80,
   };
 
   const topNavContainer = {
-    flexDirection: isLandscape ? 'column': 'row',
-    left: isLandscape ? window.width * -0.35 : window.width * -0.05,
-    marginTop: isLandscape ? -130 : 70,
+    position: 'relative',
+    flexDirection: 'row',
+    left: isLandscape ? -240 : window.width * -0.05,
+    marginTop: isLandscape ? 100 : 100,
+    top: isLandscape ? -20 : 10
   };
 
   const bottomNavContainer = {
     flexDirection: 'row',
-    marginBottom: isLandscape ? -500 : -100,
-    marginTop: isLandscape ? -50: 175
+    marginBottom: isLandscape ? -80 : -100,
+    marginTop: isLandscape ? -240: 160,
+    top: 10
   };
+
+  const currencyContainer = {
+      width: isLandscape ? '19%' :'26%',
+      height: isLandscape ? '33%' :'32%',
+      borderWidth: 8, 
+      borderColor: 'rgba(160, 200, 220, 0.9)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(184, 240, 260, 1)',
+      borderRadius: 18,
+      shadowOffset: { width: 4, height: 4 },
+      shadowColor: 'rgba(117, 82, 103, 0.8)',
+      shadowOpacity: 1,
+  };
+
+  const healthPosition = {
+    top: isLandscape ? -85 : window.height * -0.06, 
+    left: isLandscape ? -250 : window.width * -0.08
+  };
+
+  const diamondAndCoinContainer = {
+    flexDirection: 'row',
+    top: isLandscape ? -230 : 0,
+    right: isLandscape ? -400 : 0
+  };
+
+  const itemShopImg = {
+    top: isLandscape ? 2 : -33,
+    left: isLandscape ? 150: 0
+   };
+
+   const backgroundImage = {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    marginTop: isLandscape ? -80 : -70
+  };
+
+  const dialogueContainer = {
+      width: '100%',
+      top: isLandscape ? window.width * 0.02 : 0,
+      height: isLandscape ? '14%' : '10.8%', 
+      borderWidth: 7, 
+      borderColor: 'rgba(77, 49, 45, 0.9)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(143, 151, 74, 0.7)',
+      borderRadius: 18,
+      shadowOffset: { width: 4, height: 4 },
+      shadowColor: 'rgba(102, 58, 49, 0.8)',
+      shadowOpacity: 1,
+  }
 
   //const orientation = UseOrientation();
 
   //console.log(orientation)
 
   return (
-    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={styles.backgroundImage}>
+    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={backgroundImage}>
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
@@ -152,7 +206,7 @@ const PetHouse = () => {
         </View>
 
         <HealthBar
-            Optional={styles.healthPosition}
+            Optional={healthPosition}
             health={health}
             maxHealth={maxHealth}
             decreaseHealth={decreaseHealth}
@@ -166,23 +220,27 @@ const PetHouse = () => {
         
           <View style={bottomNavContainer}>
     
-            <Image source={diamond}></Image>
+              <View style={diamondAndCoinContainer}>
+                <Image source={diamond}></Image>
 
-            <View style={styles.currencyContainer}>
-              <Text style={styles.currencyText}>1.2K</Text>
-            </View>
+                <View style={currencyContainer}>
+                  <Text style={styles.currencyText}>1.2K</Text>
+                </View>
 
-            <Image source={coin}></Image>
+                <Image source={coin}></Image>
 
-            <View style={styles.currencyContainer}>
-              <Text style={styles.currencyText}>812</Text>
-            </View>
+                <View style={currencyContainer}>
+                  <Text style={styles.currencyText}>812</Text>
+                </View>
+
+              </View>
+
             <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
-            <Image source={itemShop} style={styles.itemShopImg}></Image>
+            <Image source={itemShop} style={itemShopImg}></Image>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.dialogueContainer}>
+          <View style={dialogueContainer}>
             <Text style={styles.dialogueText}>Exceteur sint occaecat cupidatat non proident, sunt in culpa qui</Text>
          </View>
 
@@ -258,6 +316,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+    marginTop: -70
   },
   nameContainer: {
     width: 175,
@@ -272,19 +331,19 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(117, 82, 103, 0.8)',
     shadowOpacity: 1,
   },
-  currencyContainer: {
-    width: '25%',
-    height: '32%', 
-    borderWidth: 8, 
-    borderColor: 'rgba(160, 200, 220, 0.9)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(184, 240, 260, 1)',
-    borderRadius: 18,
-    shadowOffset: { width: 4, height: 4 },
-    shadowColor: 'rgba(117, 82, 103, 0.8)',
-    shadowOpacity: 1,
-  },
+  // currencyContainer: {
+  //   width: '25%',
+  //   height: '32%', 
+  //   borderWidth: 8, 
+  //   borderColor: 'rgba(160, 200, 220, 0.9)',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   backgroundColor: 'rgba(184, 240, 260, 1)',
+  //   borderRadius: 18,
+  //   shadowOffset: { width: 4, height: 4 },
+  //   shadowColor: 'rgba(117, 82, 103, 0.8)',
+  //   shadowOpacity: 1,
+  // },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 35,
@@ -313,6 +372,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   profileIcon: {
+    width: 90,
+    height: 90,
     top: -10,
     left: 40,
     zIndex: 2
@@ -322,8 +383,8 @@ const styles = StyleSheet.create({
     left: -10
   },
   navItem: {
-    width: 70,
-    height: 70
+    width: 65,
+    height: 65
   },
   dialogueContainer: {
     width: '100%',
@@ -332,7 +393,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(77, 49, 45, 0.9)',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(143, 151, 74, 0.9)',
+    backgroundColor: 'rgba(143, 151, 74, 0.7)',
     borderRadius: 18,
     shadowOffset: { width: 4, height: 4 },
     shadowColor: 'rgba(102, 58, 49, 0.8)',
@@ -340,14 +401,11 @@ const styles = StyleSheet.create({
   },
   dialogueText: {
     fontFamily: 'NiceTango-K7XYo',
-    fontSize: 22,
+    fontSize: 23,
     color: 'white',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
-  },
-  itemShopImg: {
-   top: -33
   },
 
   title: {
@@ -356,11 +414,6 @@ const styles = StyleSheet.create({
     fontFamily: 'NiceTango-K7XYo',
     color: 'white',
   },
-  // duckChar: {
-  //   top: 80,
-  //   zIndex: 999,
-  // },
-
 
   // settingButtonImage: {
   //   position: 'absolute',
@@ -370,10 +423,7 @@ const styles = StyleSheet.create({
   //   height: 75,
   //   zIndex: 999,
   // },
-  healthPosition: {
-    top: window.height * -0.07, 
-    left: window.width * -0.08
-  },
+
   // settingsText: {
   //   fontSize: 50,
   //   fontFamily: 'NiceTango-K7XYo',
