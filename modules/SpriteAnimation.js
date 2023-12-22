@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+
+const window = Dimensions.get('window');
 
 const SpriteAnimation = ({ onIdleAnimationFinish }) => {
   const [frameIndex, setFrameIndex] = useState(0); // Initial frame index
@@ -116,8 +118,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   sprite: {
-    width: 200,
-    height: 200,
+    width: window.width * 0.58, 
+    height: window.width * 0.58,
     position: 'relative',
   },
   button: {

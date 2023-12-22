@@ -31,12 +31,11 @@ const Duck = ({ duckType, Optional: customStyle }) => {
       break;
   }
 
-  const imageWidth = window.width * 0.58; // adjust the scaling factor as needed
-  const imageHeight = imageWidth; // maintain aspect ratio
+  const imageWidth = window.width * 0.58; 
+  const imageHeight = imageWidth;
 
   return (
     <View style={[{ position: 'relative' }, customStyle]}>
-      {/* Render the Duck content based on duckType */}
       {duckContent}
     </View>
   );
