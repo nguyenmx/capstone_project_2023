@@ -116,6 +116,7 @@ export function HomeScreen({ navigation }) {
     require('./images/PlayableAnimals/duckRizz.gif'),
     require('./images/PlayableAnimals/duckCoffee.gif'),
     require('./images/PlayableAnimals/ducky.gif'),
+    SpriteAnimation,
     SpriteAnimation
   ];
 
@@ -129,15 +130,22 @@ export function HomeScreen({ navigation }) {
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NameScreen')}>
               <Text style={styles.buttonText}>Main Game</Text>
+              <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
+
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryModeScreen')}>
               <Text style={styles.buttonText}>Story Mode</Text>
+              <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
+
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
               <Text style={styles.buttonText}>Combat Mode</Text>
+              <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
               <Text style={styles.buttonText}>Steps</Text>
+              <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
+
             </TouchableOpacity>
           </View>
           <Swiper
@@ -191,14 +199,14 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   buttonContainer: {
-    marginTop: window.height * 0.02,
+    marginTop: window.height * 0.025,
     alignItems: 'center',
   },
   button: {
     width: window.width * 0.55,
     height: window.height * 0.08,
     backgroundColor: '#F4A460',
-    borderRadius: 10,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: window.height * 0.045, // increase spacing between buttons
@@ -209,7 +217,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: window.width * 0.065,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
     color: 'white',
+    zIndex: 997
   },
   swiperSlide: {
     flex: 1,
@@ -225,5 +237,9 @@ const styles = StyleSheet.create({
     width: window.width * 0.05,
     height: window.height * 0.05,
     aspectRatio: 1,
+  },
+  buttonImage: {
+    position: 'absolute',
+    transform: [{ scale: .2 }],
   },
 });

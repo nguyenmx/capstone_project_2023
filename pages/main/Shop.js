@@ -4,15 +4,16 @@ import { View, ImageBackground, Text, Image, StyleSheet } from 'react-native';
 class Shop extends React.Component {
     render() {
         return (
-          <ImageBackground source={require('../../images/Backgrounds/CoinShop.png')} style={styles.backgroundImage}>
+          <ImageBackground source={require('../../images/Backgrounds/CoinShop.png')} style={styles.backgroundImage} resizeMode= 'stretch'>
             <View style={styles.container}>
     
               {/* Example: Display an item with an image and price */}
               <View style={styles.shopItem}>
-                <Image source={require('../../images/Food/Apple_256x256.png')} style={styles.itemImage} />
+                <Image source={require('../../images/Food/Apple.png')} style={styles.itemImage} />
                 <Text style={styles.itemPrice}></Text>
-                <Image source={require('../../images/Food/Bread_900x900.png')} style={styles.itemImage} />
-                <Image source={require('../../images/Food/Cheese_256x256.png')} style={styles.itemImage} />
+                <Image source={require('../../images/Food/Bread.png')} style={styles.itemImage} />
+                <Image source={require('../../images/Food/Cheese.png')} style={styles.itemImage} />
+                <Image source={require('../../images/Food/Drink_Lemonade.png')} style={styles.itemImage} />
               </View>
     
               {/* Add more shop content as needed */}
@@ -37,8 +38,12 @@ class Shop extends React.Component {
           // Additional styling for the container, if needed
         },
         shopTitle: {
-          fontSize: 24,
-          color: 'white',
+          fontSize: 34,
+          color: 'black',
+          fontFamily: 'NiceTango-K7XYo',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute'
           // Additional styling for the title, if needed
         },
 
@@ -53,6 +58,7 @@ class Shop extends React.Component {
     height: 85,
     top: 100,
     left: 10,
+    elevation:10,
     // Additional styling for the item image, if needed
   },
   itemPrice: {
@@ -61,7 +67,7 @@ class Shop extends React.Component {
     // Additional styling for the item price, if needed
   },
         // Add more styles as necessary
-      });
+    });
       
-      export default Shop;
+export default Shop;
       
