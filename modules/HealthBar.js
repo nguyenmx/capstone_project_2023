@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     width: 60,
     height: 60,
-    right: window.width * .3,
+    right: window.width * .33,
     bottom: window.width * -.105,
     zIndex: 99,
   },

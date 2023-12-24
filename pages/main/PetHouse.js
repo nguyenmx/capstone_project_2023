@@ -182,7 +182,7 @@ const PetHouse = () => {
   //console.log(orientation)
 
   return (
-    <ImageBackground source={require('../../images/Backgrounds/livingRoom_night.jpg')} style={backgroundImage}>
+    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={backgroundImage}>
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
@@ -212,7 +212,6 @@ const PetHouse = () => {
             decreaseHealth={decreaseHealth}
             increaseHealth={increaseHealth}
             heartIconSource={petFood}
-            healthBarColor="blue"
         />
 
 

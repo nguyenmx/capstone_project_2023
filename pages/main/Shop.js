@@ -1,73 +1,133 @@
 import React from 'react';
-import { View, ImageBackground, Text, Image, StyleSheet } from 'react-native';
+import { View, ImageBackground, Text, Image, Dimensions, StyleSheet } from 'react-native';
+import diamond from '../../images/PetHouse/Portrait/diamond.png';
+import coin from '../../images/PetHouse/Portrait/coin.png';
+
+const window = Dimensions.get('window');
 
 class Shop extends React.Component {
-    render() {
-        return (
-          <ImageBackground source={require('../../images/Backgrounds/CoinShop.png')} style={styles.backgroundImage} resizeMode= 'stretch'>
-            <View style={styles.container}>
-    
-              {/* Example: Display an item with an image and price */}
-              <View style={styles.shopItem}>
-                <Image source={require('../../images/Food/Apple.png')} style={styles.itemImage} />
-                <Text style={styles.itemPrice}></Text>
-                <Image source={require('../../images/Food/Bread.png')} style={styles.itemImage} />
-                <Image source={require('../../images/Food/Cheese.png')} style={styles.itemImage} />
-                <Image source={require('../../images/Food/Drink_Lemonade.png')} style={styles.itemImage} />
-              </View>
-    
-              {/* Add more shop content as needed */}
+  render() {
+    return (
+      <ImageBackground
+        source={require('../../images/Backgrounds/CoinShop.png')}
+        style={styles.backgroundImage}
+        resizeMode="stretch"
+      >
+        <View style={[{ position: 'absolute', top: 125, left: 45}]} >
+          <View style={styles.priceContainer}>
+            <Image source={diamond} style={[{ position: 'absolute', zIndex: 999, top: -15, left: -5}]}></Image>
+            <View style={styles.rect}></View>
+          </View>
+
+          <View>
+            <Image source={coin} style={[{ position: 'absolute', zIndex: 999, top: -15, left: -5}]}></Image>
+            <View style={styles.rect}></View>
+          </View>
+        </View>
+
+        <View style={[styles.container, { top: window.width * .24 }]}>
+          <View style={styles.shopItem}>
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/Apple.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$1.49</Text>
+
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
+
             </View>
-          </ImageBackground>
-        );
-      }
-    }
-    
 
-    const styles = StyleSheet.create({
-        backgroundImage: {
-          flex: 1,
-          width: '100%',
-          height: '100%',
-          // Additional styling for the background image, if needed
-        },
-        container: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          // Additional styling for the container, if needed
-        },
-        shopTitle: {
-          fontSize: 34,
-          color: 'black',
-          fontFamily: 'NiceTango-K7XYo',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute'
-          // Additional styling for the title, if needed
-        },
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/Bread.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$1.49</Text>
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
 
+            </View>
 
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/Cheese.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$3.99</Text>
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
+
+            </View>
+          </View>
+        </View>
+        <View style={[styles.container, { marginTop: window.width * -0.33 }]}>
+          <View style={styles.shopItem}>
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/Carton_Blue.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$1.49</Text>
+
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
+
+            </View>
+
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/Beef_Grilled.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$1.49</Text>
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
+
+            </View>
+
+            <View style={styles.itemContainer}>
+              <Image source={require('../../images/Food/CannedFood_Fish.png')} style={styles.itemImage} />
+              <Text style={styles.itemPrice}>$3.99</Text>
+              <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
+
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  rect:{
+    width: 130,
+    height: 42,
+    backgroundColor: '#C6A2FD',
+    padding: 10,
+    borderRadius: 15,
+    marginBottom: window.height * -0.1,
+    position: 'absolute'
+  },
+  priceContainer:{
+    left: 145,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 0,
+  },
   shopItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 9,
+  },
+  itemContainer: {
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  buyBttn:{
+    width: 109,
+    height: 42,
   },
   itemImage: {
     width: 85,
     height: 85,
-    top: 100,
-    left: 10,
-    elevation:10,
-    // Additional styling for the item image, if needed
+    marginVertical: -12
   },
   itemPrice: {
     fontSize: 18,
-    color: 'white',
-    // Additional styling for the item price, if needed
+    color: 'black',
+    top: 32,
+    zIndex: 998
   },
-        // Add more styles as necessary
-    });
-      
+});
+
 export default Shop;
-      
