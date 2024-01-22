@@ -6,7 +6,7 @@ import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 // import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
-import HealthBar from '../../modules/HealthBar'; // Adjust the path based on your project structure
+import HealthBar from '../../modules/HealthBar';
 import petFood from '../../images/petFood.png';
 import profileIcon from '../../images/PetHouse/Portrait/ProfileButton.png';
 import medicineIcon from '../../images/PetHouse/Portrait/medicineIcon.png';
@@ -14,7 +14,7 @@ import foodIcon from '../../images/PetHouse/Portrait/foodIcon.png';
 import itemShop from '../../images/ItemShop/shopPic.png';
 import diamond from '../../images/PetHouse/Portrait/diamond.png';
 import coin from '../../images/PetHouse/Portrait/coin.png';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import { useNavigation } from '@react-navigation/native'; 
 //import UseOrientation from '../../components/UseOrientation';
 import { useWindowDimensions } from 'react-native';
 
@@ -128,12 +128,12 @@ const PetHouse = () => {
   const currencyContainer = {
       width: isLandscape ? '19%' :'26%',
       height: isLandscape ? '33%' :'32%',
-      borderWidth: 8, 
+      borderWidth: 2, 
       borderColor: 'rgba(160, 200, 220, 0.9)',
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(184, 240, 260, 1)',
-      borderRadius: 18,
+      borderRadius: 20,
       shadowOffset: { width: 4, height: 4 },
       shadowColor: 'rgba(117, 82, 103, 0.8)',
       shadowOpacity: 1,
@@ -171,7 +171,7 @@ const PetHouse = () => {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(143, 151, 74, 0.7)',
-      borderRadius: 18,
+      borderRadius: 8,
       shadowOffset: { width: 4, height: 4 },
       shadowColor: 'rgba(102, 58, 49, 0.8)',
       shadowOpacity: 1,
@@ -182,7 +182,7 @@ const PetHouse = () => {
   //console.log(orientation)
 
   return (
-    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={backgroundImage}>
+    <ImageBackground source={require('../../images/Backgrounds/livingRoom_night.jpg')} style={backgroundImage}>
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
@@ -211,7 +211,6 @@ const PetHouse = () => {
             maxHealth={maxHealth}
             decreaseHealth={decreaseHealth}
             increaseHealth={increaseHealth}
-            heartIconSource={petFood}
         />
 
 
@@ -320,7 +319,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     width: 175,
     height: 60, 
-    borderWidth: 8, 
+    borderWidth: 4, 
     borderColor: 'rgba(160, 200, 220, 0.9)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -364,11 +363,12 @@ const styles = StyleSheet.create({
   // },
   nameText: {
     fontFamily: 'NiceTango-K7XYo',
-    fontSize: 42,
+    fontSize: 32,
     color: 'white',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
+    zIndex:999
   },
   profileIcon: {
     width: 90,

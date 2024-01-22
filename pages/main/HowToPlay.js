@@ -78,6 +78,7 @@ const HowToPlay = () => {
 
       <View style={styles.overlay}>
         <Text style={styles.howToPlayText}>How to Play</Text>
+        <Image source={require('../../images/Banner_Blank.png')} style={styles.banner} ></Image>
       </View>
     </ImageBackground>
   );
@@ -120,7 +121,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-
+  banner: {
+    transform: [{ scale: .2 }],
+    top:window.height * .02,
+  },
   iconDescription: {
     marginTop: 100,
     justifyContent: 'center',
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   },
   howToPlayText: {
     fontSize: window.width * 0.074,
-    color: 'white',
+    color: 'purple',
     fontFamily: 'NiceTango-K7XYo',
     textAlign: 'center', 
     position: 'absolute',
@@ -136,7 +140,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
+    zIndex:999,
+    top:window.height * .11,
   },
   lvlUp: {
     width:  500,

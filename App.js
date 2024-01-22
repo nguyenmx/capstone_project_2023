@@ -30,7 +30,10 @@ import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 import Shop from './pages/main/Shop';
 import ItemShop from './pages/main/ItemShop';
+import Currency from './pages/main/Currency';
 import PetHouseLandscape from './pages/main/PetHouseLandscape';
+import { CurrencyProvider } from './pages/main/CurrencyContext';
+
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -76,6 +79,7 @@ export default function App() {
 
   return (
     <ReferenceDataContextProvider>
+    <CurrencyProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
@@ -93,11 +97,13 @@ export default function App() {
         <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
         <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
         <Stack.Screen name="Shop" component={Shop} />
+        <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
         <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
         <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
         <Stack.Screen name="PetHouseLandscape" component={PetHouseLandscape} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
+    </CurrencyProvider>
     </ReferenceDataContextProvider>
   );
 }
