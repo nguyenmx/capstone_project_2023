@@ -12,8 +12,8 @@ import verify from '../../images/TinderPage/verify.png';
 const window = Dimensions.get('window');
 
 const profiles = [
-  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: 'animals', verified: true },
-  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: 'animals', verified: true },
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: require('../../images/PlayableAnimals/duckRizz.gif'), verified: true },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: 'animals', animalType: require('../../images/PlayableAnimals/combatDuck.gif'), verified: true },
   // Add more profiles as needed...
 ];
 
@@ -78,8 +78,8 @@ const TinderSwipePage = ({ navigation }) => {
 
   const renderCurrentProfile = () => {
     const currentProfile = profiles[currentProfileIndex];
-    const availableImages = animalImages[currentProfile.animalType];
-    const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+    // const availableImages = animalImages[currentProfile.animalType];
+    // const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
 
     return (
       <View style={styles.container}>
@@ -105,7 +105,7 @@ const TinderSwipePage = ({ navigation }) => {
           <Animated.View style={[styles.swipeContainer, { transform: [{ translateX }] }]}>
             <View style={styles.profileContainer}>
               <Image source={currentProfile.image} style={styles.pfpBackground} />
-              <Image source={randomImage} style={styles.duckContainer} />
+              <Image source={currentProfile.animalType} style={styles.duckContainer} />
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => animateSwipe('left')}>
                   <Image source={swipeLeft} style={styles.swipeLeftButton} />
