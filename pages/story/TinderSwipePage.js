@@ -12,21 +12,12 @@ import verify from '../../images/TinderPage/verify.png';
 const window = Dimensions.get('window');
 
 const profiles = [
-  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: 'animals', verified: true },
-  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: 'animals', verified: true },
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: require('../../images/PlayableAnimals/duckRizz.gif'), verified: true },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: require('../../images/PlayableAnimals/combatDuck.gif'), verified: true },
+  { id: 3, name: 'Floppers', age: 19, occupation: 'Divorce Attorney', bio: 'Willing to share my bread crumbs', image: require('../../images/Backgrounds/livingRoom.jpg'), animalType: require('../../images/PlayableAnimals/combatDuck2.gif'), verified: true },
   // Add more profiles as needed...
 ];
 
-const animalImages = {
-  animals: [
-    require('../../images/PlayableAnimals/duckRizz.gif'),
-    // require('../../images/duckCoffee.gif'),
-    // require('../../images/combatDuck2.gif'),
-    // require('../../images/duckWave.gif'),
-    // require('../../images/capyKnife.gif'),
-    require('../../images/PlayableAnimals/combatDuck.gif'),
-  ],
-};
 
 const TinderSwipePage = ({ navigation }) => {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
@@ -78,8 +69,6 @@ const TinderSwipePage = ({ navigation }) => {
 
   const renderCurrentProfile = () => {
     const currentProfile = profiles[currentProfileIndex];
-    const availableImages = animalImages[currentProfile.animalType];
-    const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
 
     return (
       <View style={styles.container}>
@@ -105,7 +94,7 @@ const TinderSwipePage = ({ navigation }) => {
           <Animated.View style={[styles.swipeContainer, { transform: [{ translateX }] }]}>
             <View style={styles.profileContainer}>
               <Image source={currentProfile.image} style={styles.pfpBackground} />
-              <Image source={randomImage} style={styles.duckContainer} />
+              <Image source={currentProfile.animalType} style={styles.duckContainer} />
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => animateSwipe('left')}>
                   <Image source={swipeLeft} style={styles.swipeLeftButton} />
@@ -218,8 +207,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
-    width: 390,
-    height: 390,
+    width: 395,
+    height: 395,
   },
   nameContainer: {
     flexDirection: 'row', // Set items horizontally
@@ -241,9 +230,8 @@ const styles = StyleSheet.create({
   pfpBackground:
   {
     height: window.height * 0.7,
-    width: 380,
+    width: window.width,
     borderRadius: 10,
-    marginLeft: 15,
   },
   nameContainer: {
     flexDirection: 'row',

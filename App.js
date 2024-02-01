@@ -209,10 +209,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: window.width * 0.55,
-    height: window.height * 0.08,
+    width: window.width * 0.54,
+    height: window.height * 0.078,
     backgroundColor: '#F4A460',
-    borderRadius: 25,
+    borderRadius: 80,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: window.height * 0.045, // increase spacing between buttons
