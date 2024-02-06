@@ -30,7 +30,7 @@ import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 import Shop from './pages/main/Shop';
 import ItemShop from './pages/main/ItemShop';
-import PetHouseLandscape from './pages/main/PetHouseLandscape';
+import ProfilePage from './pages/main/ProfilePage';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -95,7 +95,7 @@ export default function App() {
         <Stack.Screen name="Shop" component={Shop} />
         <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
         <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
-        <Stack.Screen name="PetHouseLandscape" component={PetHouseLandscape} options={{ headerShown: false}} />
+        <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
     </ReferenceDataContextProvider>
@@ -133,7 +133,7 @@ export function HomeScreen({ navigation }) {
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StoryModeScreen')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TinderSwipePage')}>
               <Text style={styles.buttonText}>Story Mode</Text>
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
 
