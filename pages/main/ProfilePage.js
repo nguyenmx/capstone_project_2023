@@ -46,14 +46,12 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     bottom: window.height * 0.65
-
   },
   settings: {
     width: 80,
     height: 80,
     left: 140,
     top: 30,
-    
   },
   profileIcon: {
     width: 130,
