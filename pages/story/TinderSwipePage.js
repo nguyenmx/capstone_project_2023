@@ -53,8 +53,7 @@ const TinderSwipePage = ({ navigation }) => {
         translateX.setValue(0);
       });
     } else if (direction === 'right') {
-      // No action for right swipe
-      resetPosition(); // Reset position to prevent moving right
+        navigation.navigate('TestChatGPT');
     }
   };
 

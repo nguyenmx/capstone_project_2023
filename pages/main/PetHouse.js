@@ -101,6 +101,10 @@ const PetHouse = () => {
     navigation.navigate('Shop');
   };
 
+  const navigateToProfile = () => {
+    navigation.navigate('ProfilePage');
+  };
+
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
 
@@ -151,7 +155,7 @@ const PetHouse = () => {
   };
 
   const itemShopImg = {
-    top: isLandscape ? 2 : -33,
+    top: isLandscape ? -2 : -33,
     left: isLandscape ? 150: 0
    };
 
@@ -178,7 +182,6 @@ const PetHouse = () => {
   }
 
   //const orientation = UseOrientation();
-
   //console.log(orientation)
 
   return (
@@ -186,7 +189,7 @@ const PetHouse = () => {
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
-          <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
+          <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
               <Image source={profileIcon} style ={styles.profileIcon}></Image> 
               <View style={styles.nameContainer}>

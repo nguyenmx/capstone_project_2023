@@ -9,7 +9,7 @@ import Animal from '../../modules/CharDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
 import explosion from '../../images/CombatScreen/explosion.gif';
 import BackArrow from  '../../modules/BackArrow';
-import CombatModeLogic from '../../components/CombatModeLogic';
+import CombatModeLogic from '../../components/combat_logic/CombatModeLogic';
 import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
 import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
