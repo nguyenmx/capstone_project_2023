@@ -17,7 +17,7 @@ import coin from '../../images/PetHouse/Portrait/coin.png';
 import { useNavigation } from '@react-navigation/native'; 
 //import UseOrientation from '../../components/UseOrientation';
 import { useWindowDimensions } from 'react-native';
-
+import Inventory from './Inventory';
 
 const window = Dimensions.get('window');
 
@@ -185,7 +185,7 @@ const PetHouse = () => {
   //console.log(orientation)
 
   return (
-    <ImageBackground source={require('../../images/Backgrounds/livingRoom_night.jpg')} style={backgroundImage}>
+    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={backgroundImage}>
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
@@ -198,9 +198,8 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-          <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
-            <Image source={foodIcon} style ={styles.navItem}></Image>
-          </TouchableOpacity>
+            <Inventory foodIcon={foodIcon} styles={styles} />
+
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={medicineIcon} style ={styles.navItem}></Image>
@@ -302,6 +301,7 @@ const PetHouse = () => {
         </TouchableOpacity>
 
         <MainGameLogic /> */}
+
       </View>
     </ImageBackground>
   );
