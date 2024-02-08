@@ -72,14 +72,13 @@ const TinderSwipePage = ({ navigation }) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <View style={styles.backContainer}>
+    
             <TouchableOpacity
-              style={styles.backContainer}
               onPress={() => navigation.goBack()} // Use navigation.goBack() to go back
             >
               <BackArrow />
             </TouchableOpacity>
-          </View>
+          
           <Image source={storyModeLogo} style={styles.imageLogo} />
         </View>
         <PanGestureHandler
