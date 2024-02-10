@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, ScrollView, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native';
-import { generateResponse } from '../../components/StoryModeBot';
-import { GiftedChat,Bubble } from 'react-native-gifted-chat';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Animatable from 'react-native-animatable';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Image } from 'react-native';
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'; // Import InputToolbar
 import BackArrow from '../../modules/BackArrow';
+import { generateResponse } from '../../components/StoryModeBot';
+import profileIcon from '../../images/ChatBotIcons/profileIcon.png';
+import stickerIcon from '../../images/ChatBotIcons/stickerIcon.png';
 
 
 const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
 const botAvatar = require('../../images/PlayableAnimals/duckRizz.gif');
 
-const TestChatGPT = ({navigation}) => {
+const TestChatGPT = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
 
   const onSend = async (newMessages = []) => {
@@ -23,13 +23,20 @@ const TestChatGPT = ({navigation}) => {
     ]);
 
     try {
-      //  const botResponse = await generateResponse(userInput);
-      const botResponse = "quackquack"; // Simulated bot response
-
-      setMessages(previousMessages => [
-        ...previousMessages,
-        { _id: Math.random().toString(), text: botResponse, user: { _id: 2, name: 'ChatGPT' } },
-      ]);
+      // const botResponse = "quackquack";
+      const botResponse = await generateResponse(userInput);
+      if (botResponse.includes('https')) {
+        setMessages(previousMessages => [
+          ...previousMessages,
+          { _id: Math.random().toString(), image: botResponse, user: { _id: 2, name: 'ChatGPT' } },
+        ]);
+      }
+      else {
+          setMessages(previousMessages => [
+            ...previousMessages,
+            { _id: Math.random().toString(), text: botResponse, user: { _id: 2, name: 'ChatGPT' } },
+          ]);
+      }
     } catch (error) {
       console.error('Error fetching bot response:', error);
     }
@@ -76,24 +83,46 @@ const TestChatGPT = ({navigation}) => {
     return null;
   };
 
+
   const CustomNavBar = () => {
     return (
       <View style={styles.topNavContainer}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()} // Use navigation.goBack() to go back
-            >
-              <BackArrow />
-            </TouchableOpacity>
-        <ImageBackground source={botAvatar} style={styles.botAvatar} />
-        <Text style={styles.animalName}>Name</Text>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()} // Use navigation.goBack() to go back
+        >
+          <BackArrow />
+        </TouchableOpacity>
+        <ImageBackground source={botAvatar} style={styles.botNavAvatar} />
+        <Text style={styles.animalName}>Waddles</Text>
+        <ImageBackground source={profileIcon} style={styles.profileIcon} />
+      </View>
+    );
+  };
+
+  // Custom InputToolbar component
+  const renderInputToolbar = props => {
+    return (
+      <InputToolbar
+      {...props}
+      containerStyle={styles.inputToolbarContainer}
+      primaryStyle={styles.inputToolbarPrimary}
+      placeholder="Type a message..."
+    >
+    </InputToolbar>
+    );
+  };
+  
+  const CustomBottomNavBar = () => {
+    return (
+      <View style={styles.bottomNavContainer}>
       </View>
     );
   };
 
   return (
     <View style={styles.backgroundContainer}>
-       <CustomNavBar />
+      <CustomNavBar />
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <GiftedChat
           messages={messages}
@@ -102,8 +131,10 @@ const TestChatGPT = ({navigation}) => {
           renderBubble={renderBubble}
           renderAvatar={renderAvatar} // Custom avatar rendering
           inverted={false}
+          renderInputToolbar={renderInputToolbar} // Render custom InputToolbar
         />
       </ImageBackground>
+      {/* <CustomBottomNavBar /> */}
     </View>
   );
 };
@@ -126,16 +157,42 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   animalName: {
-    top: 40,
-    fontSize: 25,
+    top: 45,
+    fontSize: 28,
+    left: 5,
   },
   topNavContainer: {
-    padding: 15,
-    flexDirection: 'row'
+    padding: 11,
+    flexDirection: 'row',
   },
   backButton: {
-    top: 38
-  }
+    top: 38,
+  },
+  botNavAvatar: {
+    width: 80,
+    height: 80,
+    top: 15,
+  },
+  profileIcon: {
+    width: 31,
+    height: 40,
+    left: 335,
+    top: 55,
+    position: 'absolute',
+  },
+  inputToolbarContainer: {
+    padding: 8
+  
+  },
+  inputToolbarPrimary: {
+    backgroundColor: 'rgb(255,227, 249)',
+    borderRadius: 25, // Set border radius
+    paddingHorizontal: 10, // Add horizontal padding
+    paddingVertical: 5, // Add vertical padding
+  },
+  // bottomNavContainer: {
+  //   padding: 20
+  // }
 });
 
 export default TestChatGPT;
