@@ -81,31 +81,31 @@ export default function App() {
   return (
     <ReferenceDataContextProvider>
     <CurrencyProvider>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-        <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StoryMode" component={StoryModeScreen} />
-        <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
-        <Stack.Screen name="Inventory" component={Inventory}/>
-        <Stack.Screen name="InventoryState" component={InventoryState}/>
-        <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
-        <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
-        <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
-        <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
-        <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
-        <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
-        <Stack.Screen name="Shop" component={Shop} />
-        <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
-        <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
-        <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
-        <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
+          <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="StoryMode" component={StoryModeScreen} />
+          <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
+          <Stack.Screen name="Inventory" component={Inventory}/>
+          <Stack.Screen name="InventoryState" component={InventoryState}/>
+          <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
+          <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
+          <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
+          <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
+          <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
+          <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
+          <Stack.Screen name="Shop" component={Shop} />
+          <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
+          <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
+          <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
+          <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </CurrencyProvider>
     </ReferenceDataContextProvider>
   );

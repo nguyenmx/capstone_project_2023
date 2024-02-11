@@ -1,3 +1,4 @@
+//CurrencyContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const CurrencyContext = createContext();
@@ -14,6 +15,7 @@ export const withCurrency = (WrappedComponent) => {
 export const CurrencyProvider = ({ children }) => {
   const [coins, setCoins] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
+  const [inventoryItems, setInventoryItems] = useState([]);
 
   const earnCurrency = (type) => {
     if (type === 'coins') {
@@ -31,11 +33,24 @@ export const CurrencyProvider = ({ children }) => {
     }
   };
 
+  const addItemToInventory = (item) => {
+    console.log(item);
+    console.log("made it here43ee bro");
+    setInventoryItems([...inventoryItems, item]);
+    console.log(inventoryItems);
+  };
+
+  const contextValue = {
+    inventoryItems,
+    addItemToInventory
+  };
+
+
   const MAX_COINS = 999;
   const MAX_DIAMONDS = 999;
 
   return (
-    <CurrencyContext.Provider value={{ coins, diamonds, earnCurrency, spendCurrency }}>
+    <CurrencyContext.Provider value={{ coins, diamonds, earnCurrency, spendCurrency,inventoryItems, addItemToInventory }}>
       {children}
     </CurrencyContext.Provider>
   );
