@@ -27,6 +27,9 @@ const [playerExplode, setPlayerExplodeVisible] = useState(false);
 const [oppExplode, setOppExplodeVisible] = useState(false);
 const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
 const [oppMoveBubble, setOppMoveBubble] = useState(false);
+const { steps, setSteps } = useContext(ReferenceDataContext);
+
+
 
 
 explosionAnimation = (playerWon) => {
@@ -74,6 +77,7 @@ const playerBubbleAnimation = (move) => {
 };
 
 const handlePress = (move) => {
+  combatMode.playerPowerDamage(steps);
   combatMode.setPlayerMove(move);
   combatMode.setOppMove();
   const playerWon = combatMode.playerWon();

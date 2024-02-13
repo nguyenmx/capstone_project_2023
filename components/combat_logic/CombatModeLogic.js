@@ -10,6 +10,15 @@ class CombatModeLogic extends Component {
       let oppMove = "";
       let playerHealth = 100;
       let oppHealth = 100;
+      let playerPower;
+  }
+
+  setPlayerPower(number){
+    playerPower = number;
+    console.log("power damage is: ", playerPower);
+  }
+  getPlayerPower(){
+    return playerPower;
   }
   
   setPlayerMove(move) {
@@ -29,6 +38,33 @@ class CombatModeLogic extends Component {
   getPlayerMove() {
     return playerMove;
   }
+
+
+  playerPowerDamage(steps){
+    console.log("The player's steps count is: " + steps);
+    if (parseInt(steps)== 0 && steps == ""){
+      this.setPlayerPower(3);
+    }
+    else if (parseInt(steps)> 0 && parseInt(steps) <= 3500){
+      this.setPlayerPower(5);
+    }
+    else if (parseInt(steps)> 3500 && parseInt(steps) <= 5000){
+      this.setPlayerPower(7);
+    }
+    else if (parseInt(steps)> 5000 && parseInt(steps) <= 12000){
+      this.setPlayerPower(9);
+    }
+    else if (parseInt(steps)> 12000 && parseInt(steps) <= 19000){
+      this.setPlayerPower(10);
+    }
+    else if (parseInt(steps) > 19000){
+      this.setPlayerPower(15);
+    }
+    else{
+      this.setPlayerPower(0);
+    }
+  }
+
 
   playerWon() {
     if (playerMove == "scissors" && oppMove == "paper" 
@@ -71,5 +107,9 @@ class CombatModeLogic extends Component {
     // Implement the logic for calculating rewards here.
   }
 }
+
+
+
+
 
 export default CombatModeLogic;
