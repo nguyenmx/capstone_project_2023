@@ -61,7 +61,7 @@ class CombatModeLogic extends Component {
       this.setPlayerPower(15);
     }
     else{
-      this.setPlayerPower(0);
+      this.setPlayerPower(3);
     }
   }
 

@@ -16,6 +16,11 @@ const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }
     setHealth(newHealth);
   };
 
+  const decreaseHealth_2 = (number) => {
+    const newHealth = Math.max(0, health - number);
+    setHealth(newHealth);
+  };
+
   const increaseHealth = () => {
     const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
@@ -28,6 +33,7 @@ const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }
   // Exposing methods through ref
   useImperativeHandle(ref, () => ({
     decreaseHealth,
+    decreaseHealth_2,
     increaseHealth,
     getHealth,
   }));

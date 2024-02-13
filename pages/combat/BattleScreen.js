@@ -93,7 +93,7 @@ const handlePress = (move) => {
   } else if (playerWon) {
     // If player wins, introduce a delay before updating the opponent's health bar
     setTimeout(() => {
-      enemyHealthRef.current.decreaseHealth();
+      enemyHealthRef.current.decreaseHealth_2(combatMode.getPlayerPower());
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
         navigation.navigate('WinScreen');
