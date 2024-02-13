@@ -31,6 +31,7 @@ const PetHouse = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
+  const [purchasedItems, setPurchasedItems] = useState([]); // State to hold purchased items
 
   const windowDimensions = useWindowDimensions();
 
@@ -181,6 +182,11 @@ const PetHouse = () => {
       shadowOpacity: 1,
   }
 
+    // Function to add purchased items to state
+    const addToPurchasedItems = (item) => {
+      setPurchasedItems([...purchasedItems, item]);
+    };
+
   //const orientation = UseOrientation();
   //console.log(orientation)
 
@@ -198,7 +204,7 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-            <Inventory foodIcon={foodIcon} styles={styles} />
+            <Inventory foodIcon={foodIcon} styles={styles}/>
 
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>

@@ -18,7 +18,7 @@ const TimerComponent = () => {
 
 
 // these constants are to ensure the timer contunues to run no matter whether the app is running
-  const two_four = 40000; //that's 20 seconds
+  const two_four = 10000; //that's 20 seconds
   const [difference, setDifference] = useState(0);
   const [initialTime, setInitialTime] = useState(parseInt(time));
   const [timePassed, setTimePassed] = useState(0);
@@ -31,7 +31,7 @@ const TimerComponent = () => {
 
 //initiates the timer, records the date to continue to run
   const recordInitialTime = () => {
-    if (time=="0" & parseInt(steps)>0){
+    if (time=="0" && parseInt(steps)>0){
       setInitialTime(Date.now());
       startStopwatch();
       save_steps();
@@ -48,12 +48,12 @@ const TimerComponent = () => {
     }
   }
 
-  const save_steps = async(steps) => {
+  const save_steps = async() => {
     try {
       await AsyncStorage.setItem("NumberOfSteps", steps);
     } 
     catch (err) {
-      alert("I need a number! quaack");
+      alert("didn't save num of steps");
       throw err;
     }
   }
@@ -105,6 +105,7 @@ const TimerComponent = () => {
     set_run_Time(86400);
     setRunning(false);
     setSteps("0");
+    save_steps();
   }
 
 
@@ -136,6 +137,8 @@ useEffect(()=>{
     setRunning(true); 
   }
 },[])
+
+
 
 
   
