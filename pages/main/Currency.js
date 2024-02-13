@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import coinImage from '../../images/PetHouse/Portrait/coin.png';
 import diamondImage from '../../images/PetHouse/Portrait/diamond.png';
-import { useCurrency } from '../../pages/main/CurrencyContext';
+import { useCurrency } from '../../components/CurrencyContext';
 const window = Dimensions.get('window');
 
 const Currency = () => {

@@ -32,9 +32,8 @@ import Shop from './pages/main/Shop';
 import ItemShop from './pages/main/ItemShop';
 import Currency from './pages/main/Currency';
 import ProfilePage from './pages/main/ProfilePage';
-import { CurrencyProvider } from './pages/main/CurrencyContext';
+import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
-import InventoryState from './pages/main/InventoryState';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -89,7 +88,6 @@ export default function App() {
           <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
           <Stack.Screen name="Inventory" component={Inventory}/>
-          <Stack.Screen name="InventoryState" component={InventoryState}/>
           <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
           <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>

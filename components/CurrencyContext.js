@@ -34,8 +34,6 @@ export const CurrencyProvider = ({ children }) => {
   };
 
   const addItemToInventory = (item) => {
-    console.log(item);
-    console.log("made it here43ee bro");
     setInventoryItems([...inventoryItems, item]);
     console.log(inventoryItems);
   };

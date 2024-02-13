@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated } from 'react-native';
-import { withCurrency, useCurrency } from '../../pages/main/CurrencyContext';
+import { withCurrency, useCurrency } from '../../components/CurrencyContext';
 
 const Inventory = ({ foodIcon, styles }) => {
-  const { inventoryItems } = useCurrency(); // Accessing inventoryItems from context
+  const { inventoryItems } = useCurrency();
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -33,17 +33,15 @@ const Inventory = ({ foodIcon, styles }) => {
             }
           }}
         >
-          <View style={{ backgroundColor: 'white', borderRadius: 12, borderWidth: 4, borderColor: 'lightblue', width: '88%', marginTop: -305 }}>
+          <View style={{ backgroundColor: 'white', borderRadius: 10, borderColor: 'orange',borderWidth: 1,  width: '88%', marginTop: -305 }}>
             {/* Header Section */}
-            <View style={{ backgroundColor: 'lightblue', padding: 3, borderTopLeftRadius: 3, borderTopRightRadius: 3 }}>
-              <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'white', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
+            <View style={{ backgroundColor: 'orange', padding: 3, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+              <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
             {/* Content Section */}
-            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
-              {/* Render inventory items from state */}
+            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange',  justifyContent: 'space-evenly' }}>
               {inventoryItems.map((item, index) => {
-                console.log("Item image source:", item); // Add this line to log the image source
                 return (
                   <DraggableItem key={index} image={item} />
                 );
