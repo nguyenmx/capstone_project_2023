@@ -9,7 +9,7 @@ import BackArrow from '../../modules/BackArrow';
 
 const window = Dimensions.get('window');
 
-const TimerComponent = () => {
+const TimerComponent = ({ navigation }) => {
 
   const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { steps, setSteps } = useContext(ReferenceDataContext);
@@ -150,9 +150,9 @@ return (
       <View style={styles.container}>
 
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <BackArrow style={styles.backArrowContainer}> </BackArrow>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()} >
+          <BackArrow />
+        </TouchableOpacity>
           <Text style={styles.text}>I've waddled.. </Text>
         </View>
 

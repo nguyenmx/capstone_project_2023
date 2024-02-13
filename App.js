@@ -93,7 +93,7 @@ export default function App() {
           <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
-          <Stack.Screen name="TestChatGPT" component={TestChatGPT} />
+          <Stack.Screen name="TestChatGPT" component={TestChatGPT} options={{ headerShown: false }}/>
           <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
           <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
