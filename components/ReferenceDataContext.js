@@ -16,7 +16,7 @@ const ReferenceDataContext = createContext({
 const ReferenceDataContextProvider = ({ children }) => {
   const [name, setName] = useState("0");
   const [time, setTime] = useState("0");
-  const [steps, setSteps] = useState(undefined);
+  const [steps, setSteps] = useState("");
   const [selectedDuck, setSelectedDuck] = useState(0);  // Initialize selectedDuck
 
   return (

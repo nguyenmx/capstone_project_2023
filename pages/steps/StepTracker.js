@@ -48,15 +48,26 @@ const TimerComponent = () => {
     }
   }
 
-  const save_steps = async() => {
+  const save_steps = async () => {
     try {
+      console.log("Saving steps:", steps);
       await AsyncStorage.setItem("NumberOfSteps", steps);
-    } 
-    catch (err) {
-      alert("didn't save num of steps");
+    } catch (err) {
+      alert("Error saving steps: " + err);
       throw err;
     }
-  }
+  };
+
+  const save_steps_2 = async (number) => {
+    try {
+      console.log("Saving 2 steps:", number);
+      await AsyncStorage.setItem("NumberOfSteps", number);
+    } catch (err) {
+      alert("Error saving steps: " + err);
+      throw err;
+    }
+  };
+
 
   const load = async () => {
     try {
@@ -99,14 +110,17 @@ const TimerComponent = () => {
 
 
   const restart =()=>{
+    setSteps("0");
+    handleStepsChange("0");
     setTime("0");
     setInitialTime(0);
     clearInterval(intervalRef.current);
     set_run_Time(86400);
     setRunning(false);
-    setSteps("0");
-    save_steps();
   }
+
+  
+  
 
 
    
@@ -118,6 +132,8 @@ const TimerComponent = () => {
         set_run_Time(calc); 
         if (calc <= 0){
           restart();
+          save_steps_2("0");
+          
         }
     }, 1000); 
     setRunning(true); 
@@ -132,6 +148,7 @@ useEffect(()=>{
         set_run_Time(calc);
         if (calc <= 0){
           restart();
+          save_steps_2("0");
         }
     }, 1000); 
     setRunning(true); 
