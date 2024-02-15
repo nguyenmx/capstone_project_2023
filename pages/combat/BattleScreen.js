@@ -20,7 +20,7 @@ const window = Dimensions.get('window');
 //IMPORTANT: create an instance of the CombatModeLogic here
 const combatMode = new CombatModeLogic();
 const BattleScreen = ({ navigation}) => {
-const { selectedDuck } = useContext(ReferenceDataContext);
+const { selectedDuck, name, setName } = useContext(ReferenceDataContext);
 const playerHealthRef = useRef(null);
 const enemyHealthRef = useRef(null);
 const [playerExplode, setPlayerExplodeVisible] = useState(false);
@@ -141,6 +141,8 @@ const handlePress = (move) => {
             {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
             {oppExplode && <Image source={explosion} style={styles.explosionImageYou}></Image>}
           </View>
+          <Text style={styles.name}>{ name ? `${name}` : 'Player' }</Text>
+
           <View style={styles.playerContainer}>
             <Animal duckType={selectedDuck}></Animal>
             {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
@@ -168,6 +170,14 @@ const handlePress = (move) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    top: 240,
+    right: 50,
+    zIndex: 1,
   },
   backgroundImage: {
     width: '100%',
