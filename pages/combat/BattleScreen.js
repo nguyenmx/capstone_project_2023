@@ -142,7 +142,7 @@ const handlePress = (move) => {
         <TouchableOpacity onPress={() => navigation.navigate('CombatMode')}>
         <BackArrow></BackArrow>
         </TouchableOpacity>
-        <Text style={styles.botName}>{"Bot"}</Text>
+        <Text style={styles.botName}>{"Combat Bot"}</Text>
         <HealthBar ref={enemyHealthRef} barName="EnemyHealth" />
           <View style={styles.oppContainer}>
           <OpponentDuck></OpponentDuck>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   botName: {
     top: 60,
-    right: 80,
+    right: 40,
     zIndex: 1,
     fontFamily: 'NiceTango-K7XYo',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
