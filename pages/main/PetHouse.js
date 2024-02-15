@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 //import UseOrientation from '../../components/UseOrientation';
 import { useWindowDimensions } from 'react-native';
 import Inventory from './Inventory';
+import Currency from './Currency';
 
 const window = Dimensions.get('window');
 
@@ -104,6 +105,13 @@ const PetHouse = () => {
 
   const navigateToProfile = () => {
     navigation.navigate('ProfilePage');
+  };
+
+  const handleItemDrop = () => {
+    // Update health bar
+    increaseHealth();
+    // Remove item from inventory
+    // Implement logic to update inventory state, e.g., using a state variable
   };
 
   const isLandscape = windowDimensions.width > windowDimensions.height;
@@ -204,7 +212,7 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-            <Inventory foodIcon={foodIcon} styles={styles}/>
+            <Inventory foodIcon={foodIcon} styles={styles} onItemDrop={handleItemDrop} />
 
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
@@ -224,9 +232,11 @@ const PetHouse = () => {
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         
+        
           <View style={bottomNavContainer}>
     
               <View style={diamondAndCoinContainer}>
+                <Currency></Currency>
                 <Image source={diamond}></Image>
 
                 <View style={currencyContainer}>
@@ -238,8 +248,10 @@ const PetHouse = () => {
                 <View style={currencyContainer}>
                   <Text style={styles.currencyText}>812</Text>
                 </View>
+                
 
               </View>
+
 
             <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={itemShop} style={itemShopImg}></Image>

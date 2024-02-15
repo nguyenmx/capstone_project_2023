@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated } from 'react-native';
 import { withCurrency, useCurrency } from '../../components/CurrencyContext';
 
-const Inventory = ({ foodIcon, styles }) => {
-  const { inventoryItems } = useCurrency();
+const Inventory = ({ foodIcon, styles, onItemDrop}) => {
+  const { inventoryItems, removeItemFromInventory } = useCurrency(); // Get removeItemFromInventory from the currency context
+  
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -14,6 +15,11 @@ const Inventory = ({ foodIcon, styles }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const handleRemoveItem = (item) => {
+    removeItemFromInventory(item); // Call removeItemFromInventory function with the item's ID
+    console.log("new list: " + inventoryItems)
+  };
+
 
   return ( 
     <>
@@ -41,11 +47,15 @@ const Inventory = ({ foodIcon, styles }) => {
 
             {/* Content Section */}
             <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange',  justifyContent: 'space-evenly' }}>
-              {inventoryItems.map((item, index) => {
+            
+            {inventoryItems.map((item, index) => {
                 return (
-                  <DraggableItem key={index} image={item} />
+                  <TouchableOpacity key={index} onPress={() => handleRemoveItem(item)}>
+                    <Image source={item} style={{ width: 55, height: 55, marginBottom: 3 }} />
+                  </TouchableOpacity>
                 );
               })}
+
             </View>
           </View>
         </TouchableOpacity>
@@ -54,7 +64,7 @@ const Inventory = ({ foodIcon, styles }) => {
   );
 };
 
-const DraggableItem = ({ image }) => {
+const DraggableItem = ({ image, onDrop }) => {
   const [pan] = useState(new Animated.ValueXY());
 
   const panResponder = PanResponder.create({
@@ -67,9 +77,13 @@ const DraggableItem = ({ image }) => {
           dy: pan.y
         }
       ],
-      { useNativeDriver: false } // Add this options object
+      { useNativeDriver: false }
     ),
-    onPanResponderRelease: () => {
+    onPanResponderRelease: (event, gesture) => {
+      if (gesture.moveY > 92.4 && gesture.moveY < 335.3 + window.width * 0.58
+          && gesture.moveX > 92.4  && gesture.moveX < 335.3  + window.width * 0.58) {
+        onDrop();
+      }
       Animated.spring(pan, {
         toValue: { x: 0, y: 0 },
         useNativeDriver: false
@@ -85,5 +99,6 @@ const DraggableItem = ({ image }) => {
     />
   );
 };
+
 
 export default withCurrency(Inventory);

@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginLeft: 5,
+    opacity: 0, // Make the buttons invisible
   },
   buttonText: {
     color: 'white',

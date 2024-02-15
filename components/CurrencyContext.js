@@ -38,17 +38,22 @@ export const CurrencyProvider = ({ children }) => {
     console.log(inventoryItems);
   };
 
-  const contextValue = {
-    inventoryItems,
-    addItemToInventory
+  const removeItemFromInventory = (item) => {
+    console.log("Removing item:", item); 
+    const indexToRemove = inventoryItems.findIndex((inventoryItem) => inventoryItem === item);
+    if (indexToRemove !== -1) {
+      const updatedInventory = [...inventoryItems];
+      updatedInventory.splice(indexToRemove, 1);
+      setInventoryItems(updatedInventory);
+    }
   };
-
-
+  
+  
   const MAX_COINS = 999;
   const MAX_DIAMONDS = 999;
 
   return (
-    <CurrencyContext.Provider value={{ coins, diamonds, earnCurrency, spendCurrency,inventoryItems, addItemToInventory }}>
+    <CurrencyContext.Provider value={{ coins, diamonds, earnCurrency, spendCurrency,inventoryItems, addItemToInventory, removeItemFromInventory }}>
       {children}
     </CurrencyContext.Provider>
   );

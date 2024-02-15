@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native';
 import Currency from './Currency';
 import { Audio } from 'expo-av';
 import { withCurrency } from '../../components/CurrencyContext';
-import Inventory from './Inventory';
 
 const window = Dimensions.get('window');
 
