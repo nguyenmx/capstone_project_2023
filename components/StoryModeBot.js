@@ -12,13 +12,10 @@ export const generateResponse = async (userInput) => {
     return testImage;
     
   } else if (isDalleRequest){
-    try {
-      const dalleResponse = await generateDALLEResponse(userInput);
-      return dalleResponse;
-    } catch (error) {
-      console.error('Error generating DALLE image:', error);
-      return 'Error generating DALLE image';
-    }
+    console.log("got here1");
+    const dalleResponse = await generateDALLEResponse(userInput);
+    return dalleResponse;
+    
   }
   
   else {
@@ -28,6 +25,7 @@ export const generateResponse = async (userInput) => {
 };
 
 const generateDALLEResponse = async (userInput) => {
+  console.log("got here2");
   try{
     const response = await axios.post(
       'https://api.openai.com/v1/images/generations', {
@@ -42,11 +40,8 @@ const generateDALLEResponse = async (userInput) => {
         },
       }
     );
-    let url = res?.data?.data[0]?.url;
-    console.log('got url of the image: ', url);
-    messages.push({role: 'assistant', content: url});
-    return Promise.resolve({success: true, data: messages});
-
+    console.log("got here3");
+    return res?.data?.data[0]?.url;
   } catch (error) {
     console.error('Error generating image:', error);
     return 'Error generating image';
