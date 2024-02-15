@@ -47,9 +47,9 @@ const generateDALLEResponse = async (userInput) => {
     messages.push({role: 'assistant', content: url});
     return Promise.resolve({success: true, data: messages});
 
-  }catch (error) {
+  } catch (error) {
     console.error('Error generating image:', error);
-    return Promise.resolve({success: false, msg: error.message});
+    return 'Error generating image';
   }
 };
 
