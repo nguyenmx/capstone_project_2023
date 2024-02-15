@@ -5,6 +5,7 @@ import storyModeLogo from '../../images/Logos/StoryModeLogo.png';
 import swipeLeft from '../../images/TinderPage/cancel.png';
 import swipeRight from '../../images/TinderPage/green-heart-button.png';
 import briefCase from '../../images/TinderPage/briefcase.png';
+import profileIcon from '../../images/ChatBotIcons/profileIcon.png';
 import iButton from '../../images/TinderPage/i-button.png';
 import BackArrow from '../../modules/BackArrow';
 import verify from '../../images/TinderPage/verify.png';
@@ -12,9 +13,9 @@ import verify from '../../images/TinderPage/verify.png';
 const window = Dimensions.get('window');
 
 const profiles = [
-  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: require('../../images/PlayableAnimals/duckRizz.gif'), verified: true },
-  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: require('../../images/PlayableAnimals/combatDuck.gif'), verified: true },
-  { id: 3, name: 'Floppers', age: 19, occupation: 'Divorce Attorney', bio: 'Willing to share my bread crumbs', image: require('../../images/Backgrounds/livingRoom.jpg'), animalType: require('../../images/PlayableAnimals/combatDuck2.gif'), verified: true },
+  { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: require('../../images/PlayableAnimals/duckRizz.gif'), personality: 'Sporty', verified: false },
+  { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: require('../../images/PlayableAnimals/combatDuck.gif'), personality: 'Grumpy', verified: true },
+  { id: 3, name: 'Floppers', age: 19, occupation: 'Divorce Attorney', bio: 'Willing to share my bread crumbs', image: require('../../images/Backgrounds/livingRoom.jpg'), animalType: require('../../images/PlayableAnimals/combatDuck2.gif'), personality: 'Smug', verified: true },
   // Add more profiles as needed...
 ];
 
@@ -112,14 +113,26 @@ const TinderSwipePage = ({ navigation }) => {
                   <Image source={iButton} style={styles.informationButton} />
                 </TouchableOpacity>
               </View>
-              <View style={styles.occupationContainer}>
-                <Image source={briefCase} style={styles.briefCase} />
-                <Text style={styles.occText}>{currentProfile.occupation}</Text>
+
+              <View style={styles.occPersonalityContainer}>
+
+                <View style={styles.occupationContainer}>
+                  <Image source={briefCase} style={styles.briefCase} />
+                  <Text style={styles.occText}>{currentProfile.occupation}</Text>
+                </View>
+                
+                <View style={styles.personalityContainer}>
+                  <Image source={profileIcon} style={styles.profileIcon} />
+                  <Text style={styles.occText}>{currentProfile.personality}</Text>
+                </View>
               </View>
+
+              </View>
+              
               <View style={styles.bioContainer}>
                 <Text style={styles.bioText}>{currentProfile.bio}</Text>
               </View>
-            </View>
+
           </Animated.View>
         </PanGestureHandler>
       </View>
@@ -196,6 +209,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Set items horizontally
     alignItems: 'center',
   },
+  personalityContainer: {
+    left: 15,
+    flexDirection: 'row',
+    alignItems: 'center,'
+  },
   duckContainer: {
     position: 'absolute',
     top: window.width * 0.5,
@@ -225,6 +243,12 @@ const styles = StyleSheet.create({
     height: 25,
     marginRight: 10
   },
+  profileIcon: {
+    width: 20,
+    height: 25,
+    left: 3,
+    marginRight: 10
+  },
   pfpBackground:
   {
     height: window.height * 0.7,
@@ -249,6 +273,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  occPersonalityContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  bioContainer: {
+    left: 15
+  }
 });
 
 export default TinderSwipePage;

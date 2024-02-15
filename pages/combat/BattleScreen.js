@@ -27,6 +27,11 @@ const [playerExplode, setPlayerExplodeVisible] = useState(false);
 const [oppExplode, setOppExplodeVisible] = useState(false);
 const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
 const [oppMoveBubble, setOppMoveBubble] = useState(false);
+const { steps, setSteps } = useContext(ReferenceDataContext);
+
+function getRandomNumber() {
+  return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
+}
 
 
 explosionAnimation = (playerWon) => {
@@ -74,6 +79,8 @@ const playerBubbleAnimation = (move) => {
 };
 
 const handlePress = (move) => {
+  combatMode.playerPowerDamage(steps);
+  combatMode.oppPowerDamage(getRandomNumber());
   combatMode.setPlayerMove(move);
   combatMode.setOppMove();
   const playerWon = combatMode.playerWon();
@@ -89,7 +96,7 @@ const handlePress = (move) => {
   } else if (playerWon) {
     // If player wins, introduce a delay before updating the opponent's health bar
     setTimeout(() => {
-      enemyHealthRef.current.decreaseHealth();
+      enemyHealthRef.current.decreaseHealth_2(combatMode.getPlayerPower());
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
         navigation.navigate('WinScreen');
@@ -99,7 +106,7 @@ const handlePress = (move) => {
   } else {
     // If player loses, introduce a delay before updating the player's health bar
     setTimeout(() => {
-      playerHealthRef.current.decreaseHealth();
+      playerHealthRef.current.decreaseHealth_2(combatMode.getOppPower());
       if (playerHealthRef.current.getHealth() <= 0) {
         // Navigate to LossScreen when player health reaches zero
         navigation.navigate('LossScreen');

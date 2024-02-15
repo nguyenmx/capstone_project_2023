@@ -9,7 +9,7 @@ import BackArrow from '../../modules/BackArrow';
 
 const window = Dimensions.get('window');
 
-const TimerComponent = () => {
+const TimerComponent = ({ navigation }) => {
 
   const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { steps, setSteps } = useContext(ReferenceDataContext);
@@ -18,7 +18,7 @@ const TimerComponent = () => {
 
 
 // these constants are to ensure the timer contunues to run no matter whether the app is running
-  const two_four = 40000; //that's 20 seconds
+  const two_four = 40000; //that's 40 seconds
   const [difference, setDifference] = useState(0);
   const [initialTime, setInitialTime] = useState(parseInt(time));
   const [timePassed, setTimePassed] = useState(0);
@@ -31,7 +31,7 @@ const TimerComponent = () => {
 
 //initiates the timer, records the date to continue to run
   const recordInitialTime = () => {
-    if (time=="0" & parseInt(steps)>0){
+    if (time=="0" && parseInt(steps)>0){
       setInitialTime(Date.now());
       startStopwatch();
       save_steps();
@@ -48,15 +48,26 @@ const TimerComponent = () => {
     }
   }
 
-  const save_steps = async(steps) => {
+  const save_steps = async () => {
     try {
+      console.log("Saving steps:", steps);
       await AsyncStorage.setItem("NumberOfSteps", steps);
-    } 
-    catch (err) {
-      alert("I need a number! quaack");
+    } catch (err) {
+      alert("Error saving steps: " + err);
       throw err;
     }
-  }
+  };
+
+  const save_steps_2 = async (number) => {
+    try {
+      console.log("Saving 2 steps:", number);
+      await AsyncStorage.setItem("NumberOfSteps", number);
+    } catch (err) {
+      alert("Error saving steps: " + err);
+      throw err;
+    }
+  };
+
 
   const load = async () => {
     try {
@@ -99,13 +110,17 @@ const TimerComponent = () => {
 
 
   const restart =()=>{
+    setSteps("0");
+    handleStepsChange("0");
     setTime("0");
     setInitialTime(0);
     clearInterval(intervalRef.current);
     set_run_Time(86400);
     setRunning(false);
-    setSteps("0");
   }
+
+  
+  
 
 
    
@@ -117,6 +132,8 @@ const TimerComponent = () => {
         set_run_Time(calc); 
         if (calc <= 0){
           restart();
+          save_steps_2("0");
+          
         }
     }, 1000); 
     setRunning(true); 
@@ -131,11 +148,14 @@ useEffect(()=>{
         set_run_Time(calc);
         if (calc <= 0){
           restart();
+          save_steps_2("0");
         }
     }, 1000); 
     setRunning(true); 
   }
 },[])
+
+
 
 
   
@@ -147,9 +167,9 @@ return (
       <View style={styles.container}>
 
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <BackArrow style={styles.backArrowContainer}> </BackArrow>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()} >
+          <BackArrow />
+        </TouchableOpacity>
           <Text style={styles.text}>I've waddled.. </Text>
         </View>
 

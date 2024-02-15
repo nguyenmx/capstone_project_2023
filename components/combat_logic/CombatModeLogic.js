@@ -10,6 +10,24 @@ class CombatModeLogic extends Component {
       let oppMove = "";
       let playerHealth = 100;
       let oppHealth = 100;
+      let playerPower;
+      let oppPower;
+  }
+
+  setPlayerPower(number){
+    playerPower = number;
+    console.log("power damage is for player: ", playerPower);
+  }
+  getPlayerPower(){
+    return playerPower;
+  }
+
+  setOppPower(number){
+    oppPower = number;
+    console.log("power damage is for opp: ", oppPower);
+  }
+  getOppPower(){
+    return oppPower;
   }
   
   setPlayerMove(move) {
@@ -29,6 +47,59 @@ class CombatModeLogic extends Component {
   getPlayerMove() {
     return playerMove;
   }
+
+
+  playerPowerDamage(steps){
+    console.log("The player's steps count is: " + steps);
+    if (parseInt(steps)== 0 && steps == ""){
+      this.setPlayerPower(10);
+    }
+    else if (parseInt(steps)> 0 && parseInt(steps) <= 3500){
+      this.setPlayerPower(12);
+    }
+    else if (parseInt(steps)> 3500 && parseInt(steps) <= 5000){
+      this.setPlayerPower(14);
+    }
+    else if (parseInt(steps)> 5000 && parseInt(steps) <= 12000){
+      this.setPlayerPower(17);
+    }
+    else if (parseInt(steps)> 12000 && parseInt(steps) <= 19000){
+      this.setPlayerPower(18);
+    }
+    else if (parseInt(steps) > 19000){
+      this.setPlayerPower(20);
+    }
+    else{
+      this.setPlayerPower(10);
+    }
+  }
+
+
+  oppPowerDamage(steps){
+    console.log("The opp's steps count is: " + steps);
+    if (parseInt(steps)== 0 && steps == ""){
+      this.setOppPower(10);
+    }
+    else if (parseInt(steps)> 0 && parseInt(steps) <= 3500){
+      this.setOppPower(12);
+    }
+    else if (parseInt(steps)> 3500 && parseInt(steps) <= 5000){
+      this.setOppPower(14);
+    }
+    else if (parseInt(steps)> 5000 && parseInt(steps) <= 12000){
+      this.setOppPower(17);
+    }
+    else if (parseInt(steps)> 12000 && parseInt(steps) <= 19000){
+      this.setOppPower(18);
+    }
+    else if (parseInt(steps) > 19000){
+      this.setOppPower(20);
+    }
+    else{
+      this.setOppPower(10);
+    }
+  }
+
 
   playerWon() {
     if (playerMove == "scissors" && oppMove == "paper" 
@@ -71,5 +142,9 @@ class CombatModeLogic extends Component {
     // Implement the logic for calculating rewards here.
   }
 }
+
+
+
+
 
 export default CombatModeLogic;

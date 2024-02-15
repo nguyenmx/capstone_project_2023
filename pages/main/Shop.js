@@ -13,18 +13,18 @@ import coin from '../../images/PetHouse/Portrait/coin.png';
 import { useNavigation } from '@react-navigation/native';
 import Currency from './Currency';
 import { Audio } from 'expo-av';
-import { withCurrency } from '../../pages/main/CurrencyContext';
-
+import { withCurrency } from '../../components/CurrencyContext';
+import Inventory from './Inventory';
 
 const window = Dimensions.get('window');
 
-
 class Shop extends React.Component {
+
+
   soundObject = new Audio.Sound();
 
   handleBuyPress = async (item) => {
     console.log(`Buy button pressed for item: ${item.price}`);
-
     // Check if the sound is already loaded
     if (this.soundObject._loaded) {
       try {
@@ -44,44 +44,46 @@ class Shop extends React.Component {
     }
 
     // Destructure the currency values and earnCurrency function from the context
-    const { coins, diamonds, earnCurrency, spendCurrency } = this.props.currency;
+    const { coins, diamonds, earnCurrency, spendCurrency, addItemToInventory, imageSource, inventoryItems } = this.props.currency;
 
     console.log('Current coins:', coins);
     console.log('Current diamonds:', diamonds);
+    console.log('Current diamonds:', inventoryItems);
 
 
-  // Deduct the specified amount from the appropriate currency
-  if (item.currencyType === 'coins' && coins >= item.price) {
-    console.log('Deducting coins:', item.price);
-    spendCurrency('coins', item.price);
-  } else if (item.currencyType === 'diamonds' && diamonds >= item.price) {
-    console.log('Deducting diamonds:', item.price);
-    spendCurrency('diamonds', item.price);
-  } else {
-    // Handle insufficient funds (optional)
-    console.warn('Insufficient funds');
-  }
-};
-  
-  
+    // Deduct the specified amount from the appropriate currency
+    if (item.currencyType === 'coins' && coins >= item.price) {
+      console.log('Deducting coins:', item.price);
+      spendCurrency('coins', item.price);
+      addItemToInventory(item.imageSource); // Ensure item.imageSource is passed correctly
+      console.log(imageSource)
+    } else if (item.currencyType === 'diamonds' && diamonds >= item.price) {
+      console.log('Deducting diamonds:', item.price);
+      spendCurrency('diamonds', item.price);
+      addItemToInventory(item.imageSource); // Ensure item.imageSource is passed correctly
+
+    } else {
+      // Handle insufficient funds (optional)
+      console.warn('Insufficient funds');
+    }
+  };
 
   renderShopItem = (item) => (
     <View style={styles.itemContainer}>
       <Image source={item.imageSource} style={styles.itemImage} />
       <TouchableOpacity onPress={() => this.handleBuyPress(item)}>
-      <Text style={styles.itemPrice}>
-        {item.price + ' '} 
-        {item.currencyType === 'coins' ? (
-          <>
-            <Image source={coin} style={styles.currencyIcon} />
-          </>
-        ) : (
-          <>
-            <Image source={diamond} style={styles.currencyIcon} />
-          </>
-        )}
-      </Text>      
- 
+        <Text style={styles.itemPrice}>
+          {item.price + ' '}
+          {item.currencyType === 'coins' ? (
+            <>
+              <Image source={coin} style={styles.currencyIcon} />
+            </>
+          ) : (
+            <>
+              <Image source={diamond} style={styles.currencyIcon} />
+            </>
+          )}
+        </Text>
         <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
       </TouchableOpacity>
     </View>
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 33,
     color: 'white',
     top: 43,
-    left:25,
+    left: 25,
     zIndex: 998,
   },
   currencyIcon: {
