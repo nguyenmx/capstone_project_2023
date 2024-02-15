@@ -12,8 +12,13 @@ export const generateResponse = async (userInput) => {
     return testImage;
     
   } else if (isDalleRequest){
-    const dalleResponse = await generateDALLEResponse(userInput);
-    return dalleResponse;
+    try {
+      const dalleResponse = await generateDALLEResponse(userInput);
+      return dalleResponse;
+    } catch (error) {
+      console.error('Error generating DALLE image:', error);
+      return 'Error generating DALLE image';
+    }
   }
   
   else {
@@ -29,6 +34,12 @@ const generateDALLEResponse = async (userInput) => {
         userInput,
         n: 1,
         size: "512x512"
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${REACT_APP_API_KEY}`,
+        },
       }
     );
     let url = res?.data?.data[0]?.url;
