@@ -142,6 +142,7 @@ const handlePress = (move) => {
         <TouchableOpacity onPress={() => navigation.navigate('CombatMode')}>
         <BackArrow></BackArrow>
         </TouchableOpacity>
+        <Text style={styles.botName}>{"Bot"}</Text>
         <HealthBar ref={enemyHealthRef} barName="EnemyHealth" />
           <View style={styles.oppContainer}>
           <OpponentDuck></OpponentDuck>
@@ -188,7 +189,18 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
     fontSize: window.width * 0.05,
     color: 'white',
-  },   
+  },
+  botName: {
+    top: 60,
+    right: 80,
+    zIndex: 1,
+    fontFamily: 'NiceTango-K7XYo',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    fontSize: window.width * 0.05,
+    color: 'white',
+  }, 
   backgroundImage: {
     width: '100%',
     height: '100%',
@@ -205,7 +217,7 @@ const styles = StyleSheet.create({
     aspectRatio: 384 / 96,
     alignItems: 'center',
     justifyContent: 'flex-end', // Align content to the bottom of the container
-    marginTop: window.height * 0.73,
+    marginTop: window.height * 0.72,
   },
   image: {
     width: 100,
@@ -214,7 +226,8 @@ const styles = StyleSheet.create({
   },
   oppContainer: {
     marginRight: 170,
-    marginTop: 10
+    marginTop: -35,
+    bottom: -40,
   },
   playerContainer: {
     marginLeft: 150,
