@@ -179,7 +179,7 @@ const PetHouse = () => {
 
   const dialogueContainer = {
       width: '100%',
-      top: isLandscape ? window.width * 0.02 : 0,
+      top: isLandscape ? window.width * 0.02 : 14,
       height: isLandscape ? '14%' : '10.8%', 
       borderWidth: 7, 
       borderColor: 'rgba(77, 49, 45, 0.9)',

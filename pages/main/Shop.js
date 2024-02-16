@@ -96,20 +96,9 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-          <Currency />
+        <Currency optionalStyles={{ top: 120 , left: 50}} />
         </View>
-        <View style={[{ position: 'absolute', top: 125, left: 45 }]}>
-          <View style={styles.priceContainer}>
-            <Image source={diamond} style={[{ position: 'absolute', zIndex: 999, top: -15, left: -5 }]}></Image>
-            <View style={styles.rect}></View>
-          </View>
 
-          <View>
-            <Image source={coin} style={[{ position: 'relative', zIndex: 998, top: -24, left: 10, height: 35, width: 35 }]}></Image>
-            <Image source={coin} style={[{ position: 'absolute', zIndex: 999, top: -15, left: -5 }]}></Image>
-            <View style={styles.rect}></View>
-          </View>
-        </View>
 
         <View style={[styles.container, { top: window.width * 0.24 }]}>
           <View style={styles.shopItem}>

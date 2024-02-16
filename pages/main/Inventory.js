@@ -67,7 +67,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   );
 };
 
-const DraggableItem = ({ image, onDrop, inventoryItems }) => {
+const DraggableItem = ({ image, onDrop }) => {
   const [pan] = useState(new Animated.ValueXY());
 
   const panResponder = PanResponder.create({
@@ -87,10 +87,10 @@ const DraggableItem = ({ image, onDrop, inventoryItems }) => {
 
       // Check if the item is dropped on top of the Duck
       const isOverlapping =
-        moveX >window.width/2 &&
-        moveX < window.width/2 + window.width &&
-        moveY > window.height/2 &&
-        moveY <  window.height/2  + window.width;
+      moveX > window.width / -2.1 &&
+      moveX < window.width / 3.5+ window.width * 0.58 &&
+      moveY > window.height / 3.5 &&
+      moveY < window.height / 2.1 + window.width * 0.58;
 
       if (isOverlapping) {
         // Call onDrop function to remove the item from inventory
@@ -116,7 +116,6 @@ const DraggableItem = ({ image, onDrop, inventoryItems }) => {
     />
   );
 };
-
 
 
 
