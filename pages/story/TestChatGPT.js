@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Image } from 'react-native';
+import React, { useState, useContext} from 'react';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, Image, route } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'; // Import InputToolbar
 import BackArrow from '../../modules/BackArrow';
 import { generateResponse } from '../../components/StoryModeBot';
 import profileIcon from '../../images/ChatBotIcons/profileIcon.png';
 import stickerIcon from '../../images/ChatBotIcons/stickerIcon.png';
+import verify from '../../images/TinderPage/verify.png';
+
 
 
 const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
 const botAvatar = require('../../images/PlayableAnimals/duckRizz.gif');
 
-const TestChatGPT = ({ navigation }) => {
+
+const TestChatGPT = ({ navigation, route}) => {
   const [messages, setMessages] = useState([]);
+  const { currentProfile } = route.params;
 
   const onSend = async (newMessages = []) => {
     const userInput = newMessages[0].text;
@@ -76,7 +80,7 @@ const TestChatGPT = ({ navigation }) => {
     if (props.currentMessage.user._id == 2) {
       return (
         <View style={styles.botAvatarContainer}>
-          <ImageBackground source={botAvatar} style={styles.botAvatar} />
+          <ImageBackground source={currentProfile.animalType} style={styles.botAvatar} />
         </View>
       );
     }
@@ -93,8 +97,10 @@ const TestChatGPT = ({ navigation }) => {
         >
           <BackArrow />
         </TouchableOpacity>
-        <ImageBackground source={botAvatar} style={styles.botNavAvatar} />
-        <Text style={styles.animalName}>Waddles</Text>
+        <ImageBackground source={currentProfile.animalType} style={styles.botNavAvatar} />
+        <Text style={styles.animalName}>{currentProfile.name}</Text>
+        <Text style={styles.animalName}>{", " + currentProfile.age}</Text>
+        {currentProfile.verified && <Image source={verify} style={styles.verifiedIcon} />}
         <ImageBackground source={profileIcon} style={styles.profileIcon} />
       </View>
     );
@@ -175,21 +181,28 @@ const styles = StyleSheet.create({
   },
   profileIcon: {
     width: 31,
-    height: 40,
+    height: 38,
     left: 335,
     top: 55,
     position: 'absolute',
   },
   inputToolbarContainer: {
     padding: 8
+
   
   },
   inputToolbarPrimary: {
     backgroundColor: 'rgb(255,227, 249)',
     borderRadius: 25, // Set border radius
     paddingHorizontal: 10, // Add horizontal padding
-    paddingVertical: 5, // Add vertical padding
+    paddingVertical: 10, // Add vertical padding
   },
+  verifiedIcon: {
+    width: 30,
+    height: 30,
+    top: 45,
+    left: 12
+  }
   // bottomNavContainer: {
   //   padding: 20
   // }

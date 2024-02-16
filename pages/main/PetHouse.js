@@ -107,12 +107,14 @@ const PetHouse = () => {
     navigation.navigate('ProfilePage');
   };
 
-  const handleItemDrop = () => {
-    // Update health bar
-    increaseHealth();
-    // Remove item from inventory
-    // Implement logic to update inventory state, e.g., using a state variable
+  const onItemDrop = (item) => {
+    if (item === null) {
+      removeItemFromInventory(item);
+    } else {
+      console.log("item dropped on nothing: " + item)
+    }
   };
+  
 
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
@@ -190,11 +192,6 @@ const PetHouse = () => {
       shadowOpacity: 1,
   }
 
-    // Function to add purchased items to state
-    const addToPurchasedItems = (item) => {
-      setPurchasedItems([...purchasedItems, item]);
-    };
-
   //const orientation = UseOrientation();
   //console.log(orientation)
 
@@ -212,7 +209,7 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-            <Inventory foodIcon={foodIcon} styles={styles} onItemDrop={handleItemDrop} />
+            <Inventory foodIcon={foodIcon} styles={styles} onItemDrop={onItemDrop} />
 
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
@@ -231,7 +228,7 @@ const PetHouse = () => {
 
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
-        
+
         
           <View style={bottomNavContainer}>
     

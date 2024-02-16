@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions, Animated } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import storyModeLogo from '../../images/Logos/StoryModeLogo.png';
@@ -23,6 +23,7 @@ const profiles = [
 const TinderSwipePage = ({ navigation }) => {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const translateX = new Animated.Value(0);
+  const [swipedProfiles, setSwipedProfiles] = useState([]);
 
   const onSwipeEvent = Animated.event(
     [{ nativeEvent: { translationX: translateX } }],
@@ -54,9 +55,16 @@ const TinderSwipePage = ({ navigation }) => {
         translateX.setValue(0);
       });
     } else if (direction === 'right') {
-        navigation.navigate('TestChatGPT');
+        const currentProfile = profiles[currentProfileIndex];
+        setSwipedProfiles([...swipedProfiles, currentProfile]);
+        navigation.navigate('TestChatGPT', { currentProfile });
+        console.log(currentProfile.name);
     }
   };
+
+  const setAnimalProfileOnSwipe = () => {
+
+  }
 
   const resetPosition = () => {
     Animated.spring(translateX, {

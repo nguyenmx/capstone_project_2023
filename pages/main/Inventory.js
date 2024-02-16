@@ -1,6 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated } from 'react-native';
+import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { withCurrency, useCurrency } from '../../components/CurrencyContext';
+import Duck from '../../modules/CharDuck';
+
+const window = Dimensions.get('window');
+
 
 const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency(); // Get removeItemFromInventory from the currency context
@@ -17,6 +21,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   };
   const handleRemoveItem = (item) => {
     removeItemFromInventory(item); // Call removeItemFromInventory function with the item's ID
+    onItemDrop();
     console.log("new list: " + inventoryItems)
   };
 
@@ -49,12 +54,10 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
             <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange',  justifyContent: 'space-evenly' }}>
             
             {inventoryItems.map((item, index) => {
-                return (
-                  <TouchableOpacity key={index} onPress={() => handleRemoveItem(item)}>
-                    <Image source={item} style={{ width: 55, height: 55, marginBottom: 3 }} />
-                  </TouchableOpacity>
+              return (
+                <DraggableItem key={index} image={item} onDrop={handleRemoveItem} />
                 );
-              })}
+            })}
 
             </View>
           </View>
@@ -64,7 +67,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   );
 };
 
-const DraggableItem = ({ image, onDrop }) => {
+const DraggableItem = ({ image, onDrop, inventoryItems }) => {
   const [pan] = useState(new Animated.ValueXY());
 
   const panResponder = PanResponder.create({
@@ -80,10 +83,21 @@ const DraggableItem = ({ image, onDrop }) => {
       { useNativeDriver: false }
     ),
     onPanResponderRelease: (event, gesture) => {
-      if (gesture.moveY > 92.4 && gesture.moveY < 335.3 + window.width * 0.58
-          && gesture.moveX > 92.4  && gesture.moveX < 335.3  + window.width * 0.58) {
-        onDrop();
+      const { moveX, moveY } = gesture;
+
+      // Check if the item is dropped on top of the Duck
+      const isOverlapping =
+        moveX >window.width/2 &&
+        moveX < window.width/2 + window.width &&
+        moveY > window.height/2 &&
+        moveY <  window.height/2  + window.width;
+
+      if (isOverlapping) {
+        // Call onDrop function to remove the item from inventory
+        onDrop(image); // Assuming image is the item being dropped
       }
+
+      // Reset the position of the item after release
       Animated.spring(pan, {
         toValue: { x: 0, y: 0 },
         useNativeDriver: false
@@ -95,10 +109,16 @@ const DraggableItem = ({ image, onDrop }) => {
     <Animated.Image
       {...panResponder.panHandlers}
       source={image}
-      style={[{ width: 55, height: 55, marginBottom: 3 }, { transform: [{ translateX: pan.x }, { translateY: pan.y }] }]}
+      style={[
+        { width: 55, height: 55, marginBottom: 3 },
+        { transform: [{ translateX: pan.x }, { translateY: pan.y }] }
+      ]}
     />
   );
 };
+
+
+
 
 
 export default withCurrency(Inventory);
