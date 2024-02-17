@@ -97,9 +97,10 @@ const handlePress = (move) => {
     // If player wins, introduce a delay before updating the opponent's health bar
     setTimeout(() => {
       enemyHealthRef.current.decreaseHealth_2(combatMode.getPlayerPower());
+      const finalPlayerHealth = playerHealthRef.current.getHealth();
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
-        navigation.navigate('WinScreen');
+        navigation.navigate('WinScreen', { finalHealth: finalPlayerHealth });
       }
       console.log("Player wins!");
     }, 2500); // Adjust the delay timing as needed
@@ -107,13 +108,14 @@ const handlePress = (move) => {
     // If player loses, introduce a delay before updating the player's health bar
     setTimeout(() => {
       playerHealthRef.current.decreaseHealth_2(combatMode.getOppPower());
-      if (playerHealthRef.current.getHealth() <= 0) {
+      const finalPlayerHealth = playerHealthRef.current.getHealth();
+      if (finalPlayerHealth <= 0) {
         // Navigate to LossScreen when player health reaches zero
-        navigation.navigate('LossScreen');
+        navigation.navigate('LossScreen', { finalHealth: finalPlayerHealth });
       }
       console.log("Player loses!");
     }, 2500); // Adjust the delay timing as needed
-  }
+  }  
 };
 
 
