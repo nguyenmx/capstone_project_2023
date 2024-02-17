@@ -1,14 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
+import HealthBar from '../../modules/HealthBar';
+
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const defeatBanner = require('../../images/CombatScreen/defeatBanner.png');
 
-const LossScreen = ({ navigation }) => {
+const LossScreen = ({ navigation, route }) => {
   const { selectedDuck } = useContext(ReferenceDataContext);
+  const { finalHealth } = route.params || { finalHealth: 100 };;
+
+  // Create a ref for the HealthBar component
+  const healthBarRef = useRef(null);
+
+  // useEffect to update the HealthBar's initial health when finalHealth changes
+  useEffect(() => {
+    if (healthBarRef.current) {
+      healthBarRef.current.decreaseHealth_2((finalHealth-100)*-1);
+    }
+  }, [finalHealth]);
 
   return (
     <View>
@@ -17,6 +30,7 @@ const LossScreen = ({ navigation }) => {
           <Image source={defeatBanner} style={styles.banner} />
         </View>
         <Duck duckType={selectedDuck} />
+        <HealthBar ref={healthBarRef} barName="PlayerHealth" />  
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('TestingScreen')}
@@ -38,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: window.height * 0.1,
+    marginVertical: window.height * 0.05,
   },
   buttonText: {
     fontFamily: 'NiceTango-K7XYo',
@@ -52,7 +66,7 @@ const styles = StyleSheet.create({
     width: window.width * 0.7,
     aspectRatio: 702 / 614, // Adjust the aspect ratio to fit the banner image
     marginTop: window.height * 0.04,
-    marginBottom: window.height * 0.1,
+    marginBottom: window.height * 0.02,
     justifyContent: 'center',
     alignItems: 'center',
   },

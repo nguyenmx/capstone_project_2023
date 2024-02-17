@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef} from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
