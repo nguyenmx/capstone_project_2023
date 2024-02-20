@@ -87,9 +87,9 @@ const DraggableItem = ({ image, onDrop }) => {
 
       // Check if the item is dropped on top of the Duck
       const isOverlapping =
-      moveX > window.width / -2.1 &&
-      moveX < window.width / 3.5+ window.width * 0.58 &&
-      moveY > window.height / 3.5 &&
+      moveX > window.width / -4.1 &&
+      moveX < window.width / 4.5+ window.width * 0.58 &&
+      moveY > window.height / 2.5 &&
       moveY < window.height / 2.1 + window.width * 0.58;
 
       if (isOverlapping) {

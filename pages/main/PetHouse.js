@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useWindowDimensions } from 'react-native';
 import Inventory from './Inventory';
 import Currency from './Currency';
+import light from '../../images/LightS.png';
 
 const window = Dimensions.get('window');
 
@@ -32,7 +33,16 @@ const PetHouse = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
-  const [purchasedItems, setPurchasedItems] = useState([]); // State to hold purchased items
+  const [isNight, setIsNight] = useState(false);
+
+  const toggleDayNight = () => {
+    setIsNight(!isNight);
+  };
+
+  const backgroundImageSource = isNight 
+    ? require('../../images/Backgrounds/livingRoom_night.jpg') 
+    : require('../../images/Backgrounds/livingRoom.jpg');
+
 
   const windowDimensions = useWindowDimensions();
 
@@ -125,6 +135,11 @@ const PetHouse = () => {
     top: isLandscape ? -140 : 80,
   };
 
+  const lightPosition = {
+    left: isLandscape ? 10 : 10,
+    top: isLandscape ? -140 : 80,
+  };
+
   const topNavContainer = {
     position: 'relative',
     flexDirection: 'row',
@@ -196,7 +211,7 @@ const PetHouse = () => {
   //console.log(orientation)
 
   return (
-    <ImageBackground source={require('../../images/Backgrounds/livingRoom.jpg')} style={backgroundImage}>
+    <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
       <View style={styles.container}>
         <View style = {topNavContainer}>
 
@@ -228,6 +243,10 @@ const PetHouse = () => {
 
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
+        
+        <TouchableOpacity onPress={toggleDayNight} style={{transform: [{ scale: .15 }],position: 'absolute', top: 220}}>
+          <Image source={light} Optional={lightPosition}  />
+        </TouchableOpacity>
 
         
           <View style={bottomNavContainer}>
@@ -334,6 +353,16 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: -70
   },
+  lightx: {
+    transform: [{ scale: .8 }],
+    position: 'absolute'
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    marginTop: -70
+  },
   nameContainer: {
     width: 175,
     height: 60, 
@@ -431,6 +460,8 @@ const styles = StyleSheet.create({
     fontFamily: 'NiceTango-K7XYo',
     color: 'white',
   },
+
+
 
   // settingButtonImage: {
   //   position: 'absolute',

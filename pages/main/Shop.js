@@ -104,7 +104,7 @@ class Shop extends React.Component {
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' })}
-            {this.renderShopItem({ imageSource: require('../../images/Food/Cheese.png'), price: 20, currencyType: 'coins' })}
+            {this.renderShopItem({ imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' })}
           </View>
         </View>
 

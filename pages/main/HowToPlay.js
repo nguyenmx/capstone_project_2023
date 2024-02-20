@@ -77,7 +77,6 @@ const HowToPlay = () => {
       </Swiper>
 
       <View style={styles.overlay}>
-        <Text style={styles.howToPlayText}>How to Play</Text>
         <Image source={require('../../images/Banner_Blank.png')} style={styles.banner} ></Image>
       </View>
     </ImageBackground>
