@@ -56,32 +56,6 @@ const dalle = async (prompt) => {
 
 
 
-// const generateDALLEResponse = async (userInput) => {
-//   console.log("got here2");
-//   try {
-//     const response = await axios.post(
-//       'https://api.openai.com/v1/images/generations',
-//       {
-//         userInput,
-//         n: 1,
-//         size: "512x512"
-//       },
-//       {
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${REACT_APP_API_KEY}`,
-//         },
-//       }
-//     );
-//     console.log("got here3");
-//     console.log("DALL-E response URL:", response?.data?.data[0]?.url);
-//     return response?.data?.data[0]?.url;
-//   } catch (error) {
-//     console.error('Error generating image:', error);
-//     return 'Error generating image';
-//   }
-// };
-
 const generateChatGPTResponse = async (userInput) => {
   try {
     const response = await axios.post(
