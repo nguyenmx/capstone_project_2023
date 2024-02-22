@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef}  from 'react';
+import React, {useState, useContext, useRef, useEffect}  from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal} from 'react-native';
 import backgroundImage from '../../images/Backgrounds/background.gif';
 import rock from '../../images/CombatScreen/rock.png';
@@ -19,15 +19,20 @@ const window = Dimensions.get('window');
 
 //IMPORTANT: create an instance of the CombatModeLogic here
 const combatMode = new CombatModeLogic();
-const BattleScreen = ({ navigation}) => {
-const { selectedDuck, name, setName } = useContext(ReferenceDataContext);
-const playerHealthRef = useRef(null);
-const enemyHealthRef = useRef(null);
-const [playerExplode, setPlayerExplodeVisible] = useState(false);
-const [oppExplode, setOppExplodeVisible] = useState(false);
-const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
-const [oppMoveBubble, setOppMoveBubble] = useState(false);
-const { steps, setSteps } = useContext(ReferenceDataContext);
+const BattleScreen = ({ navigation }) => {
+  const { selectedDuck, name, playerHealth, setPlayerHealth, setName } = useContext(ReferenceDataContext);
+  const playerHealthRef = useRef(null);
+  const enemyHealthRef = useRef(null);
+  const [playerExplode, setPlayerExplodeVisible] = useState(false);
+  const [oppExplode, setOppExplodeVisible] = useState(false);
+  const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
+  const [oppMoveBubble, setOppMoveBubble] = useState(false);
+  const { steps, setSteps } = useContext(ReferenceDataContext)
+
+useEffect(() => {
+  // Here you can do something when playerHealth changes
+  console.log('Player health updated:', playerHealth);
+}, [playerHealth]);
 
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
@@ -84,7 +89,7 @@ const handlePress = (move) => {
   combatMode.setPlayerMove(move);
   combatMode.setOppMove();
   const playerWon = combatMode.playerWon();
-  
+
   playerBubbleAnimation(move);
   oppBubbleAnimation(combatMode.getOppMove());
   explosionAnimation(playerWon);
@@ -97,10 +102,9 @@ const handlePress = (move) => {
     // If player wins, introduce a delay before updating the opponent's health bar
     setTimeout(() => {
       enemyHealthRef.current.decreaseHealth_2(combatMode.getPlayerPower());
-      const finalPlayerHealth = playerHealthRef.current.getHealth();
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
-        navigation.navigate('WinScreen', { finalHealth: finalPlayerHealth });
+        navigation.navigate('WinScreen');
       }
       console.log("Player wins!");
     }, 2500); // Adjust the delay timing as needed
@@ -109,13 +113,17 @@ const handlePress = (move) => {
     setTimeout(() => {
       playerHealthRef.current.decreaseHealth_2(combatMode.getOppPower());
       const finalPlayerHealth = playerHealthRef.current.getHealth();
+
+      // Update playerHealth in the context
+      setPlayerHealth(finalPlayerHealth);
+
       if (finalPlayerHealth <= 0) {
         // Navigate to LossScreen when player health reaches zero
-        navigation.navigate('LossScreen', { finalHealth: finalPlayerHealth });
+        navigation.navigate('LossScreen');
       }
       console.log("Player loses!");
     }, 2500); // Adjust the delay timing as needed
-  }  
+  }
 };
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
@@ -24,8 +24,7 @@ import light from '../../images/LightS.png';
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-  const { name, setName } = useContext(ReferenceDataContext);
-  const { selectedDuck } = useContext(ReferenceDataContext);
+  const { name, setName, selectedDuck, playerHealth } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
@@ -43,6 +42,9 @@ const PetHouse = () => {
     ? require('../../images/Backgrounds/livingRoom_night.jpg') 
     : require('../../images/Backgrounds/livingRoom.jpg');
 
+
+  // Create a ref for the HealthBar component
+  const healthBarRef = useRef(null);
 
   const windowDimensions = useWindowDimensions();
 
@@ -72,6 +74,11 @@ const PetHouse = () => {
 
 
   useEffect(() => {
+
+    if (healthBarRef.current) {
+      healthBarRef.current.decreaseHealth_2((playerHealth-100)*-1);
+    }
+
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 1000,
@@ -88,7 +95,7 @@ const PetHouse = () => {
         sound.unloadAsync();
       }
     };
-  }, [fadeAnim, sound]);
+  }, [fadeAnim, sound, playerHealth]);
 
   const onVolumeChange = (value) => {
     if (sound) {
@@ -234,6 +241,7 @@ const PetHouse = () => {
         </View>
 
         <HealthBar
+            ref={healthBarRef}
             Optional={healthPosition}
             health={health}
             maxHealth={maxHealth}
