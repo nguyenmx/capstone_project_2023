@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
@@ -20,11 +20,14 @@ import { useWindowDimensions } from 'react-native';
 import Inventory from './Inventory';
 import Currency from './Currency';
 import light from '../../images/LightS.png';
+import LottieView from 'lottie-react-native';
+
 
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-  const { name, setName, selectedDuck, playerHealth } = useContext(ReferenceDataContext);
+  const { name, setName } = useContext(ReferenceDataContext);
+  const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);
@@ -33,6 +36,8 @@ const PetHouse = () => {
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
   const [isNight, setIsNight] = useState(false);
+  const [animationLoaded, setAnimationLoaded] = useState(false);
+
 
   const toggleDayNight = () => {
     setIsNight(!isNight);
@@ -42,9 +47,6 @@ const PetHouse = () => {
     ? require('../../images/Backgrounds/livingRoom_night.jpg') 
     : require('../../images/Backgrounds/livingRoom.jpg');
 
-
-  // Create a ref for the HealthBar component
-  const healthBarRef = useRef(null);
 
   const windowDimensions = useWindowDimensions();
 
@@ -74,11 +76,6 @@ const PetHouse = () => {
 
 
   useEffect(() => {
-
-    if (healthBarRef.current) {
-      healthBarRef.current.decreaseHealth_2((playerHealth-100)*-1);
-    }
-
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 1000,
@@ -95,7 +92,7 @@ const PetHouse = () => {
         sound.unloadAsync();
       }
     };
-  }, [fadeAnim, sound, playerHealth]);
+  }, [fadeAnim, sound]);
 
   const onVolumeChange = (value) => {
     if (sound) {
@@ -127,6 +124,7 @@ const PetHouse = () => {
   const onItemDrop = (item) => {
     if (item === null) {
       removeItemFromInventory(item);
+      increaseHealth();
     } else {
       console.log("item dropped on nothing: " + item)
     }
@@ -143,8 +141,10 @@ const PetHouse = () => {
   };
 
   const lightPosition = {
-    left: isLandscape ? 10 : 10,
-    top: isLandscape ? -140 : 80,
+    right: isLandscape ? 293 : 75,
+    top: isLandscape ? 2 : 220,
+    transform: [{ scale: .15 }],
+    position: 'absolute'
   };
 
   const topNavContainer = {
@@ -174,6 +174,7 @@ const PetHouse = () => {
       shadowOffset: { width: 4, height: 4 },
       shadowColor: 'rgba(117, 82, 103, 0.8)',
       shadowOpacity: 1,
+      opacity: 0 // added in  opacity to make invisable without changing the positioning
   };
 
   const healthPosition = {
@@ -241,7 +242,6 @@ const PetHouse = () => {
         </View>
 
         <HealthBar
-            ref={healthBarRef}
             Optional={healthPosition}
             health={health}
             maxHealth={maxHealth}
@@ -249,14 +249,12 @@ const PetHouse = () => {
             increaseHealth={increaseHealth}
         />
 
-
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         
-        <TouchableOpacity onPress={toggleDayNight} style={{transform: [{ scale: .15 }],position: 'absolute', top: 220}}>
-          <Image source={light} Optional={lightPosition}  />
+        <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
+          <Image source={light} style={position = 'absolute'}/>
         </TouchableOpacity>
-
-        
+ 
           <View style={bottomNavContainer}>
     
               <View style={diamondAndCoinContainer}>
@@ -271,11 +269,9 @@ const PetHouse = () => {
 
                 <View style={currencyContainer}>
                   <Text style={styles.currencyText}>812</Text>
-                </View>
-                
+                </View>   
 
               </View>
-
 
             <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={itemShop} style={itemShopImg}></Image>
@@ -360,10 +356,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     marginTop: -70
-  },
-  lightx: {
-    transform: [{ scale: .8 }],
-    position: 'absolute'
   },
   backgroundImage: {
     flex: 1,

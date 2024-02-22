@@ -35,11 +35,9 @@ export const CurrencyProvider = ({ children }) => {
 
   const addItemToInventory = (item) => {
     setInventoryItems([...inventoryItems, item]);
-    console.log(inventoryItems);
   };
 
   const removeItemFromInventory = (item) => {
-    console.log("Removing item:", item); 
     const indexToRemove = inventoryItems.findIndex((inventoryItem) => inventoryItem === item);
     if (indexToRemove !== -1) {
       const updatedInventory = [...inventoryItems];

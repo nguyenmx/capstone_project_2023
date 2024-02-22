@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   currencyContainer: {
     width: 130,
     height: 42,
-    backgroundColor: '#C6A2FD',
+    backgroundColor: '#60864F',
     padding: 10,
     borderRadius: 25,
     position: 'absolute',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     flexDirection: 'row',
-    backgroundColor: '#C6A2FD',
+    backgroundColor: '#60864F',
     paddingHorizontal: 10,
     borderRadius: 5,
     alignItems: 'center',

@@ -47,7 +47,7 @@ class Shop extends React.Component {
 
     console.log('Current coins:', coins);
     console.log('Current diamonds:', diamonds);
-    console.log('Current diamonds:', inventoryItems);
+    console.log('Current inv:', inventoryItems);
 
 
     // Deduct the specified amount from the appropriate currency

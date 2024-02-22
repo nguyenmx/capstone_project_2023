@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { withCurrency, useCurrency } from '../../components/CurrencyContext';
 import Duck from '../../modules/CharDuck';
 
 const window = Dimensions.get('window');
 
-
-const Inventory = ({ foodIcon, styles, onItemDrop}) => {
-  const { inventoryItems, removeItemFromInventory } = useCurrency(); // Get removeItemFromInventory from the currency context
-  
+const Inventory = ({ foodIcon, styles, onItemDrop, increaseHealth }) => {
+  const { inventoryItems, removeItemFromInventory } = useCurrency();
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -19,14 +17,14 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
   const handleRemoveItem = (item) => {
-    removeItemFromInventory(item); // Call removeItemFromInventory function with the item's ID
-    onItemDrop();
-    console.log("new list: " + inventoryItems)
+    removeItemFromInventory(item);
+    onItemDrop(item); // Pass the dropped item to onItemDrop
+    increaseHealth(); // Call increaseHealth after item is dropped
   };
 
-
-  return ( 
+  return (
     <>
       <TouchableOpacity onPress={openModal} style={styles.shopButton}>
         <Image source={foodIcon} style={styles.navItem} />
@@ -50,13 +48,12 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
               <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
-            {/* Content Section */}
             <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange',  justifyContent: 'space-evenly' }}>
             
             {inventoryItems.map((item, index) => {
               return (
-                <DraggableItem key={index} image={item} onDrop={handleRemoveItem} />
-                );
+                <DraggableItem key={index} image={item} onDrop={handleRemoveItem} increaseHealth={increaseHealth} />
+              );
             })}
 
             </View>
@@ -67,7 +64,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop}) => {
   );
 };
 
-const DraggableItem = ({ image, onDrop }) => {
+const DraggableItem = ({ image, onDrop, increaseHealth }) => {
   const [pan] = useState(new Animated.ValueXY());
 
   const panResponder = PanResponder.create({
@@ -87,10 +84,10 @@ const DraggableItem = ({ image, onDrop }) => {
 
       // Check if the item is dropped on top of the Duck
       const isOverlapping =
-      moveX > window.width / -4.1 &&
-      moveX < window.width / 4.5+ window.width * 0.58 &&
-      moveY > window.height / 2.5 &&
-      moveY < window.height / 2.1 + window.width * 0.58;
+        moveX > window.width / -4.1 &&
+        moveX < window.width / 4.5 + window.width * 0.58 &&
+        moveY > window.height / 2.5 &&
+        moveY < window.height / 2.1 + window.width * 0.58;
 
       if (isOverlapping) {
         // Call onDrop function to remove the item from inventory
@@ -116,8 +113,6 @@ const DraggableItem = ({ image, onDrop }) => {
     />
   );
 };
-
-
 
 
 export default withCurrency(Inventory);
