@@ -1,23 +1,24 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
 const ReferenceDataContext = createContext({
-  name: "",
+  name: '',
   setName: () => {},
-  steps: "",
+  steps: '',
   setSteps: () => {},
-  selectedDuck: 0,  // Add selectedDuck to the context
-  setSelectedDuck: () => {},  // Add a function to set selectedDuck
-  time: "",
+  selectedDuck: 0,
+  setSelectedDuck: () => {},
+  time: '',
   setTime: () => {},
-  
+  playerHealth: 100, // Add playerHealth to the context
+  setPlayerHealth: () => {}, // Add a function to set playerHealth
 });
 
-
 const ReferenceDataContextProvider = ({ children }) => {
-  const [name, setName] = useState("0");
-  const [time, setTime] = useState("0");
-  const [steps, setSteps] = useState("");
-  const [selectedDuck, setSelectedDuck] = useState(0);  // Initialize selectedDuck
+  const [name, setName] = useState('');
+  const [time, setTime] = useState('');
+  const [steps, setSteps] = useState('');
+  const [selectedDuck, setSelectedDuck] = useState(0);
+  const [playerHealth, setPlayerHealth] = useState(100); // Initialize playerHealth
 
   return (
     <ReferenceDataContext.Provider
@@ -30,6 +31,8 @@ const ReferenceDataContextProvider = ({ children }) => {
         setSelectedDuck,
         time,
         setTime,
+        playerHealth,
+        setPlayerHealth,
       }}
     >
       {children}
@@ -38,4 +41,3 @@ const ReferenceDataContextProvider = ({ children }) => {
 };
 
 export { ReferenceDataContext, ReferenceDataContextProvider };
-  

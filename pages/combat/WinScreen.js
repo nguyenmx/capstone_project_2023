@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
@@ -8,9 +8,8 @@ const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const victoryBanner = require('../../images/CombatScreen/victoryBanner.png');
 
-const WinScreen = ({ navigation, route }) => {
-  const { selectedDuck } = useContext(ReferenceDataContext);
-  const { finalHealth } = route.params || { finalHealth: 100 };
+const WinScreen = ({navigation}) => {
+  const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
 
   // Create a ref for the HealthBar component
   const healthBarRef = useRef(null);
@@ -18,9 +17,9 @@ const WinScreen = ({ navigation, route }) => {
   // useEffect to update the HealthBar's initial health when finalHealth changes
   useEffect(() => {
     if (healthBarRef.current) {
-      healthBarRef.current.decreaseHealth_2((finalHealth-100)*-1);
+      healthBarRef.current.decreaseHealth_2((playerHealth-100)*-1);
     }
-  }, [finalHealth]);
+  }, [playerHealth]);
 
   return (
     <View>
