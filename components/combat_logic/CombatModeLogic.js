@@ -52,25 +52,25 @@ class CombatModeLogic extends Component {
   playerPowerDamage(steps){
     console.log("The player's steps count is: " + steps);
     if (parseInt(steps)== 0 && steps == ""){
-      this.setPlayerPower(10);
-    }
-    else if (parseInt(steps)> 0 && parseInt(steps) <= 3500){
       this.setPlayerPower(12);
     }
-    else if (parseInt(steps)> 3500 && parseInt(steps) <= 5000){
+    else if (parseInt(steps)> 0 && parseInt(steps) <= 3500){
       this.setPlayerPower(14);
     }
+    else if (parseInt(steps)> 3500 && parseInt(steps) <= 5000){
+      this.setPlayerPower(16);
+    }
     else if (parseInt(steps)> 5000 && parseInt(steps) <= 12000){
-      this.setPlayerPower(17);
+      this.setPlayerPower(19);
     }
     else if (parseInt(steps)> 12000 && parseInt(steps) <= 19000){
-      this.setPlayerPower(18);
-    }
-    else if (parseInt(steps) > 19000){
       this.setPlayerPower(20);
     }
+    else if (parseInt(steps) > 19000){
+      this.setPlayerPower(22);
+    }
     else{
-      this.setPlayerPower(10);
+      this.setPlayerPower(12);
     }
   }
 

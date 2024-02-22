@@ -28,7 +28,7 @@ const TestChatGPT = ({ navigation, route}) => {
 
     try {
       // const botResponse = "quackquack";
-      const botResponse = await generateResponse(userInput);
+      const botResponse = await generateResponse(userInput, currentProfile.personality);
       if (botResponse.includes('https')) {
         setMessages(previousMessages => [
           ...previousMessages,

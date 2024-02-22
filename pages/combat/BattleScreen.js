@@ -9,6 +9,9 @@ import Animal from '../../modules/CharDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
 import explosion from '../../images/CombatScreen/explosion.gif';
 import BackArrow from  '../../modules/BackArrow';
+import banner from '../../images/CombatScreen/UpdatedCombatUI/banner.png';
+import nameUI from '../../images/CombatScreen/UpdatedCombatUI/nameUI.png';
+import warningIcon from '../../images/CombatScreen/UpdatedCombatUI/warning.png';
 import CombatModeLogic from '../../components/combat_logic/CombatModeLogic';
 import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
 import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
@@ -145,30 +148,46 @@ const handlePress = (move) => {
     setModalVisible(false);
   };
 
+
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        <View style={styles.playerOppContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('CombatMode')}>
-        <BackArrow></BackArrow>
-        </TouchableOpacity>
-        <Text style={styles.botName}>{"Combat Bot"}</Text>
-        <HealthBar ref={enemyHealthRef} barName="EnemyHealth" />
-          <View style={styles.oppContainer}>
-          <OpponentDuck></OpponentDuck>
-            {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
-            {oppExplode && <Image source={explosion} style={styles.explosionImageYou}></Image>}
+        <View style={styles.botContainer}>
+          <View style={styles.nameContainer}>
+            <Image source={nameUI} style={styles.whiteRectangle}></Image>
+            <Text style={styles.botName}>Combat Bot</Text>
+            <Text style={styles.damageTaken}>-17 HP</Text>
+            <View style= {styles.OppHealthBar} >
+              <HealthBar ref={enemyHealthRef} barName="EnemyHealth"/>
+            </View>
+            <Image source={warningIcon} style={styles.warningIcon}></Image>
           </View>
-          <Text style={styles.name}>{ name ? `${name}` : 'Player' }</Text>
-
-          <View style={styles.playerContainer}>
-            <Animal duckType={selectedDuck}></Animal>
-            {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
-            {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}
-          </View>
-          <HealthBar ref={playerHealthRef} barName="PlayerHealth" />
+          <View style={styles.duckOppContainer}>
+           <OpponentDuck></OpponentDuck>
+           {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
+           {oppExplode && <Image source={explosion} style={styles.explosionImageYou}></Image>}
+           </View>
         </View>
-        <View style={styles.imageContainer}>
+
+        <View style={styles.playerContainer}>
+          <View style={styles.nameContainer}>
+            <Image source={nameUI} style={styles.whiteRectanglePlayer}></Image>
+            <Text style={styles.playerName}>{ name ? `${name}` : 'Player' }</Text>
+            <Text style={styles.playerDamageTaken}>-17 HP</Text>
+            <View style= {styles.playerHealthBar} >
+            <HealthBar ref={playerHealthRef} barName="PlayerHealth" />
+            </View>
+            <Image source={warningIcon} style={styles.playerWarningIcon}></Image>
+          </View>
+          <View style={styles.duckContainer}>
+          <Animal duckType={selectedDuck}></Animal>
+          {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
+          {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}
+          </View>
+        </View>
+      
+        <Image source={banner} style={styles.banner}></Image>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => handlePress("rock")}>
             <Image source={rock} style={styles.image} />
           </TouchableOpacity>
@@ -189,28 +208,68 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  name: {
-    top: 240,
-    right: 50,
-    zIndex: 1,
-    fontFamily: 'NiceTango-K7XYo',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
-    fontSize: window.width * 0.05,
-    color: 'white',
-  },
+  // name: {
+  //   top: 240,
+  //   right: 50,
+  //   zIndex: 1,
+  //   fontFamily: 'NiceTango-K7XYo',
+  //   textShadowColor: 'rgba(0, 0, 0, 0.75)',
+  //   textShadowOffset: { width: 2, height: 2 },
+  //   textShadowRadius: 4,
+  //   fontSize: window.width * 0.05,
+  //   color: 'white',
+  // },
   botName: {
-    top: 60,
-    right: 40,
+    right: 10,
     zIndex: 1,
     fontFamily: 'NiceTango-K7XYo',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
-    fontSize: window.width * 0.05,
-    color: 'white',
-  }, 
+    fontSize: 28,
+    color: 'darkgreen',
+  },
+  playerName: {
+    left: 85,
+    zIndex: 1,
+    fontFamily: 'NiceTango-K7XYo',
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    fontSize: 28,
+    color: 'darkgreen',
+  },
+  whiteRectangle: {
+    top: window.width * 0.2,
+    right: 40,
+    width: 322,
+    height: 95
+  },
+  whiteRectanglePlayer: {
+    top: window.width * 0.2,
+    right: -20,
+    width: 322,
+    height: 95,
+    transform: [{ scaleX: -1 }]
+  },
+  damageTaken: {
+    right: 23,
+    zIndex: 1,
+    fontFamily: 'BowlbyOneSC-Regular',
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    fontSize: 20,
+    color: 'red',
+  },
+  warningIcon: {
+    left: 240,
+    top: -220
+  },
+  playerWarningIcon: {
+    left: 10,
+    top: -220
+  },
   backgroundImage: {
     width: '100%',
     height: '100%',
@@ -222,47 +281,91 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  playerOppContainer: {
-    width: '100%', // Adjusted to a percentage value
-    aspectRatio: 384 / 96,
-    alignItems: 'center',
-    justifyContent: 'flex-end', // Align content to the bottom of the container
-    marginTop: window.height * 0.72,
+  OppHealthBar: {
+    top: -85,
+    right: -42,
   },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
+  playerHealthBar: {
+    top: -85,
+    left: 20,
+    transform: [{ scaleX: -1 }],
+
   },
-  oppContainer: {
-    marginRight: 170,
-    marginTop: -35,
-    bottom: -40,
+  playerDamageTaken: {
+    left: 35,
+    zIndex: 1,
+    fontFamily: 'BowlbyOneSC-Regular',
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    fontSize: 20,
+    color: 'red',
+  },
+  duckOppContainer: {
+    displayflex: 'row',
+    top: -180,
+    left: -90
+  },
+  duckContainer: {
+    displayflex: 'row',
+    top: -180,
+    left: 50,
+    transform: [{ scaleX: -1 }]
   },
   playerContainer: {
-    marginLeft: 150,
-    transform: [{ scaleX: -1 }],
-    marginBottom: -50
+    top: -310,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    top: -570,
+    right: window.width * 0.01
+  },
+  banner: {
+    left: 280,
+    width: 350
+
+  },
+  image: {
+    width: 20,
+    height: 20,
+  },
+  botContainer: {
+    top: -30
+  },
+
+  // playerOppContainer: {
+  //   width: '100%', // Adjusted to a percentage value
+  //   aspectRatio: 384 / 96,
+  //   alignItems: 'center',
+  //   justifyContent: 'flex-end', // Align content to the bottom of the container
+  //   marginTop: window.height * 0.72,
+  //},
+  image: {
+    width: 85,
+    height: 85,
+  },
+  nameContainer: {
+    left: 10
+  },
+
+  // playerContainer: {
+  //   marginLeft: 150,
+  //   transform: [{ scaleX: -1 }],
+  //   marginBottom: -50
+  // },
   explosionImageMe: {
     position: 'absolute',
-    top: 0,
-    left: 35,
-    right: 0,
-    bottom: 0,
+
     resizeMode: 'contain',
   },
   explosionImageYou: {
     position: 'absolute',
-    top: 0,
-    left: 40,
-    bottom: 0,
     resizeMode: 'contain',
   },
   bubbleImage: {
     position: 'absolute',
     top: 0,
-    right: -128,
+    right: -48,
     width: 150, // Adjust the width as needed
     height: 150, // Adjust the height as needed
     resizeMode: 'contain',

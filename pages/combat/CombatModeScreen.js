@@ -20,7 +20,7 @@ const CombatModeScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('TestingScreen')}
+          onPress={() => navigation.navigate('BattleScreen')}
         >
           <Text style={styles.buttonText}>Fight!</Text>
         </TouchableOpacity>

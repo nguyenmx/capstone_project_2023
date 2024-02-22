@@ -47,7 +47,8 @@ var selectedDuck = 0;
 export default function App() {
   const [fontsLoaded] = useFonts({
     "NiceTango-K7XYo": require("./assets/fonts/NiceTango-K7XYo.ttf"),
-    "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf")
+    "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf"),
+    "BowlbyOneSC-Regular": require("./assets/fonts/BowlbyOneSC-Regular.ttf")
   })
 
   useEffect(() => {
