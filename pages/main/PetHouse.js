@@ -22,6 +22,7 @@ import Currency from './Currency';
 import light from '../../images/LightS.png';
 import LottieView from 'lottie-react-native';
 
+import tasks from '../../components/main_game_logic/suggested_tasks';
 
 const window = Dimensions.get('window');
 
@@ -215,6 +216,14 @@ const PetHouse = () => {
       shadowOpacity: 1,
   }
 
+
+  function getRandomInt_forTasks(max) {
+    return Math.floor(Math.random() * (max - 0) + 0);
+  }
+
+  console.log("Random number is: ", getRandomInt_forTasks(6));
+  console.log("Task is: ", tasks);
+
   //const orientation = UseOrientation();
   //console.log(orientation)
 
@@ -279,7 +288,7 @@ const PetHouse = () => {
           </View>
 
           <View style={dialogueContainer}>
-            <Text style={styles.dialogueText}>Exceteur sint occaecat cupidatat non proident, sunt in culpa qui</Text>
+            <Text style={styles.dialogueText}>Current Task: {tasks[getRandomInt_forTasks(tasks.length)]} </Text>
          </View>
 
         
