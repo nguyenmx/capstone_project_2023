@@ -2,11 +2,14 @@ import axios from 'axios';
 import { REACT_APP_API_KEY } from "@env";
 
 
-const testImage = 'https://tse1.mm.bing.net/th/id/OIG4.V1MBi6cXS8sBkpVNmHCH?pid=ImgGn';
+// generic d picture for testing
+const testImage = 'https://img.freepik.com/premium-photo/duckling-who-are-represented-white-background_136670-2986.jpg';
+//const testSelfie = require('../../images/PetHouse/Portrait/diamond.png');
 export const generateResponse = async (userInput) => {
   // Check if the user is requesting an image
-  const isImageRequest = userInput.toLowerCase().includes("selfie");
+  const isImageRequest = userInput.toLowerCase().includes("badminton");
   const isDalleRequest = userInput.toLowerCase().includes("image");
+  const isSelfieRequest = userInput.toLowerCase().includes("selfie");
   if (isImageRequest) {
     // const imageURL = await generateDALLEResponse(userInput);
     // return imageURL; // Return the generated image URL
@@ -18,6 +21,11 @@ export const generateResponse = async (userInput) => {
     console.log("the prompt is: ", userInput);
     const dalleResponse = await dalle(userInput);
     return dalleResponse;
+  }
+  else if (isSelfieRequest) { 
+    const selfieResponse = await dalle("selfie of " + testImage + "in an anime style");
+    console.log("Here's a selfie of me hehe");
+    return selfieResponse;
   }
   
   else {
@@ -31,7 +39,7 @@ export const generateResponse = async (userInput) => {
 
 const dalle = async (prompt) => {
   try {
-    prompt = "cartoon " + prompt;
+    prompt = "cute" +prompt;
     console.log("new prompt: ", prompt);
     const response = await axios.post(
       'https://api.openai.com/v1/images/generations',
@@ -53,8 +61,6 @@ const dalle = async (prompt) => {
     return 'Error generating image. Please try again';
   }
 };
-
-
 
 const generateChatGPTResponse = async (userInput) => {
   try {
