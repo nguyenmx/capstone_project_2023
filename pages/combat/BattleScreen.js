@@ -1,5 +1,5 @@
 import React, {useState, useContext, useRef, useEffect}  from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal, Animated} from 'react-native';
 import backgroundImage from '../../images/Backgrounds/background.gif';
 import rock from '../../images/CombatScreen/rock.png';
 import scissor from '../../images/CombatScreen/scissor.png';
@@ -10,6 +10,7 @@ import OpponentDuck from '../../modules/OpponentDuck';
 import explosion from '../../images/CombatScreen/explosion.gif';
 import BackArrow from  '../../modules/BackArrow';
 import banner from '../../images/CombatScreen/UpdatedCombatUI/banner.png';
+import attack from '../../images/CombatScreen/UpdatedCombatUI/killmove.png';
 import nameUI from '../../images/CombatScreen/UpdatedCombatUI/nameUI.png';
 import warningIcon from '../../images/CombatScreen/UpdatedCombatUI/warning.png';
 import CombatModeLogic from '../../components/combat_logic/CombatModeLogic';
@@ -30,7 +31,15 @@ const BattleScreen = ({ navigation }) => {
   const [oppExplode, setOppExplodeVisible] = useState(false);
   const [playerMoveBubble, setPlayerMoveBubble] = useState(false);
   const [oppMoveBubble, setOppMoveBubble] = useState(false);
+  const [playerWarning, setPlayerWarningVisible] = useState(false);
+  const [playerAttack, setPlayerAttackVisible] = useState(false);
+  const [oppWarning, setOppWarningVisible] = useState(false);
+  const [oppAttack, setOppAttackVisible] = useState(false);
+  const [playerDamageTaken, setPlayerDamageTaken] = useState(0);
+  const [oppDamageTaken, setOppDamageTaken] = useState(0);
+
   const { steps, setSteps } = useContext(ReferenceDataContext)
+  const moveAnimation = new Animated.Value(0);
 
 useEffect(() => {
   // Here you can do something when playerHealth changes
@@ -40,31 +49,28 @@ useEffect(() => {
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
 }
-
-
 explosionAnimation = (playerWon) => {
   if (playerWon) {
     setTimeout(() => {
     setOppExplodeVisible(true);
     setTimeout(() => {
       setOppExplodeVisible(false);
-    }, 2300)
-  }, 2200);
+    }, 2400)
+  }, 2400);
   }
   if(playerWon == false) {
     setTimeout(() => {
     setPlayerExplodeVisible(true);
     setTimeout(() => {
       setPlayerExplodeVisible(false);
-    }, 2300)
-  }, 2300);
+    }, 2400)
+  }, 2400);
   }
   if (playerWon == null) {
     setPlayerExplodeVisible(false);
     setOppExplodeVisible(false);
   }
 }
-
 const oppBubbleAnimation = (move) => {
   oppMove = combatMode.getOppMove();
   // Wait for a couple of seconds before setting the opponent's move bubble
@@ -75,7 +81,7 @@ const oppBubbleAnimation = (move) => {
     setTimeout(() => {
       setOppMoveBubble(null);
     }, 1900);
-  }, 800); // Adjust the delay according to your needs
+  }, 500); // Adjust the delay according to your needs
 };
 
 const playerBubbleAnimation = (move) => {
@@ -83,8 +89,58 @@ const playerBubbleAnimation = (move) => {
   // Reset the player move after a timeout
   setTimeout(() => {
     setPlayerMoveBubble(null);
-  }, 2800);
+  }, 1900);
 };
+const warningAnimation = (playerWon) => {
+  if (playerWon) {
+    setTimeout(() => {
+    setOppWarningVisible(true);
+    
+    setTimeout(() => {
+      setOppWarningVisible(false);
+    }, 2300)
+  }, 2200);
+  }
+  if(playerWon == false) {
+    setTimeout(() => {
+    setPlayerWarningVisible(true);
+    setTimeout(() => {
+      setPlayerWarningVisible(false);
+    }, 2300)
+  }, 2300);
+  }
+  if (playerWon == null) {
+    setPlayerWarningVisible(false);
+    setOppWarningVisible(false);
+  }
+}
+
+const DamageAnimation = () => {
+  
+}
+const attackAnimation = (playerWon) => {
+  if (playerWon) {
+    setTimeout(() => {
+    setPlayerAttackVisible(true);
+    setTimeout(() => {
+      setPlayerAttackVisible(false);
+    }, 2300)
+  }, 2200);
+  }
+  if(playerWon == false) {
+    setTimeout(() => {
+    setOppAttackVisible(true);
+    setTimeout(() => {
+      setOppAttackVisible(false);
+    }, 2300)
+  }, 2200);
+  }
+  if (playerWon == null) {
+    setPlayerAttackVisible(false);
+    setOppAttackVisible(false);
+  }
+}
+
 
 const handlePress = (move) => {
   combatMode.playerPowerDamage(steps);
@@ -96,6 +152,8 @@ const handlePress = (move) => {
   playerBubbleAnimation(move);
   oppBubbleAnimation(combatMode.getOppMove());
   explosionAnimation(playerWon);
+  warningAnimation(playerWon);
+  attackAnimation(playerWon);
   console.log(combatMode.playerWon());
 
   if (playerWon === null) {
@@ -104,7 +162,9 @@ const handlePress = (move) => {
   } else if (playerWon) {
     // If player wins, introduce a delay before updating the opponent's health bar
     setTimeout(() => {
-      enemyHealthRef.current.decreaseHealth_2(combatMode.getPlayerPower());
+      const damage = combatMode.getPlayerPower();
+      enemyHealthRef.current.decreaseHealth_2(damage);
+      setOppDamageTaken(damage);
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
         navigation.navigate('WinScreen');
@@ -114,9 +174,11 @@ const handlePress = (move) => {
   } else {
     // If player loses, introduce a delay before updating the player's health bar
     setTimeout(() => {
-      playerHealthRef.current.decreaseHealth_2(combatMode.getOppPower());
+      const damage = combatMode.getOppPower();
+      playerHealthRef.current.decreaseHealth_2(damage);
+      setPlayerDamageTaken(damage);
       const finalPlayerHealth = playerHealthRef.current.getHealth();
-
+  
       // Update playerHealth in the context
       setPlayerHealth(finalPlayerHealth);
 
@@ -128,9 +190,6 @@ const handlePress = (move) => {
     }, 2500); // Adjust the delay timing as needed
   }
 };
-
-
-
   const getImageForMove = (move) => {
     switch (move) {
       case 'rock':
@@ -148,7 +207,6 @@ const handlePress = (move) => {
     setModalVisible(false);
   };
 
-
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -156,16 +214,18 @@ const handlePress = (move) => {
           <View style={styles.nameContainer}>
             <Image source={nameUI} style={styles.whiteRectangle}></Image>
             <Text style={styles.botName}>Combat Bot</Text>
-            <Text style={styles.damageTaken}>-17 HP</Text>
+            <Text style={styles.damageTaken}>{`-${oppDamageTaken} HP`}</Text>
             <View style= {styles.OppHealthBar} >
               <HealthBar ref={enemyHealthRef} barName="EnemyHealth"/>
             </View>
-            <Image source={warningIcon} style={styles.warningIcon}></Image>
+            {/* <Image source={warningIcon} style={styles.warningIcon}></Image> */}
           </View>
           <View style={styles.duckOppContainer}>
            <OpponentDuck></OpponentDuck>
            {oppMoveBubble && <Image source={getImageForMove(oppMove)} style={styles.bubbleImage} />}
+           {oppAttack && <Image source={attack} style={styles.attackMove}></Image>}
            {oppExplode && <Image source={explosion} style={styles.explosionImageYou}></Image>}
+          
            </View>
         </View>
 
@@ -173,20 +233,21 @@ const handlePress = (move) => {
           <View style={styles.nameContainer}>
             <Image source={nameUI} style={styles.whiteRectanglePlayer}></Image>
             <Text style={styles.playerName}>{ name ? `${name}` : 'Player' }</Text>
-            <Text style={styles.playerDamageTaken}>-17 HP</Text>
+            <Text style={styles.playerDamageTaken}>{`-${playerDamageTaken} HP`}</Text>
             <View style= {styles.playerHealthBar} >
             <HealthBar ref={playerHealthRef} barName="PlayerHealth" />
             </View>
-            <Image source={warningIcon} style={styles.playerWarningIcon}></Image>
+            {playerWarning && <Image source={warningIcon} style={styles.playerWarningIcon}></Image>}
           </View>
           <View style={styles.duckContainer}>
           <Animal duckType={selectedDuck}></Animal>
-          {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImage} />}
+          {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImageP} />}
+          {playerAttack && <Image source={attack} style={styles.attackMove}></Image>}
           {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}
           </View>
         </View>
       
-        <Image source={banner} style={styles.banner}></Image>
+        {/* <Image source={banner} style={styles.banner}></Image> */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => handlePress("rock")}>
             <Image source={rock} style={styles.image} />
@@ -208,17 +269,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // name: {
-  //   top: 240,
-  //   right: 50,
-  //   zIndex: 1,
-  //   fontFamily: 'NiceTango-K7XYo',
-  //   textShadowColor: 'rgba(0, 0, 0, 0.75)',
-  //   textShadowOffset: { width: 2, height: 2 },
-  //   textShadowRadius: 4,
-  //   fontSize: window.width * 0.05,
-  //   color: 'white',
-  // },
   botName: {
     right: 10,
     zIndex: 1,
@@ -230,7 +280,7 @@ const styles = StyleSheet.create({
     color: 'darkgreen',
   },
   playerName: {
-    left: 85,
+    left: 45,
     zIndex: 1,
     fontFamily: 'NiceTango-K7XYo',
     textShadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -264,10 +314,10 @@ const styles = StyleSheet.create({
   },
   warningIcon: {
     left: 240,
-    top: -220
+    top: -225
   },
   playerWarningIcon: {
-    left: 10,
+    left: 260,
     top: -220
   },
   backgroundImage: {
@@ -303,22 +353,23 @@ const styles = StyleSheet.create({
   },
   duckOppContainer: {
     displayflex: 'row',
-    top: -180,
-    left: -90
+    top: -100,
+    left: -85
   },
   duckContainer: {
     displayflex: 'row',
-    top: -180,
-    left: 50,
-    transform: [{ scaleX: -1 }]
+    top: 180,
+    left: 140,
+    transform: [{ scaleX: -1 }],
+    position: 'absolute'
   },
   playerContainer: {
-    top: -310,
+    top: -230,
   },
   buttonContainer: {
     flexDirection: 'row',
-    top: -570,
-    right: window.width * 0.01
+    position: 'absolute',
+    top: 750
   },
   banner: {
     left: 280,
@@ -332,14 +383,6 @@ const styles = StyleSheet.create({
   botContainer: {
     top: -30
   },
-
-  // playerOppContainer: {
-  //   width: '100%', // Adjusted to a percentage value
-  //   aspectRatio: 384 / 96,
-  //   alignItems: 'center',
-  //   justifyContent: 'flex-end', // Align content to the bottom of the container
-  //   marginTop: window.height * 0.72,
-  //},
   image: {
     width: 85,
     height: 85,
@@ -347,25 +390,32 @@ const styles = StyleSheet.create({
   nameContainer: {
     left: 10
   },
-
-  // playerContainer: {
-  //   marginLeft: 150,
-  //   transform: [{ scaleX: -1 }],
-  //   marginBottom: -50
-  // },
   explosionImageMe: {
     position: 'absolute',
-
     resizeMode: 'contain',
   },
   explosionImageYou: {
     position: 'absolute',
+    left: 35,
+    resizeMode: 'contain',
+  },
+  attackMove: {
+    position: 'absolute',
+    left: 150,
     resizeMode: 'contain',
   },
   bubbleImage: {
     position: 'absolute',
     top: 0,
-    right: -48,
+    right: -60,
+    width: 150, // Adjust the width as needed
+    height: 150, // Adjust the height as needed
+    resizeMode: 'contain',
+  },
+  bubbleImageP: {
+    position: 'absolute',
+    left: 210,
+    top: 0,
     width: 150, // Adjust the width as needed
     height: 150, // Adjust the height as needed
     resizeMode: 'contain',

@@ -32,7 +32,7 @@ const LossScreen = ({navigation}) => {
         <HealthBar ref={healthBarRef} barName="PlayerHealth" />  
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('TestingScreen')}
+          onPress={() => navigation.navigate('CombatModeScreen')}
         >
           <Text style={styles.buttonText}>Back To Menu</Text>
         </TouchableOpacity>
