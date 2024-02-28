@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
-// import settingButton from '../../images/settingButton.png';
 import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar';
-import petFood from '../../images/petFood.png';
 import profileIcon from '../../images/PetHouse/Portrait/ProfileButton.png';
 import medicineIcon from '../../images/PetHouse/Portrait/medicineIcon.png';
 import foodIcon from '../../images/PetHouse/Portrait/foodIcon.png';
@@ -20,7 +18,6 @@ import { useWindowDimensions } from 'react-native';
 import Inventory from './Inventory';
 import Currency from './Currency';
 import light from '../../images/LightS.png';
-import LottieView from 'lottie-react-native';
 
 import tasks from '../../components/main_game_logic/suggested_tasks';
 
@@ -51,14 +48,24 @@ const PetHouse = () => {
 
   const windowDimensions = useWindowDimensions();
 
+  const healthBarRef = useRef(null);
+
   const decreaseHealth = () => {
-    const newHealth = Math.max(0, health - 10);
-    setHealth(newHealth);
+    if (healthBarRef.current) {
+      healthBarRef.current.decreaseHealth();
+    }
+  };
+
+  const decreaseHealthBy = (amount) => {
+    if (healthBarRef.current) {
+      healthBarRef.current.decreaseHealth_2(amount);
+    }
   };
 
   const increaseHealth = () => {
-    const newHealth = Math.min(maxHealth, health + 10);
-    setHealth(newHealth);
+    if (healthBarRef.current) {
+      healthBarRef.current.increaseHealth();
+    }
   };
 
   async function playSound() {
@@ -101,6 +108,7 @@ const PetHouse = () => {
     }
     setVolume(value);
   };
+  
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -125,11 +133,12 @@ const PetHouse = () => {
   const onItemDrop = (item) => {
     if (item === null) {
       removeItemFromInventory(item);
-      increaseHealth();
+      //increaseHealth();
     } else {
       console.log("item dropped on nothing: " + item)
     }
   };
+  
   
 
   const isLandscape = windowDimensions.width > windowDimensions.height;
@@ -241,8 +250,13 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-            <Inventory foodIcon={foodIcon} styles={styles} onItemDrop={onItemDrop} />
-
+            <Inventory
+              foodIcon={foodIcon} 
+              styles={styles}
+              onItemDrop={() => decreaseHealth()} // Example for decreasing health
+              onItemDropBy={(amount) => decreaseHealthBy(amount)} // Example for decreasing health by custom amount
+              onItemFeed={() => increaseHealth()} // Example for increasing health
+            />
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={medicineIcon} style ={styles.navItem}></Image>
@@ -250,13 +264,13 @@ const PetHouse = () => {
 
         </View>
 
-        <HealthBar
-            Optional={healthPosition}
-            health={health}
-            maxHealth={maxHealth}
-            decreaseHealth={decreaseHealth}
-            increaseHealth={increaseHealth}
-        />
+
+         <HealthBar Optional={healthPosition} ref={healthBarRef} />
+
+        <Animated.Text style={[styles.title, { opacity: fadeAnim, position: 'absolute' }]}>
+          Living room
+        </Animated.Text>
+
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         
@@ -290,64 +304,6 @@ const PetHouse = () => {
           <View style={dialogueContainer}>
             <Text style={styles.dialogueText}>Current Task: {tasks[getRandomInt_forTasks(tasks.length)]} </Text>
          </View>
-
-        
-        {/* <HealthBar
-          Optional={styles.healthPosition}
-          health={health}
-          maxHealth={maxHealth}
-          decreaseHealth={decreaseHealth}
-          increaseHealth={increaseHealth}
-        />
-
-        <HealthBar
-          Optional={styles.healthPosition}
-          health={health}
-          maxHealth={maxHealth}
-          decreaseHealth={decreaseHealth}
-          increaseHealth={increaseHealth}
-          heartIconSource={petFood}
-          healthBarColor="blue"
-        />
-
-        <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
-          Living room
-        </Animated.Text>
-
-       
-
-        <Modal
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
-            <View style={styles.popUp}>
-              <Text style={styles.settingsText}>Settings</Text>
-              <Slider
-                style={{ width: 200, height: 40 }}
-                minimumValue={0}
-                maximumValue={1}
-                step={0.01}
-                value={volume}
-                onValueChange={onVolumeChange}
-              />
-              <Button title="Exit" onPress={hideModal} />
-              <Button title="Play Sound" onPress={playSound} />
-            </View>
-          </View>
-        </Modal>
-
-        <Duck duckType={selectedDuck} Optional={styles.duckCoffeeImage} />
-
-        <TouchableOpacity onPress={toggleModal}>
-          <Image source={settingButton} style={styles.settingButtonImage} />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
-          <Image source={shop} style={styles.shopIcon} />
-        </TouchableOpacity>
-
-        <MainGameLogic /> */}
 
       </View>
     </ImageBackground>
@@ -510,4 +466,3 @@ const styles = StyleSheet.create({
 
 
 export default PetHouse;
-

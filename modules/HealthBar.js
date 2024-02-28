@@ -4,7 +4,7 @@ import Heart from '../images/Heart.png';
 
 const window = Dimensions.get('window');
 
-const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }, ref) => {
+const HealthBar = forwardRef(({ Optional: customStyle}, ref) => {
   const [health, setHealth] = useState(100);
   const maxHealth = 100;
 
@@ -14,16 +14,19 @@ const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
+    console.log("Decreasing health to:", newHealth);
   };
 
   const decreaseHealth_2 = (number) => {
     const newHealth = Math.max(0, health - number);
     setHealth(newHealth);
+    console.log("Decreasing health by", number, "to:", newHealth);
   };
 
   const increaseHealth = () => {
     const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
+    console.log("Increasing health to:", newHealth);
   };
 
   const getHealth = () => {

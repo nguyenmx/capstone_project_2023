@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
-import { withCurrency, useCurrency } from '../../components/CurrencyContext';
+import { useCurrency } from '../../components/CurrencyContext';
 import Duck from '../../modules/CharDuck';
 
 const window = Dimensions.get('window');
 
-const Inventory = ({ foodIcon, styles, onItemDrop, increaseHealth }) => {
+const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency();
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const openModal = () => {
     setModalVisible(true);
@@ -20,14 +20,22 @@ const Inventory = ({ foodIcon, styles, onItemDrop, increaseHealth }) => {
 
   const handleRemoveItem = (item) => {
     removeItemFromInventory(item);
-    onItemDrop(item); // Pass the dropped item to onItemDrop
-    increaseHealth(); // Call increaseHealth after item is dropped
+    onItemDrop(); // Call the passed function for dropping items
+  };
+
+  const handleRemoveItemBy = (item, amount) => {
+    removeItemFromInventory(item);
+    onItemDropBy(amount); // Call the passed function for dropping items by custom amount
+  };
+
+  const handleFeedDuck = () => {
+    onItemFeed(); // Call the passed function for feeding the duck
   };
 
   return (
     <>
-      <TouchableOpacity onPress={openModal} style={styles.shopButton}>
-        <Image source={foodIcon} style={styles.navItem} />
+      <TouchableOpacity onPress={openModal} style={{width: 50, height: 50}}>
+        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:"center"}}/>
       </TouchableOpacity>
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>
@@ -42,19 +50,25 @@ const Inventory = ({ foodIcon, styles, onItemDrop, increaseHealth }) => {
             }
           }}
         >
-          <View style={{ backgroundColor: 'white', borderRadius: 10, borderColor: 'orange',borderWidth: 1,  width: '88%', marginTop: -305 }}>
+          <View style={{ backgroundColor: 'white', borderRadius: 10, borderColor: 'orange', borderWidth: 1, width: '88%', marginTop: -305 }}>
             {/* Header Section */}
             <View style={{ backgroundColor: 'orange', padding: 3, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
               <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
-            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange',  justifyContent: 'space-evenly' }}>
-            
-            {inventoryItems.map((item, index) => {
-              return (
-                <DraggableItem key={index} image={item} onDrop={handleRemoveItem} increaseHealth={increaseHealth} />
-              );
-            })}
+            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange', justifyContent: 'space-evenly' }}>
+
+              {inventoryItems.map((item, index) => {
+                return (
+                  <DraggableItem
+                    key={index}
+                    image={item}
+                    onDrop={() => handleRemoveItem(item)} // Handle dropping item
+                    onDropBy={(amount) => handleRemoveItemBy(item, amount)} // Handle dropping item by custom amount
+                    onFeed={() => handleFeedDuck()} // Handle feeding the duck
+                  />
+                );
+              })}
 
             </View>
           </View>
@@ -64,8 +78,8 @@ const Inventory = ({ foodIcon, styles, onItemDrop, increaseHealth }) => {
   );
 };
 
-const DraggableItem = ({ image, onDrop, increaseHealth }) => {
-  const [pan] = useState(new Animated.ValueXY());
+const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
+  const [pan] = React.useState(new Animated.ValueXY());
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -91,7 +105,8 @@ const DraggableItem = ({ image, onDrop, increaseHealth }) => {
 
       if (isOverlapping) {
         // Call onDrop function to remove the item from inventory
-        onDrop(image); // Assuming image is the item being dropped
+        onDrop(); // Assuming image is the item being dropped
+        onFeed(); // Also feed the duck when an item is dropped
       }
 
       // Reset the position of the item after release
@@ -114,5 +129,4 @@ const DraggableItem = ({ image, onDrop, increaseHealth }) => {
   );
 };
 
-
-export default withCurrency(Inventory);
+export default Inventory;
