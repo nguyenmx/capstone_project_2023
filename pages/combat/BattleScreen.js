@@ -40,10 +40,15 @@ const BattleScreen = ({ navigation }) => {
 
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
+  const [initialPlayerHealth] = useState(100); // was playerhealth before
+
 
 useEffect(() => {
   // Here you can do something when playerHealth changes
+  console.log("initial health recorded:", initialPlayerHealth);
   console.log('Player health updated:', playerHealth);
+  playerHealthRef.current.setMaxHealth(initialPlayerHealth);
+
 }, [playerHealth]);
 
 function getRandomNumber() {
@@ -141,7 +146,6 @@ const attackAnimation = (playerWon) => {
   }
 }
 
-
 const handlePress = (move) => {
   combatMode.playerPowerDamage(steps);
   combatMode.oppPowerDamage(getRandomNumber());
@@ -167,7 +171,9 @@ const handlePress = (move) => {
       setOppDamageTaken(damage);
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
-        navigation.navigate('WinScreen');
+        console.log("initial health recorded: ", initialPlayerHealth);
+        navigation.navigate('WinScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
+
       }
       console.log("Player wins!");
     }, 2500); // Adjust the delay timing as needed
@@ -184,7 +190,8 @@ const handlePress = (move) => {
 
       if (finalPlayerHealth <= 0) {
         // Navigate to LossScreen when player health reaches zero
-        navigation.navigate('LossScreen');
+        console.log("initial health recorded: ", initialPlayerHealth);
+        navigation.navigate('LossScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
       }
       console.log("Player loses!");
     }, 2500); // Adjust the delay timing as needed

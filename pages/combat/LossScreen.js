@@ -4,12 +4,12 @@ import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
 
-
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const defeatBanner = require('../../images/CombatScreen/defeatBanner.png');
 
-const LossScreen = ({navigation}) => {
+const LossScreen = ({navigation, route }) => {
+  const { initialPlayerHealth, enemyFinalHealth } = route.params;
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
 
   // Create a ref for the HealthBar component
@@ -18,7 +18,8 @@ const LossScreen = ({navigation}) => {
   // useEffect to update the HealthBar's initial health when finalHealth changes
   useEffect(() => {
     if (healthBarRef.current) {
-      healthBarRef.current.decreaseHealth_2((playerHealth-100)*-1);
+      healthBarRef.current.setMaxHealth(initialPlayerHealth - Math.round(enemyFinalHealth * 0.15));
+      healthBarRef.current.setCurrentHealth(0);
     }
   }, [playerHealth]);
 
@@ -32,7 +33,7 @@ const LossScreen = ({navigation}) => {
         <HealthBar ref={healthBarRef} barName="PlayerHealth" />  
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('CombatModeScreen')}
+          onPress={() => navigation.navigate('CombatMode')}
         >
           <Text style={styles.buttonText}>Back To Menu</Text>
         </TouchableOpacity>

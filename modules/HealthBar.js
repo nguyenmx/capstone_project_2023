@@ -4,12 +4,13 @@ import Heart from '../images/Heart.png';
 
 const window = Dimensions.get('window');
 
-const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }, ref) => {
-  const [health, setHealth] = useState(100);
-  const maxHealth = 100;
+const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, heartIconSource = Heart }, ref) => {
+  const [health, setHealth] = useState(maxHealthProp);
+  const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
   const healthPercentage = (health / maxHealth) * 100;
   const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
+
 
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
@@ -26,8 +27,25 @@ const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }
     setHealth(newHealth);
   };
 
+  const setMaxHealthValue = (newMaxHealth = 100) => {
+    setMaxHealth(newMaxHealth);
+    if (health > newMaxHealth) {
+      setHealth(newMaxHealth);
+    }
+  };
+
+  const setCurrentHealth = (newHealth) => {
+    // Ensure the new health is within valid bounds (0 to maxHealth)
+    const clampedHealth = Math.min(Math.max(newHealth, 0), maxHealth);
+    setHealth(clampedHealth);
+  };
+
   const getHealth = () => {
     return health;
+  };
+
+  const getMaxHealth = () => {
+    return maxHealth;
   }
 
   // Exposing methods through ref
@@ -35,7 +53,10 @@ const HealthBar = forwardRef(({ Optional: customStyle, heartIconSource = Heart }
     decreaseHealth,
     decreaseHealth_2,
     increaseHealth,
+    setCurrentHealth,
+    setMaxHealth: setMaxHealthValue,
     getHealth,
+    getMaxHealth,
   }));
 
   return (
