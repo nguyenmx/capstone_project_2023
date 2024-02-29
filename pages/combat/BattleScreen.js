@@ -40,7 +40,7 @@ const BattleScreen = ({ navigation }) => {
 
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
-  const [initialPlayerHealth] = useState(100); // was playerhealth before
+  const [initialPlayerHealth] = useState(playerHealth); // was playerhealth before
 
 
 useEffect(() => {
@@ -172,6 +172,7 @@ const handlePress = (move) => {
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
         console.log("initial health recorded: ", initialPlayerHealth);
+        setPlayerHealth(initialPlayerHealth + 10);
         navigation.navigate('WinScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
 
       }
@@ -184,13 +185,12 @@ const handlePress = (move) => {
       playerHealthRef.current.decreaseHealth_2(damage);
       setPlayerDamageTaken(damage);
       const finalPlayerHealth = playerHealthRef.current.getHealth();
-  
-      // Update playerHealth in the context
-      setPlayerHealth(finalPlayerHealth);
 
       if (finalPlayerHealth <= 0) {
         // Navigate to LossScreen when player health reaches zero
         console.log("initial health recorded: ", initialPlayerHealth);
+        // Update playerHealth in the context with loss 
+        setPlayerHealth(initialPlayerHealth - Math.round(enemyHealthRef.current.getHealth() * 0.15));
         navigation.navigate('LossScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
       }
       console.log("Player loses!");
@@ -242,7 +242,7 @@ const handlePress = (move) => {
             <Text style={styles.playerName}>{ name ? `${name}` : 'Player' }</Text>
             <Text style={styles.playerDamageTaken}>{`-${playerDamageTaken} HP`}</Text>
             <View style= {styles.playerHealthBar} >
-            <HealthBar ref={playerHealthRef} barName="PlayerHealth" />
+            <HealthBar ref={playerHealthRef} currentHealthProp={playerHealth} barName="PlayerHealth" />
             </View>
             {playerWarning && <Image source={warningIcon} style={styles.playerWarningIcon}></Image>}
           </View>

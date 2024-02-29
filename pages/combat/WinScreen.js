@@ -20,7 +20,8 @@ const WinScreen = ({navigation ,route }) => {
     if (healthBarRef.current) {
       console.log("initial health transfered:", initialPlayerHealth);
       //healthBarRef.current.setMaxHealth(initialPlayerHealth + Math.round((initialPlayerHealth - playerHealth+10) * 0.15)); // figure out what the formula for winning is
-      healthBarRef.current.setCurrentHealth(initialPlayerHealth + Math.round((initialPlayerHealth - playerHealth+10) * 0.15));
+      healthBarRef.current.setMaxHealth(initialPlayerHealth + 10); //temp increase to test
+      //healthBarRef.current.setCurrentHealth(initialPlayerHealth + Math.round((initialPlayerHealth - playerHealth+10) * 0.15));
     }
   }, [playerHealth]);
 
@@ -31,7 +32,7 @@ const WinScreen = ({navigation ,route }) => {
           <Image source={victoryBanner} style={styles.banner} />
         </View>
         <Duck duckType={selectedDuck} />     
-        <HealthBar ref={healthBarRef} barName="PlayerHealth" />    
+        <HealthBar ref={healthBarRef} currentHealthProp={initialPlayerHealth+10} barName="PlayerHealth" />    
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('CombatMode')}

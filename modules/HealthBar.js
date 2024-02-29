@@ -4,8 +4,8 @@ import Heart from '../images/Heart.png';
 
 const window = Dimensions.get('window');
 
-const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, heartIconSource = Heart }, ref) => {
-  const [health, setHealth] = useState(maxHealthProp);
+const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart }, ref) => {
+  const [health, setHealth] = useState(currentHealthProp);
   const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
   const healthPercentage = (health / maxHealth) * 100;
