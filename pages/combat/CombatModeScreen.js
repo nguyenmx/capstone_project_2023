@@ -24,11 +24,19 @@ const CombatModeScreen = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Fight!</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.combatPowerContainer}
+          onPress={() => navigation.navigate('StepsConversion')}
+        >
+          <Text style={homeButtonStyles.buttonText}>Combat Power</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity
           style={homeButtonStyles.buttonContainer}
           onPress={() => navigation.navigate('Home')}
         >
-          <Text style={homeButtonStyles.buttonText}>Back To Home</Text>
+          <Text style={homeButtonStyles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
         <Duck duckType={selectedDuck} />
       </ImageBackground>
@@ -41,7 +49,7 @@ export default CombatModeScreen;
 // Styling
 const styles = StyleSheet.create({
   swordContainer: {
-    width: window.width * 0.4, // Adjust the width to resize the image
+    width: window.width * 0.3, // Adjust the width to resize the image
     aspectRatio: 1,
     marginTop: window.height * 0.03,
     marginBottom: window.height * 0.025,
@@ -56,6 +64,15 @@ const styles = StyleSheet.create({
     width: window.width * 0.7,
     height: window.height * 0.1,
     backgroundColor: '#FF4242',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: window.height * 0.015,
+  },
+  combatPowerContainer: {
+    width: window.width * 0.7,
+    height: window.height * 0.1,
+    backgroundColor: '#ff8503',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -92,6 +109,7 @@ const styles = StyleSheet.create({
     marginTop: window.height * 0.06,
   },
 });
+
 
 const homeButtonStyles = {
   buttonContainer: {

@@ -34,6 +34,7 @@ import Currency from './pages/main/Currency';
 import ProfilePage from './pages/main/ProfilePage';
 import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
+import StepsConversion from './pages/combat/StepsConversion';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -86,7 +87,7 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
           <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="StoryMode" component={StoryModeScreen} />
-          <Stack.Screen name="CombatMode" component={CombatModeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="CombatModeScreen" component={CombatModeScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
           <Stack.Screen name="Inventory" component={Inventory}/>
           <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
@@ -103,6 +104,7 @@ export default function App() {
           <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
           <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
           <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
+          <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </CurrencyProvider>
@@ -146,7 +148,7 @@ export function HomeScreen({ navigation }) {
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatMode')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatModeScreen')}>
               <Text style={styles.buttonText}>Combat Mode</Text>
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
             </TouchableOpacity>
