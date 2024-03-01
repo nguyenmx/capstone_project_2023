@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef} from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
@@ -24,7 +24,7 @@ import tasks from '../../components/main_game_logic/suggested_tasks';
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-  const { name, setName } = useContext(ReferenceDataContext);
+  const { name, setName, playerHealth} = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
@@ -35,6 +35,7 @@ const PetHouse = () => {
   const maxHealth = 100;
   const [isNight, setIsNight] = useState(false);
   const [animationLoaded, setAnimationLoaded] = useState(false);
+  const playerHealthRef = useRef(null);
 
 
   const toggleDayNight = () => {
@@ -84,6 +85,9 @@ const PetHouse = () => {
 
 
   useEffect(() => {
+
+    playerHealthRef.current.setMaxHealth(playerHealth);
+
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 1000,
