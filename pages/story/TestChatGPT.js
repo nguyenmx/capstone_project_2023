@@ -28,7 +28,8 @@ const TestChatGPT = ({ navigation, route}) => {
 
     try {
       // const botResponse = "quackquack";
-      const botResponse = await generateResponse(userInput, currentProfile.personality);
+      // Carries over the animal's personality, name, and age to the bot - GenerateResponse is within the StoryModeBot class
+      const botResponse = await generateResponse(userInput, currentProfile.personality, currentProfile.name, currentProfile.age);
       if (botResponse.includes('https')) {
         setMessages(previousMessages => [
           ...previousMessages,
@@ -187,15 +188,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   inputToolbarContainer: {
-    padding: 8
+    padding: 5
 
-  
   },
   inputToolbarPrimary: {
-    backgroundColor: 'rgb(255,227, 249)',
+    backgroundColor: 'rgb(255,230, 255)',
     borderRadius: 25, // Set border radius
-    paddingHorizontal: 10, // Add horizontal padding
-    paddingVertical: 10, // Add vertical padding
+    paddingHorizontal: 8, // Add horizontal padding
+    paddingVertical: 8, // Add vertical padding
   },
   verifiedIcon: {
     width: 30,
