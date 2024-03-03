@@ -40,14 +40,14 @@ const BattleScreen = ({ navigation }) => {
 
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
-  const [initialPlayerHealth] = useState(playerHealth); // was playerhealth before
+  const [initialPlayerHealth] = useState(playerHealth);
 
 
 useEffect(() => {
-  // Here you can do something when playerHealth changes
-  console.log("initial health recorded:", initialPlayerHealth);
-  console.log('Player health updated:', playerHealth);
-  playerHealthRef.current.setMaxHealth(initialPlayerHealth);
+  console.log("initial health recorded was:", initialPlayerHealth);
+  console.log('Player health in data file updated:', playerHealth);
+  //playerHealthRef.current.setMaxHealth(100);
+  //playerHealthRef.current.setCurrentHealth(initialPlayerHealth);
 
 }, [playerHealth]);
 
@@ -149,6 +149,7 @@ const attackAnimation = (playerWon) => {
 const handlePress = (move) => {
   combatMode.playerPowerDamage(steps);
   combatMode.oppPowerDamage(getRandomNumber());
+  //combatMode.oppPowerDamage(60000); // high number to make testing losses easier
   combatMode.setPlayerMove(move);
   combatMode.setOppMove();
   const playerWon = combatMode.playerWon();
@@ -171,9 +172,9 @@ const handlePress = (move) => {
       setOppDamageTaken(damage);
       if (enemyHealthRef.current.getHealth() <= 0) {
         // Navigate to WinScreen when enemy health reaches zero
-        console.log("initial health recorded: ", initialPlayerHealth);
-        setPlayerHealth(initialPlayerHealth + 10);
-        navigation.navigate('WinScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
+        setPlayerHealth(initialPlayerHealth + Math.round(playerHealthRef.current.getHealth() * 0.15));
+        console.log("initial health updated after win to: ", initialPlayerHealth);
+        navigation.navigate('WinScreen');
 
       }
       console.log("Player wins!");
@@ -188,10 +189,9 @@ const handlePress = (move) => {
 
       if (finalPlayerHealth <= 0) {
         // Navigate to LossScreen when player health reaches zero
-        console.log("initial health recorded: ", initialPlayerHealth);
-        // Update playerHealth in the context with loss 
         setPlayerHealth(initialPlayerHealth - Math.round(enemyHealthRef.current.getHealth() * 0.15));
-        navigation.navigate('LossScreen', { enemyFinalHealth: enemyHealthRef.current.getHealth(), initialPlayerHealth: initialPlayerHealth });
+        console.log("initial health updated after loss to: ", initialPlayerHealth);
+        navigation.navigate('LossScreen');
       }
       console.log("Player loses!");
     }, 2500); // Adjust the delay timing as needed

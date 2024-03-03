@@ -27,26 +27,29 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     setHealth(newHealth);
   };
 
-  const setMaxHealthValue = (newMaxHealth = 100) => {
-    setMaxHealth(newMaxHealth);
-    if (health > newMaxHealth) {
-      setHealth(newMaxHealth);
-    }
-  };
+  // const setMaxHealthValue = (newMaxHealth = 100) => {
+  //   setMaxHealth(newMaxHealth);
+  //   if (health > newMaxHealth) {
+  //     setHealth(newMaxHealth);
+  //   }
+  // };
 
   const setCurrentHealth = (newHealth) => {
+    const maxHealth = 100; // Set your maximum health value here
+
     // Ensure the new health is within valid bounds (0 to maxHealth)
     const clampedHealth = Math.min(Math.max(newHealth, 0), maxHealth);
     setHealth(clampedHealth);
-  };
+};
+
 
   const getHealth = () => {
     return health;
   };
 
-  const getMaxHealth = () => {
-    return maxHealth;
-  }
+  // const getMaxHealth = () => {
+  //   return maxHealth;
+  // }
 
   // Exposing methods through ref
   useImperativeHandle(ref, () => ({
@@ -54,9 +57,9 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     decreaseHealth_2,
     increaseHealth,
     setCurrentHealth,
-    setMaxHealth: setMaxHealthValue,
+    //setMaxHealth: setMaxHealthValue,
     getHealth,
-    getMaxHealth,
+    //getMaxHealth,
   }));
 
   return (

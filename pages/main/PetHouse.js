@@ -79,8 +79,6 @@ const PetHouse = () => {
 
   useEffect(() => {
 
-    playerHealthRef.current.setMaxHealth(playerHealth);
-
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 1000,
@@ -257,8 +255,6 @@ const PetHouse = () => {
         <HealthBar
             ref={playerHealthRef}
             Optional={healthPosition}
-            health={health}
-            maxHealth={maxHealth}
             decreaseHealth={decreaseHealth}
             increaseHealth={increaseHealth}
             currentHealthProp={playerHealth}

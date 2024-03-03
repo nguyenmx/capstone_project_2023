@@ -8,18 +8,13 @@ const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const defeatBanner = require('../../images/CombatScreen/defeatBanner.png');
 
-const LossScreen = ({navigation, route }) => {
-  const { initialPlayerHealth, enemyFinalHealth } = route.params;
+const LossScreen = ({navigation}) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
-
-  // Create a ref for the HealthBar component
   const healthBarRef = useRef(null);
 
-  // useEffect to update the HealthBar's initial health when finalHealth changes
   useEffect(() => {
     if (healthBarRef.current) {
-      healthBarRef.current.setMaxHealth(initialPlayerHealth - Math.round(enemyFinalHealth * 0.15));
-      healthBarRef.current.setCurrentHealth(0);
+      healthBarRef.current.setCurrentHealth(playerHealth);
     }
   }, [playerHealth]);
 
@@ -30,7 +25,7 @@ const LossScreen = ({navigation, route }) => {
           <Image source={defeatBanner} style={styles.banner} />
         </View>
         <Duck duckType={selectedDuck} />
-        <HealthBar ref={healthBarRef} barName="PlayerHealth" />  
+        <HealthBar ref={healthBarRef} currentHealthProp={playerHealth} barName="PlayerHealth" />  
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('CombatModeScreen')}
