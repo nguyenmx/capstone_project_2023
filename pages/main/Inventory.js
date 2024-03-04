@@ -35,7 +35,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) =
   return (
     <>
       <TouchableOpacity onPress={openModal} style={{width: 50, height: 50}}>
-        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:"center"}}/>
+        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:""}}/>
       </TouchableOpacity>
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>

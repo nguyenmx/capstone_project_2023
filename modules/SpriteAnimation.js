@@ -28,7 +28,7 @@ const SpriteAnimation = ({
     };
   };
 
-  const handleAnimationSwitch = () => {
+  const switchToNextAnimation = () => {
     setAnimationType((prevType) => {
       const animationTypes = Object.keys(animations);
       const currentIndex = animationTypes.indexOf(prevType);
@@ -38,18 +38,26 @@ const SpriteAnimation = ({
   };
 
   const handleSpritePress = () => {
-    handleAnimationSwitch();
+    switchToNextAnimation();
     setTimeout(() => {
-      handleAnimationSwitch();
-    }, animations[animationType].length * 150);
+      switchToNextAnimation();
+    }, animations[animationType].length * 150); // Switch back after current animation frames
   };
+
+  useEffect(() => {
+    const switchAnimationTimer = setTimeout(() => {
+      switchToNextAnimation();
+    }, 10000); // Change animation every 3 seconds
+
+    return () => clearTimeout(switchAnimationTimer);
+  }, [animationType]);
 
   useEffect(() => {
     return playAnimation(animations[animationType]);
   }, [animationType]);
 
   return (
-    <View >
+    <View style={styles.container}>
       <TouchableOpacity onPress={handleSpritePress}>
         <Image
           source={animations[animationType][frameIndex]}
@@ -62,21 +70,11 @@ const SpriteAnimation = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+
   },
   sprite: {
     width: window.width * 0.58,
     height: window.width * 0.58,
-    position: 'relative',
-  },
-  button: {
-    top: 20,
-    padding: 10,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
     position: 'relative',
   },
 });

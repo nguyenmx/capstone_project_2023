@@ -83,10 +83,9 @@ const PetHouse = () => {
 
   const navigation = useNavigation(); // Initialize the navigation hook
 
-
   useEffect(() => {
-
-    playerHealthRef.current.setMaxHealth(playerHealth);
+    // Set playerHealthRef to the current HealthBar instance
+    playerHealthRef.current = healthBarRef.current;
 
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
@@ -105,6 +104,7 @@ const PetHouse = () => {
       }
     };
   }, [fadeAnim, sound]);
+
 
   const onVolumeChange = (value) => {
     if (sound) {
