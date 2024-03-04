@@ -9,8 +9,8 @@ const ReferenceDataContext = createContext({
   setSelectedDuck: () => {},
   time: '',
   setTime: () => {},
-  playerHealth: 100, // Add playerHealth to the context
-  setPlayerHealth: () => {}, // Add a function to set playerHealth
+  playerHealth: 100,
+  setPlayerHealth: () => {},
 });
 
 const ReferenceDataContextProvider = ({ children }) => {
@@ -18,7 +18,12 @@ const ReferenceDataContextProvider = ({ children }) => {
   const [time, setTime] = useState('');
   const [steps, setSteps] = useState('');
   const [selectedDuck, setSelectedDuck] = useState(0);
-  const [playerHealth, setPlayerHealth] = useState(100); // Initialize playerHealth
+  const [playerHealth, setPlayerHealth] = useState(100);
+
+  // Modify setPlayerHealth to ensure it stays between 0 and 100
+  const clampedPlayerHealth = (newHealth) => {
+    return Math.min(Math.max(newHealth, 0), 100);
+  };
 
   return (
     <ReferenceDataContext.Provider
@@ -32,7 +37,7 @@ const ReferenceDataContextProvider = ({ children }) => {
         time,
         setTime,
         playerHealth,
-        setPlayerHealth,
+        setPlayerHealth: (newHealth) => setPlayerHealth(clampedPlayerHealth(newHealth)),
       }}
     >
       {children}

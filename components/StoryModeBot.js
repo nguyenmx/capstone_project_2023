@@ -5,7 +5,9 @@ import { REACT_APP_API_KEY } from "@env";
 // generic d picture for testing
 const testImage = 'https://img.freepik.com/premium-photo/duckling-who-are-represented-white-background_136670-2986.jpg';
 //const testSelfie = require('../../images/PetHouse/Portrait/diamond.png');
-export const generateResponse = async (userInput) => {
+export const generateResponse = async (userInput, currentBotPersonality, name, age) => {
+  
+
   // Check if the user is requesting an image
   const isImageRequest = userInput.toLowerCase().includes("badminton");
   const isDalleRequest = userInput.toLowerCase().includes("image");
@@ -30,7 +32,7 @@ export const generateResponse = async (userInput) => {
   
   else {
     // Return the GPT-3.5 response
-    const chatGPTResponse = await generateChatGPTResponse(userInput);
+    const chatGPTResponse = await generateChatGPTResponse(userInput, currentBotPersonality, name, age);
     return chatGPTResponse;
   }
 };
@@ -62,17 +64,17 @@ const dalle = async (prompt) => {
   }
 };
 
-const generateChatGPTResponse = async (userInput) => {
+const generateChatGPTResponse = async (userInput, currentBotPersonality, name, age) => {
   try {
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
         model: 'gpt-3.5-turbo',
         messages: [{ role: 'user', content: userInput },
-        { role: 'system', content: 'You a character from a dating app that is a duck that talks casually. The duck is flirty, creative, has dry humor, and very friendly' },
+        { role: 'system', content: `You are on a dating app and your are a duck that talks casually. Your name is ${name} and your personality is mainly ${currentBotPersonality}, flirty, has dry humor, and friendly. Your current age is ${age}`},
         ],
         temperature: 0.8,
-        max_tokens: 50,
+        max_tokens: 30,
       },
       {
         headers: {

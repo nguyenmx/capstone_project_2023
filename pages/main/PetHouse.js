@@ -271,10 +271,6 @@ const PetHouse = () => {
 
          <HealthBar Optional={healthPosition} ref={healthBarRef} />
 
-        <Animated.Text style={[styles.title, { opacity: fadeAnim, position: 'absolute' }]}>
-          Living room
-        </Animated.Text>
-
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         

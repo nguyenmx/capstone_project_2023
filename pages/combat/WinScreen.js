@@ -8,20 +8,13 @@ const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const victoryBanner = require('../../images/CombatScreen/victoryBanner.png');
 
-const WinScreen = ({navigation ,route }) => {
-  const { initialPlayerHealth, enemyFinalHealth } = route.params;
+const WinScreen = ({navigation}) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
-
-  // Create a ref for the HealthBar component
   const healthBarRef = useRef(null);
 
-  // useEffect to update the HealthBar's initial health when finalHealth changes
   useEffect(() => {
     if (healthBarRef.current) {
-      console.log("initial health transfered:", initialPlayerHealth);
-      //healthBarRef.current.setMaxHealth(initialPlayerHealth + Math.round((initialPlayerHealth - playerHealth+10) * 0.15)); // figure out what the formula for winning is
-      healthBarRef.current.setMaxHealth(initialPlayerHealth + 10); //temp increase to test
-      //healthBarRef.current.setCurrentHealth(initialPlayerHealth + Math.round((initialPlayerHealth - playerHealth+10) * 0.15));
+      healthBarRef.current.setCurrentHealth(playerHealth);
     }
   }, [playerHealth]);
 
@@ -32,10 +25,12 @@ const WinScreen = ({navigation ,route }) => {
           <Image source={victoryBanner} style={styles.banner} />
         </View>
         <Duck duckType={selectedDuck} />     
-        <HealthBar ref={healthBarRef} currentHealthProp={initialPlayerHealth+10} barName="PlayerHealth" />    
+        <HealthBar ref={healthBarRef}
+         currentHealthProp={playerHealth} 
+         barName="PlayerHealth" />    
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('CombatMode')}
+          onPress={() => navigation.navigate('CombatModeScreen')}
         >
           <Text style={styles.buttonText}>Back To Menu</Text>
         </TouchableOpacity>

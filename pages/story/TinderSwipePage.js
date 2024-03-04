@@ -12,13 +12,13 @@ import verify from '../../images/TinderPage/verify.png';
 
 const window = Dimensions.get('window');
 
+
 const profiles = [
   { id: 1, name: 'Quaxly', age: 25, occupation: 'Professional Sleeper', bio: 'Are you a 2 cuz that\'s a 10 in binary', image: require('../../images/Backgrounds/forest_pfp.jpg'), animalType: require('../../images/PlayableAnimals/duckRizz.gif'), personality: 'Sporty', verified: false },
   { id: 2, name: 'Waddles', age: 21, occupation: 'Pond Ambassador', bio: 'Seeking someone for pond soirées', image: require('../../images/Backgrounds/duckPond.png'), animalType: require('../../images/PlayableAnimals/combatDuck.gif'), personality: 'Grumpy', verified: true },
   { id: 3, name: 'Floppers', age: 19, occupation: 'Divorce Attorney', bio: 'Willing to share my bread crumbs', image: require('../../images/Backgrounds/livingRoom.jpg'), animalType: require('../../images/PlayableAnimals/combatDuck2.gif'), personality: 'Smug', verified: true },
   // Add more profiles as needed...
 ];
-
 
 const TinderSwipePage = ({ navigation }) => {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
@@ -29,7 +29,6 @@ const TinderSwipePage = ({ navigation }) => {
     [{ nativeEvent: { translationX: translateX } }],
     { useNativeDriver: true }
   );
-
   const onSwipeRelease = (event) => {
     const { translationX, velocityX } = event.nativeEvent;
 
@@ -58,6 +57,8 @@ const TinderSwipePage = ({ navigation }) => {
         const currentProfile = profiles[currentProfileIndex];
         setSwipedProfiles([...swipedProfiles, currentProfile]);
         navigation.navigate('TestChatGPT', { currentProfile });
+
+        console.log(currentProfile.personality);
         console.log(currentProfile.name);
     }
   };
