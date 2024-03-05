@@ -18,7 +18,13 @@ import { useWindowDimensions } from 'react-native';
 import Inventory from './Inventory';
 import Currency from './Currency';
 import light from '../../images/LightS.png';
-
+import ani from '../../images/Animation1.gif'
+import birdprof from '../../images/PetHouse/Asset12.png'
+import p2 from '../../images/PetHouse/Asset4.png'
+import p3 from '../../images/PetHouse/Asset7.png'
+import p4 from '../../images/PetHouse/Asset8.png'
+import p5 from '../../images/PetHouse/Asset11.png'
+import p6 from '../../images/PetHouse/Asset13.png'
 import tasks from '../../components/main_game_logic/suggested_tasks';
 
 const window = Dimensions.get('window');
@@ -36,6 +42,29 @@ const PetHouse = () => {
   const [isNight, setIsNight] = useState(false);
   const [animationLoaded, setAnimationLoaded] = useState(false);
   const playerHealthRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  const profileImages = {
+    1: p3,//wave
+    2: p6, //Rizz
+    3: p5, //Coffe
+    4: p2, // Banana
+    5: birdprof, //crow
+    6: p4, //Squid
+  };
+
+  const profileImagePath = profileImages[selectedDuck];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 3000); // Image will disappear after 3 seconds
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []); // Runs once on component mount
+
 
 
   const toggleDayNight = () => {
@@ -247,7 +276,7 @@ const PetHouse = () => {
 
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
-              <Image source={profileIcon} style ={styles.profileIcon}></Image> 
+            <Image source={profileImagePath} style={styles.profileIcon} />
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
@@ -270,6 +299,9 @@ const PetHouse = () => {
 
 
          <HealthBar Optional={healthPosition} ref={healthBarRef} />
+
+         {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
+         
 
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />

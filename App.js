@@ -35,6 +35,7 @@ import ProfilePage from './pages/main/ProfilePage';
 import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
 import StepsConversion from './pages/combat/StepsConversion';
+import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';
@@ -105,6 +106,7 @@ export default function App() {
           <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
           <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
           <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
+          <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </CurrencyProvider>

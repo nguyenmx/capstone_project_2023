@@ -31,6 +31,7 @@
     "react-native": "0.72.6",
     "react-native-animatable": "^1.4.0",
     "react-native-fs": "^2.20.0",
+    "react-native-gif": "^1.0.3",
     "react-native-gifted-chat": "^2.4.0",
     "react-native-health": "^1.18.0",
     "react-native-linear-gradient": "^2.8.3",
