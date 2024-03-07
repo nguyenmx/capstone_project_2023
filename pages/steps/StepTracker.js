@@ -92,7 +92,6 @@ const TimerComponent = ({ navigation }) => {
   }
 
 
-
   const calculateTimePassed = () => {
     if (initialTime) {
       const currentTime = Date.now();
@@ -118,11 +117,6 @@ const TimerComponent = ({ navigation }) => {
     set_run_Time(86400);
     setRunning(false);
   }
-
-  
-  
-
-
    
   const startStopwatch = () => { 
     startTimeRef.current = Date.now() - parseInt(time); 
@@ -154,12 +148,6 @@ useEffect(()=>{
     setRunning(true); 
   }
 },[])
-
-
-
-
-  
-
 
 
 return (
@@ -208,7 +196,6 @@ return (
   </ImageBackground>
 );
 };
-
 
 
 const styles = StyleSheet.create({
@@ -294,7 +281,5 @@ const styles = StyleSheet.create({
     height: 250
   }
 }); 
-
-
 
 export default TimerComponent;

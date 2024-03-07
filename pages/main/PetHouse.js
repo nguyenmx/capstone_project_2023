@@ -298,7 +298,7 @@ const PetHouse = () => {
         </View>
 
 
-         <HealthBar Optional={healthPosition} ref={healthBarRef} />
+         <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={playerHealth} />
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
