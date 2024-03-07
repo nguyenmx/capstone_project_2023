@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
-import Duck from '../../modules/CharDuck';
 
 const window = Dimensions.get('window');
 

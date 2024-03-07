@@ -10,6 +10,7 @@ const SpriteAnimation = ({
   celebrateFrames,
   deadFrames,
   playDead, // Prop to trigger playDead animation
+  playCelebrate, // Prop to trigger playCelebrate animation
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
@@ -22,13 +23,13 @@ const SpriteAnimation = ({
     dead: deadFrames,
   };
 
-  const playAnimation = (frames) => {
+  const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
       setFrameIndex((prevIndex) => {
         const nextIndex = (prevIndex + 1) % frames.length;
-        if (animationType === 'dead' && nextIndex === frames.length - 1) {
+        if (!loop && nextIndex === frames.length - 1) {
           setIsPlaying(false);
-          clearInterval(intervalId); // Stop the animation at the last frame of 'dead'
+          clearInterval(intervalId);
         }
         return nextIndex;
       });
@@ -43,7 +44,10 @@ const SpriteAnimation = ({
     setAnimationType((prevType) => {
       if (playDead && prevType !== 'dead') {
         setIsPlaying(false);
-        return 'dead'; // Switch to dead animation if playDead is true
+        return 'dead';
+      } else if (playCelebrate && prevType !== 'celebrate') {
+        setIsPlaying(false);
+        return 'celebrate';
       } else {
         setIsPlaying(true);
         const animationTypes = Object.keys(animations);
@@ -58,28 +62,32 @@ const SpriteAnimation = ({
     switchToNextAnimation();
     setTimeout(() => {
       switchToNextAnimation();
-    }, animations[animationType].length * 150); // Switch back after current animation frames
+    }, animations[animationType].length * 150);
   };
 
   useEffect(() => {
     if (isPlaying) {
-      return playAnimation(animations[animationType]);
+      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle');
     }
   }, [isPlaying, animationType]);
 
-  // Effect to handle playDead animation
   useEffect(() => {
     if (playDead && animationType !== 'dead') {
       setAnimationType('dead');
       setTimeout(() => {
-        setIsPlaying(false); // Stop the animation after 5 seconds
+        setIsPlaying(false);
       }, 5000);
     } else if (playDead && animationType === 'dead') {
-      // Set frame index to the last frame of 'dead' animation
       setFrameIndex(deadFrames.length - 1);
       setIsPlaying(false);
     }
   }, [playDead]);
+
+  useEffect(() => {
+    if (playCelebrate && animationType !== 'celebrate') {
+      setAnimationType('celebrate');
+    } 
+  }, [playCelebrate]);
 
   return (
     <View style={styles.container}>
