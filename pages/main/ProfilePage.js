@@ -12,6 +12,8 @@ import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
+import p1 from '../../images/PetHouse/Asset2.png'
+
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/ProfilePage/pawsBackground.png');
@@ -20,7 +22,8 @@ const ProfilePage = ({ navigation }) => {
   const { selectedDuck } = useContext(ReferenceDataContext);
   
   const profileImages = {
-    1: p3,//wave
+    0: p3,//wave
+    1: p1,//Capy
     2: p6, //Rizz
     3: p5, //Coffe
     4: p2, // Banana
@@ -50,7 +53,7 @@ const ProfilePage = ({ navigation }) => {
           </View>
           <Duck duckType={selectedDuck} Optional={{top:200, zIndex: 999, position: 'absolute'}}/>
 
-          <FriendshipLevel style= {styles.profileIcon} ></FriendshipLevel>
+          <FriendshipLevel style= {{zIndex:999}} ></FriendshipLevel>
           <Image source={rectangle} style={styles.rectangle} />
         </View>
       </ImageBackground>
