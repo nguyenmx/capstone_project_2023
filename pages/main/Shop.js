@@ -1,26 +1,49 @@
 import React from 'react';
-import {
-  View,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
+import { View, ImageBackground, Text, TouchableOpacity, Image, Dimensions, StyleSheet, AsyncStorage } from 'react-native';
 import diamond from '../../images/PetHouse/Portrait/diamond.png';
 import coin from '../../images/PetHouse/Portrait/coin.png';
 import { useNavigation } from '@react-navigation/native';
 import Currency from './Currency';
 import { Audio } from 'expo-av';
 import { withCurrency } from '../../components/CurrencyContext';
+import mango from '../../images/Food/Mango.png'
+import boba from '../../images/Food/Bobba_Green.png'
+import salad from '../../images/Food/Salat.png'
+import burger from '../../images/Food/Burger.png'
+import shrimp from '../../images/Food/Shrimp.png'
 
 const window = Dimensions.get('window');
 
 class Shop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timer: 180, // 3 minutes in seconds
+    };
+    this.soundObject = new Audio.Sound();
+  }
 
+  componentDidMount() {
+    this.startTimer();
+  }
 
-  soundObject = new Audio.Sound();
+  componentWillUnmount() {
+    clearInterval(this.timerInterval);
+  }
+
+  startTimer = () => {
+    this.timerInterval = setInterval(() => {
+      if (this.state.timer > 0) {
+        this.setState((prevState) => ({
+          timer: prevState.timer - 1,
+        }));
+      } else {
+        clearInterval(this.timerInterval);
+        // Timer has reached 0, perform any actions needed
+        console.log('Timer has reached 0');
+      }
+    }, 1000);
+  };
 
   handleBuyPress = async (item) => {
     console.log(`Buy button pressed for item: ${item.price}`);
@@ -49,7 +72,6 @@ class Shop extends React.Component {
     console.log('Current diamonds:', diamonds);
     console.log('Current inv:', inventoryItems);
 
-
     // Deduct the specified amount from the appropriate currency
     if (item.currencyType === 'coins' && coins >= item.price) {
       console.log('Deducting coins:', item.price);
@@ -60,7 +82,6 @@ class Shop extends React.Component {
       console.log('Deducting diamonds:', item.price);
       spendCurrency('diamonds', item.price);
       addItemToInventory(item.imageSource); // Ensure item.imageSource is passed correctly
-
     } else {
       // Handle insufficient funds (optional)
       console.warn('Insufficient funds');
@@ -89,6 +110,13 @@ class Shop extends React.Component {
   );
 
   render() {
+    const { timer } = this.state;
+    const minutes = Math.floor(timer / 60);
+    let seconds = timer % 60;
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
     return (
       <ImageBackground
         source={require('../../images/Backgrounds/CoinShop.png')}
@@ -96,19 +124,21 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-        <Currency optionalStyles={{top: 140, left: 15}} />
+          <Currency optionalStyles={{ top: 120, left: 50 }} />
         </View>
 
-        {/* BUG: anything above 170 will make the coin currency buttons not pressable */}
-        <View style={[styles.container, {top: 170}]}> 
+        <View style={[styles.container, { top: window.width * 0.24 }]}>
+          <Text style={styles.timerText}>
+            {'Restocking in... ' + minutes + ':' + seconds}
+          </Text>
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' })}
           </View>
         </View>
-         {/* BUG: moving the container by top will make coin currency unpressable - temporary fix for now */}
-        <View style={[styles.container, {}]}>
+
+        <View style={[styles.container, { marginTop: window.width * -0.33 }]}>
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' })}
@@ -132,7 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#C6A2FD',
     padding: 10,
     borderRadius: 25,
-    //marginBottom: window.height * -0.1,
+    marginBottom: window.height * -0.1,
     position: 'absolute',
   },
   priceContainer: {
@@ -142,6 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 0,
   },
   shopItem: {
     flexDirection: 'row',
@@ -170,14 +201,20 @@ const styles = StyleSheet.create({
     zIndex: 998,
   },
   currencyIcon: {
-    width: 30,
+    width: 25,
     height: 25,
-    marginBottom: 5
+    marginLeft: 5,
   },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 16,
     marginLeft: 5,
+  },
+  timerText: {
+    fontFamily: 'NiceTango-K7XYo',
+    fontSize: 20,
+    color: 'white',
+    marginBottom: 10,
   },
 });
 

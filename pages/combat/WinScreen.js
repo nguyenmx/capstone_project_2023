@@ -1,8 +1,10 @@
-import React, { useContext, useRef, useEffect} from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
+import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the SpriteAnimation component
+import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
@@ -11,6 +13,7 @@ const victoryBanner = require('../../images/CombatScreen/victoryBanner.png');
 const WinScreen = ({navigation}) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
   const healthBarRef = useRef(null);
+  const [celebrate, setCelebrate] = useState(true); // State for celebrate animation
 
   useEffect(() => {
     if (healthBarRef.current) {
@@ -18,16 +21,41 @@ const WinScreen = ({navigation}) => {
     }
   }, [playerHealth]);
 
+  // Get the sprite frames for selectedDuck
+  const spriteFrames = getSpriteFrames(selectedDuck);
+
+  let duckContent;
+
+  // Check if selectedDuck is a SpriteAnimation (duckType 5 or 6)
+  if (selectedDuck === 5 || selectedDuck === 6) {
+    duckContent = (
+      <SpriteAnimation
+        idleFrames={spriteFrames.idleFrames}
+        walkFrames={spriteFrames.walkFrames}
+        celebrateFrames={spriteFrames.celebrateFrames}
+        deadFrames={spriteFrames.deadFrames}
+        playCelebrate={celebrate}
+        playDead={false} // Or set to true to trigger dead animation
+      />
+    );
+  } else {
+    duckContent = (
+      <Duck duckType={selectedDuck} />
+    );
+  }
+
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.bannerContainer}>
           <Image source={victoryBanner} style={styles.banner} />
         </View>
-        <Duck duckType={selectedDuck} />     
-        <HealthBar ref={healthBarRef}
-         currentHealthProp={playerHealth} 
-         barName="PlayerHealth" />    
+        {duckContent}
+        <HealthBar
+          ref={healthBarRef}
+          currentHealthProp={playerHealth} 
+          barName="PlayerHealth"
+        />    
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('CombatModeScreen')}
@@ -49,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: window.height * 0.05,
+    marginVertical: window.height * 0.02,
   },
   buttonText: {
     fontFamily: 'NiceTango-K7XYo',
@@ -87,4 +115,3 @@ const styles = StyleSheet.create({
     marginTop: window.height * 0.06,
   },
 });
-

@@ -8,19 +8,31 @@ const SpriteAnimation = ({
   idleFrames,
   walkFrames,
   celebrateFrames,
+  deadFrames,
+  playDead, // Prop to trigger playDead animation
+  playCelebrate, // Prop to trigger playCelebrate animation
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const animations = {
     idle: idleFrames,
     walk: walkFrames,
     celebrate: celebrateFrames,
+    dead: deadFrames,
   };
 
-  const playAnimation = (frames) => {
+  const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
-      setFrameIndex((prevIndex) => (prevIndex + 1) % frames.length);
+      setFrameIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % frames.length;
+        if (!loop && nextIndex === frames.length - 1) {
+          setIsPlaying(false);
+          clearInterval(intervalId);
+        }
+        return nextIndex;
+      });
     }, 150);
 
     return () => {
@@ -30,10 +42,19 @@ const SpriteAnimation = ({
 
   const switchToNextAnimation = () => {
     setAnimationType((prevType) => {
-      const animationTypes = Object.keys(animations);
-      const currentIndex = animationTypes.indexOf(prevType);
-      const nextIndex = (currentIndex + 1) % animationTypes.length;
-      return animationTypes[nextIndex];
+      if (playDead && prevType !== 'dead') {
+        setIsPlaying(false);
+        return 'dead';
+      } else if (playCelebrate && prevType !== 'celebrate') {
+        setIsPlaying(false);
+        return 'celebrate';
+      } else {
+        setIsPlaying(true);
+        const animationTypes = Object.keys(animations);
+        let currentIndex = animationTypes.indexOf(prevType);
+        currentIndex = (currentIndex + 1) % animationTypes.length;
+        return animationTypes[currentIndex];
+      }
     });
   };
 
@@ -41,20 +62,32 @@ const SpriteAnimation = ({
     switchToNextAnimation();
     setTimeout(() => {
       switchToNextAnimation();
-    }, animations[animationType].length * 150); // Switch back after current animation frames
+    }, animations[animationType].length * 150);
   };
 
   useEffect(() => {
-    const switchAnimationTimer = setTimeout(() => {
-      switchToNextAnimation();
-    }, 10000); // Change animation every 3 seconds
-
-    return () => clearTimeout(switchAnimationTimer);
-  }, [animationType]);
+    if (isPlaying) {
+      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle');
+    }
+  }, [isPlaying, animationType]);
 
   useEffect(() => {
-    return playAnimation(animations[animationType]);
-  }, [animationType]);
+    if (playDead && animationType !== 'dead') {
+      setAnimationType('dead');
+      setTimeout(() => {
+        setIsPlaying(false);
+      }, 5000);
+    } else if (playDead && animationType === 'dead') {
+      setFrameIndex(deadFrames.length - 1);
+      setIsPlaying(false);
+    }
+  }, [playDead]);
+
+  useEffect(() => {
+    if (playCelebrate && animationType !== 'celebrate') {
+      setAnimationType('celebrate');
+    } 
+  }, [playCelebrate]);
 
   return (
     <View style={styles.container}>

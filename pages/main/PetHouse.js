@@ -20,12 +20,14 @@ import Currency from './Currency';
 import light from '../../images/LightS.png';
 import ani from '../../images/Animation1.gif'
 import birdprof from '../../images/PetHouse/Asset12.png'
+import p1 from '../../images/PetHouse/Asset2.png'
 import p2 from '../../images/PetHouse/Asset4.png'
 import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
 import tasks from '../../components/main_game_logic/suggested_tasks';
+import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
 
 const window = Dimensions.get('window');
 
@@ -45,7 +47,8 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const profileImages = {
-    1: p3,//wave
+    0: p3,//wave
+    1: p1,//Capy
     2: p6, //Rizz
     3: p5, //Coffe
     4: p2, // Banana
@@ -276,7 +279,8 @@ const PetHouse = () => {
 
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
-            <Image source={profileImagePath} style={styles.profileIcon} />
+            <Image source={profileIcon} style={styles.profileIcon} />
+            {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
@@ -298,7 +302,7 @@ const PetHouse = () => {
         </View>
 
 
-         <HealthBar Optional={healthPosition} ref={healthBarRef} />
+         <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={playerHealth} />
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
@@ -326,12 +330,17 @@ const PetHouse = () => {
                   <Text style={styles.currencyText}>812</Text>
                 </View>   
 
+
+
               </View>
+
 
             <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={itemShop} style={itemShopImg}></Image>
             </TouchableOpacity>
           </View>
+
+
 
           <View style={dialogueContainer}>
             <Text style={styles.dialogueText}>Current Task: {tasks[getRandomInt_forTasks(tasks.length)]} </Text>
@@ -426,6 +435,7 @@ const styles = StyleSheet.create({
     left: -10
   },
   navItem: {
+    left: 15,
     width: 65,
     height: 65
   },

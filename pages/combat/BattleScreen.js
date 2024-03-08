@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useEffect}  from 'react';
+import React, {useState, useContext, useRef}  from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, Modal, Animated} from 'react-native';
 import backgroundImage from '../../images/Backgrounds/background.gif';
 import rock from '../../images/CombatScreen/rock.png';
@@ -41,15 +41,6 @@ const BattleScreen = ({ navigation }) => {
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
   const [initialPlayerHealth] = useState(playerHealth);
-
-
-useEffect(() => {
-  console.log("initial health recorded was:", initialPlayerHealth);
-  console.log('Player health in data file updated:', playerHealth);
-  //playerHealthRef.current.setMaxHealth(100);
-  //playerHealthRef.current.setCurrentHealth(initialPlayerHealth);
-
-}, [playerHealth]);
 
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;

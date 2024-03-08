@@ -1,14 +1,16 @@
-import React, { useContext, useRef, useEffect} from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
+import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
+import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the updated SpriteAnimation component
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
 const defeatBanner = require('../../images/CombatScreen/defeatBanner.png');
 
-const LossScreen = ({navigation}) => {
+const LossScreen = ({ navigation }) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
   const healthBarRef = useRef(null);
 
@@ -18,14 +20,36 @@ const LossScreen = ({navigation}) => {
     }
   }, [playerHealth]);
 
+  let duckContent;
+
+  // Get the sprite frames for selectedDuck
+  const spriteFrames = getSpriteFrames(selectedDuck);
+
+  // Check if selectedDuck is a SpriteAnimation (duckType 5 or 6)
+  if (selectedDuck === 5 || selectedDuck === 6) {
+    duckContent = (
+      <SpriteAnimation
+        idleFrames={spriteFrames.idleFrames}
+        walkFrames={spriteFrames.walkFrames}
+        celebrateFrames={spriteFrames.celebrateFrames}
+        deadFrames={spriteFrames.deadFrames}
+        playDead={true} // Play the dead animation
+      />
+    );
+  } else {
+    duckContent = (
+      <Duck duckType={selectedDuck} />
+    );
+  }
+
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.bannerContainer}>
           <Image source={defeatBanner} style={styles.banner} />
         </View>
-        <Duck duckType={selectedDuck} />
-        <HealthBar ref={healthBarRef} currentHealthProp={playerHealth} barName="PlayerHealth" />  
+        {duckContent}
+        <HealthBar ref={healthBarRef} currentHealthProp={playerHealth} barName="PlayerHealth" />
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('CombatModeScreen')}
