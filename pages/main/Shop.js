@@ -96,19 +96,19 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-        <Currency optionalStyles={{ top: 120 , left: 50}} />
+        <Currency optionalStyles={{top: 140, left: 15}} />
         </View>
 
-
-        <View style={[styles.container, { top: window.width * 0.24 }]}>
+        {/* BUG: anything above 170 will make the coin currency buttons not pressable */}
+        <View style={[styles.container, {top: 170}]}> 
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' })}
           </View>
         </View>
-
-        <View style={[styles.container, { marginTop: window.width * -0.33 }]}>
+         {/* BUG: moving the container by top will make coin currency unpressable - temporary fix for now */}
+        <View style={[styles.container, {}]}>
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' })}
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#C6A2FD',
     padding: 10,
     borderRadius: 25,
-    marginBottom: window.height * -0.1,
+    //marginBottom: window.height * -0.1,
     position: 'absolute',
   },
   priceContainer: {
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
   },
   shopItem: {
     flexDirection: 'row',
@@ -171,9 +170,9 @@ const styles = StyleSheet.create({
     zIndex: 998,
   },
   currencyIcon: {
-    width: 25,
+    width: 30,
     height: 25,
-    marginLeft: 5,
+    marginBottom: 5
   },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
