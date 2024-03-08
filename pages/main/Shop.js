@@ -124,10 +124,10 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-          <Currency optionalStyles={{ top: 120, left: 50 }} />
+          <Currency optionalStyles={{ top: 140, left: 15 }} />
         </View>
 
-        <View style={[styles.container, { top: window.width * 0.24 }]}>
+        <View style={[styles.container, { top: 150 }]}>
           <Text style={styles.timerText}>
             {'Restocking in... ' + minutes + ':' + seconds}
           </Text>
@@ -138,7 +138,7 @@ class Shop extends React.Component {
           </View>
         </View>
 
-        <View style={[styles.container, { marginTop: window.width * -0.33 }]}>
+        <View style={[styles.container, {}]}>
           <View style={styles.shopItem}>
             {this.renderShopItem({ imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' })}
             {this.renderShopItem({ imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' })}
