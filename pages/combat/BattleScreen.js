@@ -18,6 +18,7 @@ import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
 import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
+import { useTasks } from '../../components/TasksContext';
 
 const window = Dimensions.get('window');
 
@@ -41,6 +42,7 @@ const BattleScreen = ({ navigation }) => {
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
   const [initialPlayerHealth] = useState(playerHealth);
+  const { completeTask } = useTasks();
 
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
@@ -183,6 +185,7 @@ const handlePress = (move) => {
         setPlayerHealth(initialPlayerHealth - Math.round(enemyHealthRef.current.getHealth() * 0.15));
         console.log("initial health updated after loss to: ", initialPlayerHealth);
         navigation.navigate('LossScreen');
+        completeTask(3);
       }
       console.log("Player loses!");
     }, 2500); // Adjust the delay timing as needed

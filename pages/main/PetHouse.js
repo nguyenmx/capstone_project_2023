@@ -26,7 +26,9 @@ import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
-import tasks from '../../components/main_game_logic/suggested_tasks';
+// import tasks from '../../components/main_game_logic/suggested_tasks';
+import {useTasks} from '../../components/TasksContext';
+//import tasks from '../../components/TasksContext';
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
 
 const window = Dimensions.get('window');
@@ -45,6 +47,8 @@ const PetHouse = () => {
   const [animationLoaded, setAnimationLoaded] = useState(false);
   const playerHealthRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
+  const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
 
   const profileImages = {
     0: p3,//wave
@@ -217,6 +221,12 @@ const PetHouse = () => {
     left: isLandscape ? -250 : window.width * -0.08
   };
 
+  // const inventoryPos = {
+  //   position: 'absolute',
+  //   top: isLandscape ? 20 : 100,
+  //   left: isLandscape ? 20 : 10, 
+  // };
+
   const diamondAndCoinContainer = {
     flexDirection: 'row',
     top: isLandscape ? -230 : 0,
@@ -250,16 +260,40 @@ const PetHouse = () => {
       shadowOpacity: 1,
   }
 
+  useEffect(() => {
+    // Set up an effect to move to a random incomplete task when the current one is completed
+    if (currentTaskIndex !== null && tasks[currentTaskIndex].completed) {
+      // Filter out incomplete tasks
+      const incompleteTasks = tasks.filter(task => !task.completed);
+  
+      // Check if there are incomplete tasks remaining
+      if (incompleteTasks.length > 0) {
+        // Generate a random index within the range of incompleteTasks
+        const randomIndex = Math.floor(Math.random() * incompleteTasks.length);
+        
+        // Update currentTaskIndex to the randomly selected incomplete task index
+        setCurrentTaskIndex(randomIndex);
+      }
+    }
+  }, [currentTaskIndex, tasks]);
+  
+  const handleCompleteTask = () => {
+    // Function to mark the current task as completed
+    if (currentTaskIndex !== null) {
+      completeTask(currentTaskIndex); // Mark the current task as completed
+    }
+  };
 
-  function getRandomInt_forTasks(max) {
-    return Math.floor(Math.random() * (max - 0) + 0);
-  }
+  // function getRandomInt_forTasks(max) {
+  //   return Math.floor(Math.random() * (max - 0) + 0);
+  // }
 
-  console.log("Random number is: ", getRandomInt_forTasks(6));
-  console.log("Task is: ", tasks);
+  // console.log("Random number is: ", getRandomInt_forTasks(6));
+  // console.log("Task is: ", tasks);
 
   //const orientation = UseOrientation();
   //console.log(orientation)
+
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
@@ -276,9 +310,9 @@ const PetHouse = () => {
             </View>
             </TouchableOpacity>
       
-            <Inventory
+            <Inventory 
               foodIcon={foodIcon} 
-              styles={styles}
+              // inventoryPos={inventoryPos}
               onItemDrop={() => decreaseHealth()} // Example for decreasing health
               onItemDropBy={(amount) => decreaseHealthBy(amount)} // Example for decreasing health by custom amount
               onItemFeed={() => increaseHealth()} // Example for increasing health
@@ -318,21 +352,15 @@ const PetHouse = () => {
                 <View style={currencyContainer}>
                   <Text style={styles.currencyText}>812</Text>
                 </View>   
-
-
-
               </View>
-
 
             <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
             <Image source={itemShop} style={itemShopImg}></Image>
             </TouchableOpacity>
           </View>
 
-
-
           <View style={dialogueContainer}>
-            <Text style={styles.dialogueText}>Current Task: {tasks[getRandomInt_forTasks(tasks.length)]} </Text>
+            <Text style={styles.dialogueText}>Current Task: {tasks[currentTaskIndex].text} </Text>
          </View>
 
       </View>
