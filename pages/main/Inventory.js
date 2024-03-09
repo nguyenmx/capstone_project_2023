@@ -1,11 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
+import { useTasks } from '../../components/TasksContext';
 
 const window = Dimensions.get('window');
 
-const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) => {
+const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, onItemFeed }) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency();
+  const { completeTask } = useTasks();
+
 
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -29,6 +32,8 @@ const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) =
 
   const handleFeedDuck = () => {
     onItemFeed(); // Call the passed function for feeding the duck
+    completeTask(0); //Mark the first task as complete
+    //Mark which task has been complete
   };
 
   return (
@@ -39,7 +44,7 @@ const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) =
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>
         <TouchableOpacity
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
           onPress={(event) => {
             const isInsideModal = event.target === event.currentTarget;
             if (isInsideModal) {
