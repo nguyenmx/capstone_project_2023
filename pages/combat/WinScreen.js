@@ -5,6 +5,7 @@ import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
 import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the SpriteAnimation component
 import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
+import { Audio } from 'expo-av'; // Import expo-av Audio
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');

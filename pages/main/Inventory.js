@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
+import { TouchableNativeFeedback, TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
 
 const window = Dimensions.get('window');
@@ -55,21 +55,25 @@ const Inventory = ({ foodIcon, styles, onItemDrop, onItemDropBy, onItemFeed }) =
               <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
-            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange', justifyContent: 'space-evenly' }}>
-
-              {inventoryItems.map((item, index) => {
-                return (
-                  <DraggableItem
-                    key={index}
-                    image={item}
-                    onDrop={() => handleRemoveItem(item)} // Handle dropping item
-                    onDropBy={(amount) => handleRemoveItemBy(item, amount)} // Handle dropping item by custom amount
-                    onFeed={() => handleFeedDuck()} // Handle feeding the duck
-                  />
-                );
-              })}
-
-            </View>
+            {inventoryItems.length === 0 ? ( // Check if inventory is empty
+              <View style={{ padding: 10 }}>
+                <Text style={{ fontSize: 16, fontFamily: 'NiceTango-K7XYo', color: 'gray', textAlign: 'center' }}>Nothing’s here...</Text>
+              </View>
+            ) : (
+              <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 1, borderColor: 'orange', justifyContent: 'space-evenly' }}>
+                {inventoryItems.map((item, index) => {
+                  return (
+                    <DraggableItem
+                      key={index}
+                      image={item}
+                      onDrop={() => handleRemoveItem(item)} // Handle dropping item
+                      onDropBy={(amount) => handleRemoveItemBy(item, amount)} // Handle dropping item by custom amount
+                      onFeed={() => handleFeedDuck()} // Handle feeding the duck
+                    />
+                  );
+                })}
+              </View>
+            )}
           </View>
         </TouchableOpacity>
       </Modal>

@@ -212,9 +212,10 @@ const styles = StyleSheet.create({
   },
   timerText: {
     fontFamily: 'NiceTango-K7XYo',
-    fontSize: 20,
+    fontSize: 30,
     color: 'white',
-    marginBottom: 10,
+    bottom: -170,
+    position: 'absolute'
   },
 });
 

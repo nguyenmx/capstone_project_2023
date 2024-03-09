@@ -44,6 +44,21 @@ export const getSpriteFrames = duckType => {
       idleFrames: [
         require('../images/CharacterSheet/CharacterSheet-0.png'),
         require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-2.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+
       ],
       walkFrames: [
         require('../images/CharacterSheet/CharacterSheet-21.png'),
@@ -58,6 +73,10 @@ export const getSpriteFrames = duckType => {
         require('../images/CharacterSheet/CharacterSheet-13.png'),
       ],
       deadFrames: [
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
         require('../images/CharacterSheet/CharacterSheet-34.png'),
         require('../images/CharacterSheet/CharacterSheet-35.png'),
         require('../images/CharacterSheet/CharacterSheet-36.png'),
@@ -89,6 +108,10 @@ export const getSpriteFrames = duckType => {
         require('../images/Squid_Character/tile059.png'),
       ],
       deadFrames: [
+        require('../images/Squid_Character/tile000.png'),
+        require('../images/Squid_Character/tile001.png'),
+        require('../images/Squid_Character/tile002.png'),
+        require('../images/Squid_Character/tile003.png'),
         require('../images/Squid_Character/tile048.png'),
         require('../images/Squid_Character/tile049.png'),
         require('../images/Squid_Character/tile050.png'),

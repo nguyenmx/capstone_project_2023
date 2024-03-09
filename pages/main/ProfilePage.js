@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import rectangle from '../../images/ProfilePage/rectangle.png';
+import pp from '../../images/ProfilePage/pawsandhearts.jpg';
+
 import profileIcon from '../../images/ProfilePage/profileIcon.png';
 import settingsButton from '../../images/settingButton.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
@@ -16,9 +18,10 @@ import p1 from '../../images/PetHouse/Asset2.png'
 
 
 const window = Dimensions.get('window');
-const backgroundImage = require('../../images/ProfilePage/pawsBackground.png');
+const backgroundImage = pp;
 
 const ProfilePage = ({ navigation }) => {
+  const { name, setName, playerHealth} = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
   
   const profileImages = {
@@ -41,7 +44,9 @@ const ProfilePage = ({ navigation }) => {
            <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
           <Image source={profileImagePath} style={styles.profileIcon} />
-
+          <View style={styles.nameContainer}>
+                <Text style={styles.nameText}>{name}</Text>
+           </View>
           <View style={styles.attributesContainer}>
             <Text style={styles.attributeNames}>Name</Text>
             <Text style={styles.attributeNames}>Gender</Text>
@@ -54,8 +59,9 @@ const ProfilePage = ({ navigation }) => {
           <Duck duckType={selectedDuck} Optional={{top:200, zIndex: 999, position: 'absolute'}}/>
 
           <FriendshipLevel style= {{zIndex:999}} ></FriendshipLevel>
-          <Image source={rectangle} style={styles.rectangle} />
         </View>
+        <Image source={rectangle} style={styles.rectangle} />
+
       </ImageBackground>
     </View>
   );
@@ -104,4 +110,27 @@ const styles = StyleSheet.create({
     color: 'rgba(137, 40, 125, 0.70)',
     fontFamily: 'NiceTango-K7XYo',
   },
+  nameContainer: {
+    width: 175,
+    height: 60, 
+    borderWidth: 4, 
+    borderColor: 'rgba(160, 200, 220, 0.9)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(184, 240, 260, 1)',
+    borderRadius: 18,
+    shadowOffset: { width: 4, height: 4 },
+    shadowColor: 'rgba(117, 82, 103, 0.8)',
+    shadowOpacity: 1,
+  },
+  nameText: {
+    fontFamily: 'NiceTango-K7XYo',
+    fontSize: 32,
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    zIndex:999
+  },
+
 });

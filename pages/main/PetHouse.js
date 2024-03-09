@@ -61,12 +61,12 @@ const PetHouse = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000); // Image will disappear after 3 seconds
+    }, 3000); 
 
     return () => {
       clearTimeout(timer);
     };
-  }, []); // Runs once on component mount
+  }, []); 
 
 
 
@@ -165,18 +165,7 @@ const PetHouse = () => {
   const navigateToProfile = () => {
     navigation.navigate('ProfilePage');
   };
-
-  const onItemDrop = (item) => {
-    if (item === null) {
-      removeItemFromInventory(item);
-      //increaseHealth();
-    } else {
-      console.log("item dropped on nothing: " + item)
-    }
-  };
   
-  
-
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
 

@@ -67,7 +67,7 @@ const SpriteAnimation = ({
 
   useEffect(() => {
     if (isPlaying) {
-      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle');
+      return playAnimation(animations[animationType], animationType !== 'dead');
     }
   }, [isPlaying, animationType]);
 
@@ -91,12 +91,10 @@ const SpriteAnimation = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleSpritePress}>
         <Image
           source={animations[animationType][frameIndex]}
           style={styles.sprite}
         />
-      </TouchableOpacity>
     </View>
   );
 };

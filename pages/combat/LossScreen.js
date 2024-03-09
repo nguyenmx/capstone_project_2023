@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOp
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
-import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
-import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the updated SpriteAnimation component
+import { getSpriteFrames } from '../../modules/CharDuck';
+import SpriteAnimation from '../../modules/SpriteAnimation'; 
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
@@ -25,7 +25,6 @@ const LossScreen = ({ navigation }) => {
   // Get the sprite frames for selectedDuck
   const spriteFrames = getSpriteFrames(selectedDuck);
 
-  // Check if selectedDuck is a SpriteAnimation (duckType 5 or 6)
   if (selectedDuck === 5 || selectedDuck === 6) {
     duckContent = (
       <SpriteAnimation
@@ -33,7 +32,7 @@ const LossScreen = ({ navigation }) => {
         walkFrames={spriteFrames.walkFrames}
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
-        playDead={true} // Play the dead animation
+        playDead={true} 
       />
     );
   } else {
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
   },
   bannerContainer: {
     width: window.width * 0.7,
-    aspectRatio: 702 / 614, // Adjust the aspect ratio to fit the banner image
+    aspectRatio: 702 / 614, 
     marginTop: window.height * 0.04,
     marginBottom: window.height * 0.02,
     justifyContent: 'center',
