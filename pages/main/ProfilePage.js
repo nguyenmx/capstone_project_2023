@@ -43,10 +43,9 @@ const ProfilePage = ({ navigation }) => {
         <TouchableOpacity>
            <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
-          <Image source={profileImagePath} style={styles.profileIcon} />
-          <View style={styles.nameContainer}>
-                <Text style={styles.nameText}>{name}</Text>
-           </View>
+          <Image source={profileIcon} style={styles.profileIcon} />
+          {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
+
           <View style={styles.attributesContainer}>
             <Text style={styles.attributeNames}>Name</Text>
             <Text style={styles.attributeNames}>Gender</Text>
@@ -56,7 +55,7 @@ const ProfilePage = ({ navigation }) => {
             <Text style={styles.attributeNames}>Nature</Text>
               <Text style={styles.attributeNames}>Species</Text>
           </View>
-          <Duck duckType={selectedDuck} Optional={{top:200, zIndex: 999, position: 'absolute'}}/>
+          {/* <Duck duckType={selectedDuck} Optional={{top:200, zIndex: 999, position: 'absolute'}}/> */}
 
           <FriendshipLevel style= {{zIndex:999}} ></FriendshipLevel>
         </View>

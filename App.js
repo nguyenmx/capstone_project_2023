@@ -100,7 +100,7 @@ export default function App() {
           <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
           <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
-          <Stack.Screen name="Shop" component={Shop} />
+          <Stack.Screen name="Shop" component={Shop} options={{ headerShown: false}}/>
           <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
           <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
           <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />

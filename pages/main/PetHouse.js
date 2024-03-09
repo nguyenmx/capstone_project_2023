@@ -268,7 +268,8 @@ const PetHouse = () => {
 
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
-            <Image source={profileImagePath} style={styles.profileIcon} />
+            <Image source={profileIcon} style={styles.profileIcon} />
+            {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
@@ -423,6 +424,7 @@ const styles = StyleSheet.create({
     left: -10
   },
   navItem: {
+    left: 15,
     width: 65,
     height: 65
   },
