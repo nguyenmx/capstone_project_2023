@@ -19,6 +19,7 @@ import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import { useTasks } from '../../components/TasksContext';
+import { useCurrency } from '../../components/CurrencyContext'; 
 
 const window = Dimensions.get('window');
 
@@ -43,6 +44,7 @@ const BattleScreen = ({ navigation }) => {
   const moveAnimation = new Animated.Value(0);
   const [initialPlayerHealth] = useState(playerHealth);
   const { completeTask } = useTasks();
+  const { earnCurrency } = useCurrency();
 
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
@@ -167,6 +169,7 @@ const handlePress = (move) => {
         // Navigate to WinScreen when enemy health reaches zero
         setPlayerHealth(initialPlayerHealth + Math.round(playerHealthRef.current.getHealth() * 0.15));
         console.log("initial health updated after win to: ", initialPlayerHealth);
+        earnCurrency('coins');
         navigation.navigate('WinScreen');
 
       }
