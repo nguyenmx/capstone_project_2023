@@ -124,10 +124,10 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-          <Currency optionalStyles={{ top: 140, left: 15 }} />
+          <Currency optionalStyles={{ top: 130, left: 15 }} />
         </View>
 
-        <View style={[styles.container, { top: 150 }]}>
+        <View style={[styles.container, { top: 140 }]}>
           <Text style={styles.timerText}>
             {'Restocking in... ' + minutes + ':' + seconds}
           </Text>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   rect: {
     width: 130,
-    height: 42,
+    height: 50,
     backgroundColor: '#C6A2FD',
     padding: 10,
     borderRadius: 25,
@@ -201,9 +201,10 @@ const styles = StyleSheet.create({
     zIndex: 998,
   },
   currencyIcon: {
-    width: 25,
-    height: 25,
+    width: 28,
+    height: 23,
     marginLeft: 5,
+    marginTop: 10
   },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
