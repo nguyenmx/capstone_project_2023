@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackArrow from '../../modules/BackArrow';
 import { generateResponse } from '../../components/StoryModeBot';
 import profileIcon from '../../images/ChatBotIcons/profileIcon.png';
 import stickerIcon from '../../images/ChatBotIcons/stickerIcon.png';
+import eraserIcon from '../../images/ChatBotIcons/eraserIcon.png';
 import verify from '../../images/TinderPage/verify.png';
 
 const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
@@ -43,6 +44,7 @@ const TestChatGPT = ({ navigation, route }) => {
   const clearChat = () => {
     setMessages([]);
     storeMessages([], characterId); // Save an empty array to clear messages
+    console.log("cleared");
   };
 
   const onSend = async (newMessages = []) => {
@@ -151,6 +153,9 @@ const TestChatGPT = ({ navigation, route }) => {
           <Text style={styles.animalName}>{`, ${currentProfile.age}`}</Text>
           {currentProfile.verified && <Image source={verify} style={styles.verifiedIcon} />}
           <ImageBackground source={profileIcon} style={styles.profileIcon} />
+          <TouchableWithoutFeedback onPress={clearChat}>
+            <Image source={eraserIcon} style={styles.eraseIcon} />
+          </TouchableWithoutFeedback>
         </View>
       );
     };
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
   },
   animalName: {
     top: 45,
-    fontSize: 28,
+    fontSize: 25,
     left: 5,
   },
   topNavContainer: {
@@ -221,13 +226,20 @@ const styles = StyleSheet.create({
   profileIcon: {
     width: 31,
     height: 38,
-    left: 335,
+    left: 300,
     top: 55,
     position: 'absolute',
   },
+  eraseIcon: {
+    width: 33,
+    height: 41,
+    left: 360,
+    top: 55,
+    position: 'absolute',
+    pointerEvents: 'box-only', // Add this line
+  },
   inputToolbarContainer: {
-    padding: 5
-
+    padding: 5,
   },
   inputToolbarPrimary: {
     backgroundColor: 'rgb(255,230, 255)',
