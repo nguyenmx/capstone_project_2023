@@ -83,8 +83,8 @@ export default function App() {
 
   return (
     <ReferenceDataContextProvider>
-    <TasksProvider>
     <CurrencyProvider>
+    <TasksProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
@@ -111,8 +111,8 @@ export default function App() {
           <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
-    </CurrencyProvider>
     </TasksProvider>
+    </CurrencyProvider>
     </ReferenceDataContextProvider>
   );
 }
