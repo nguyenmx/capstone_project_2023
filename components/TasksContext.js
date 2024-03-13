@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useCurrency } from './CurrencyContext';
 
 const TasksContext = createContext();
 
@@ -12,6 +13,7 @@ export const withTasks = (WrappedComponent) => {
 };
 
 export const TasksProvider = ({ children }) => {
+  const {earnCurrency} = useCurrency();
   const initialTasks = [
   { id: 0, text: "You need to feed the pet boi", completed: false },
   { id: 1, text: "Get the most favorite food plssss", completed: false },
@@ -33,6 +35,7 @@ export const TasksProvider = ({ children }) => {
         task.id === taskId ? { ...task, completed: true } : task
       );
     });
+    earnCurrency('coins');
     console.log("Task " + taskId + " has been completed!");
   };
 

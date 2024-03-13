@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     zIndex: 2,
-    down: 20,
   },
   attributesContainer: {
     zIndex: 2,

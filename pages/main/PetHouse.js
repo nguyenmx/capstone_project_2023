@@ -261,18 +261,14 @@ const PetHouse = () => {
   }
 
   useEffect(() => {
-    // Set up an effect to move to a random incomplete task when the current one is completed
+    // Set up an effect to move to the next task when the current one is completed
     if (currentTaskIndex !== null && tasks[currentTaskIndex].completed) {
-      // Filter out incomplete tasks
-      const incompleteTasks = tasks.filter(task => !task.completed);
+      // Find the index of the next incomplete task
+      const nextIncompleteTaskIndex = tasks.findIndex(task => !task.completed);
   
-      // Check if there are incomplete tasks remaining
-      if (incompleteTasks.length > 0) {
-        // Generate a random index within the range of incompleteTasks
-        const randomIndex = Math.floor(Math.random() * incompleteTasks.length);
-        
-        // Update currentTaskIndex to the randomly selected incomplete task index
-        setCurrentTaskIndex(randomIndex);
+      // Move to the next incomplete task index if found
+      if (nextIncompleteTaskIndex !== -1) {
+        setCurrentTaskIndex(nextIncompleteTaskIndex);
       }
     }
   }, [currentTaskIndex, tasks]);
