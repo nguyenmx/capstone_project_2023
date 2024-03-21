@@ -5,6 +5,7 @@ import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
 import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
 import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the updated SpriteAnimation component
+import { Audio } from 'expo-av';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
@@ -13,6 +14,35 @@ const defeatBanner = require('../../images/CombatScreen/defeatBanner.png');
 const LossScreen = ({ navigation }) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
   const healthBarRef = useRef(null);
+  this.soundObject = new Audio.Sound();
+
+  useEffect(() => {
+    handlePlay(); // Call handlePlay when component mounts
+    return () => {
+      // Clean up function to unload sound when component unmounts
+      soundObject.unloadAsync();
+    };
+  }, []);
+
+
+  handlePlay = async () => {
+    if (this.soundObject._loaded) {
+      try {
+        // If loaded, play the sound
+        await this.soundObject.replayAsync();
+      } catch (error) {
+        console.error('Error replaying the sound:', error);
+      }
+    } else {
+      // If not loaded, load and play the sound
+      try {
+        await this.soundObject.loadAsync(require('../../assets/sfx/defeat.wav'));
+        await this.soundObject.playAsync();
+      } catch (error) {
+        console.error('Error loading or playing the sound:', error);
+      }
+    }
+  }
 
   useEffect(() => {
     if (healthBarRef.current) {
