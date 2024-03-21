@@ -91,10 +91,12 @@ const SpriteAnimation = ({
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={handleSpritePress}>
         <Image
           source={animations[animationType][frameIndex]}
           style={styles.sprite}
         />
+        </TouchableOpacity>
     </View>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
-import SpriteAnimation from './SpriteAnimation'; // Import the SpriteAnimation component
+import SpriteAnimation from './SpriteAnimation';
 
 const window = Dimensions.get('window');
 
-// Data for different types of ducks
 const duckData = {
   0: {
     name: 'Quacky',
@@ -137,17 +136,14 @@ const Duck = ({ duckType, Optional: customStyle }) => {
   let duckContent;
   let duckInfo;
 
-  // Check if duckType is valid
   if (duckData.hasOwnProperty(duckType)) {
     duckInfo = duckData[duckType];
   } else {
-    // Default to duckType 0 if not found
     duckInfo = duckData[0];
   }
 
   const spriteFrames = getSpriteFrames(duckType);
 
-  // Set duckContent based on duckType
   if (duckType === 5 || duckType === 6) {
     duckContent = (
       <SpriteAnimation

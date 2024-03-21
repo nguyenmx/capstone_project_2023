@@ -20,11 +20,11 @@ const Currency = ({ optionalStyles }) => {
         <Text style={styles.currencyText}> {diamonds}</Text>
       </View>
       <TouchableOpacity onPress={() => earnCurrency('coins')} style={styles.button}>
-        <Text style={styles.buttonText}>Earn Coins</Text>
+        <Text style={styles.buttonText}></Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => earnCurrency('diamonds')} style={styles.button}>
-        <Text style={styles.buttonText}>Earn Diamonds</Text>
+        <Text style={styles.buttonText}></Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     borderRadius: 24,
-    marginRight: 10, // Add margin-right for gap between price containers
+    marginRight: 10,
   },
   currencyText: {
     fontSize: 35,

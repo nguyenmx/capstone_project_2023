@@ -5,7 +5,7 @@ import { useTasks } from '../../components/TasksContext';
 
 const window = Dimensions.get('window');
 
-const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, onItemFeed }) => {
+const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onItemDropBy, onItemFeed }) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency();
   const { completeTask } = useTasks();
 
@@ -39,7 +39,7 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
   return (
     <>
       <TouchableOpacity onPress={openModal} style={{width: 50, height: 50}}>
-        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:""}}/>
+        <Image source={foodIcon} style={{width: 65, height: 65, zIndex: 997}}/>
       </TouchableOpacity>
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>
@@ -60,6 +60,7 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
               <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
+            
             {inventoryItems.length === 0 ? ( // Check if inventory is empty
               <View style={{ padding: 10 }}>
                 <Text style={{ fontSize: 16, fontFamily: 'NiceTango-K7XYo', color: 'gray', textAlign: 'center' }}>Nothing’s here...</Text>
@@ -71,9 +72,9 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
                     <DraggableItem
                       key={index}
                       image={item}
-                      onDrop={() => handleRemoveItem(item)} // Handle dropping item
-                      onDropBy={(amount) => handleRemoveItemBy(item, amount)} // Handle dropping item by custom amount
-                      onFeed={() => handleFeedDuck()} // Handle feeding the duck
+                      onDrop={() => handleRemoveItem(item)} 
+                      onDropBy={(amount) => handleRemoveItemBy(item, amount)} 
+                      onFeed={() => handleFeedDuck()} 
                     />
                   );
                 })}
@@ -107,12 +108,11 @@ const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
       // Check if the item is dropped on top of the Duck
       const isOverlapping =
         moveX > window.width / -4.1 &&
-        moveX < window.width / 4.4 + window.width * 0.58 &&
-        moveY > window.height / 4.4 &&
-        moveY < window.height / 2.1 + window.width * 0.58;
+        moveX < window.width / 4.4 + window.width * 0.60 &&
+        moveY > window.height / 2.4 &&
+        moveY < window.height / 2.1 + window.width * 0.50;
 
       if (isOverlapping) {
-        // Call onDrop function to remove the item from inventory
         onDrop(); // Assuming image is the item being dropped
         onFeed(); // Also feed the duck when an item is dropped
       }

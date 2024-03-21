@@ -26,6 +26,7 @@ import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
+import zzz from '../../images/PetHouse/zzz.gif'
 // import tasks from '../../components/main_game_logic/suggested_tasks';
 import {useTasks} from '../../components/TasksContext';
 //import tasks from '../../components/TasksContext';
@@ -298,7 +299,7 @@ const PetHouse = () => {
 
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
-            <Image source={profileIcon} style={styles.profileIcon} />
+            <Image source={profileImagePath} style={styles.profileIcon} />
             {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
@@ -312,6 +313,7 @@ const PetHouse = () => {
               onItemDrop={() => decreaseHealth()} // Example for decreasing health
               onItemDropBy={(amount) => decreaseHealthBy(amount)} // Example for decreasing health by custom amount
               onItemFeed={() => increaseHealth()} // Example for increasing health
+              //Optional: styles = {{top: 23}}
             />
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
@@ -325,25 +327,27 @@ const PetHouse = () => {
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
-
+         {isNight && (
+        <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: 270, left: 80, transform: [{ scale: .5 }] }} />
+        )}
 
         <Duck duckType={selectedDuck} Optional={duckPosition} />
         
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
-          <Image source={light} style={position = 'absolute'}/>
+          <Image source={light} style={{position:'absolute'}}/>
         </TouchableOpacity>
  
           <View style={bottomNavContainer}>
     
               <View style={diamondAndCoinContainer}>
                 <Currency></Currency>
-                <Image source={diamond}></Image>
+                <Image source={diamond} style= {{opacity: 0}}></Image>
 
                 <View style={currencyContainer}>
                   <Text style={styles.currencyText}>1.2K</Text>
                 </View>
 
-                <Image source={coin}></Image>
+                <Image source={coin} style= {{opacity: 0}}></Image>
 
                 <View style={currencyContainer}>
                   <Text style={styles.currencyText}>812</Text>
@@ -385,8 +389,6 @@ const styles = StyleSheet.create({
   nameContainer: {
     width: 175,
     height: 60, 
-    borderWidth: 4, 
-    borderColor: 'rgba(160, 200, 220, 0.9)',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(184, 240, 260, 1)',
