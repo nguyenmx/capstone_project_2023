@@ -5,7 +5,7 @@ import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
 import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the SpriteAnimation component
 import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
-import { Audio } from 'expo-av'; // Import expo-av Audio
+import { Audio } from 'expo-av';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
@@ -15,6 +15,16 @@ const WinScreen = ({navigation}) => {
   const { selectedDuck, playerHealth } = useContext(ReferenceDataContext);
   const healthBarRef = useRef(null);
   const [celebrate, setCelebrate] = useState(true); // State for celebrate animation
+  this.soundObject = new Audio.Sound();
+
+  useEffect(() => {
+    handlePlay(); // Call handlePlay when component mounts
+    return () => {
+      // Clean up function to unload sound when component unmounts
+      soundObject.unloadAsync();
+    };
+  }, []);
+
 
   useEffect(() => {
     if (healthBarRef.current) {
@@ -43,6 +53,26 @@ const WinScreen = ({navigation}) => {
     duckContent = (
       <Duck duckType={selectedDuck} />
     );
+  }
+
+
+  handlePlay = async () => {
+    if (this.soundObject._loaded) {
+      try {
+        // If loaded, play the sound
+        await this.soundObject.replayAsync();
+      } catch (error) {
+        console.error('Error replaying the sound:', error);
+      }
+    } else {
+      // If not loaded, load and play the sound
+      try {
+        await this.soundObject.loadAsync(require('../../assets/sfx/crowd_cheer.wav'));
+        await this.soundObject.playAsync();
+      } catch (error) {
+        console.error('Error loading or playing the sound:', error);
+      }
+    }
   }
 
   return (

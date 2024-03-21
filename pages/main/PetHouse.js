@@ -35,7 +35,7 @@ import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-  const { name, setName, playerHealth} = useContext(ReferenceDataContext);
+  const { name, setName, playerHealth, setPlayerHealth} = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
@@ -103,6 +103,7 @@ const PetHouse = () => {
   const increaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.increaseHealth();
+      setPlayerHealth(playerHealth + 10);
     }
   };
 
