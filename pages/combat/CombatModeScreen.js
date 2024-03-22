@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect} from 'react';
+import React, { useContext, useRef, useEffect, useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
@@ -12,35 +12,36 @@ const CombatModeScreen = ({ navigation }) => {
   // Access the selectedDuck value from the context
   const { selectedDuck } = useContext(ReferenceDataContext);
 
-  this.soundObject = new Audio.Sound();
+  const [soundLoaded, setSoundLoaded] = useState(false);
+  const soundObject = useRef(new Audio.Sound()).current;
 
   useEffect(() => {
-    handlePlay(); // Call handlePlay when component mounts
-    return () => {
-      // Clean up function to unload sound when component unmounts
-      soundObject.unloadAsync();
+    const handlePlay = async () => {
+      if (soundLoaded) {
+        try {
+          await soundObject.replayAsync();
+        } catch (error) {
+          console.error('Error replaying the sound:', error);
+        }
+      } else {
+        try {
+          await soundObject.loadAsync(require('../../assets/sfx/combat_mode.wav'));
+          await soundObject.playAsync();
+          setSoundLoaded(true);
+        } catch (error) {
+          console.error('Error loading or playing the sound:', error);
+        }
+      }
     };
-  }, []);
 
+    handlePlay();
 
-  handlePlay = async () => {
-    if (this.soundObject._loaded) {
-      try {
-        // If loaded, play the sound
-        await this.soundObject.replayAsync();
-      } catch (error) {
-        console.error('Error replaying the sound:', error);
+    return () => {
+      if (soundLoaded) {
+        soundObject.unloadAsync();
       }
-    } else {
-      // If not loaded, load and play the sound
-      try {
-        await this.soundObject.loadAsync(require('../../assets/sfx/combat_mode.wav'),{ shouldPlay: true, isLooping: true });
-        await this.soundObject.playAsync();
-      } catch (error) {
-        console.error('Error loading or playing the sound:', error);
-      }
-    }
-  }
+    };
+  }, [soundLoaded]);
 
   return (
     <View>
