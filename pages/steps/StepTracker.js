@@ -6,10 +6,43 @@ import buddies from '../../images/AnimalVisuals/CapyAndDuck.gif';
 import cancel from '../../images/TinderPage/cancel.png';
 import submit from '../../images/submitButton.png';
 import BackArrow from '../../modules/BackArrow';
+import { Audio } from 'expo-av';
 
 const window = Dimensions.get('window');
 
 const TimerComponent = ({ navigation }) => {
+
+  const [soundLoaded, setSoundLoaded] = useState(false);
+  const soundObject = useRef(new Audio.Sound()).current;
+
+  useEffect(() => {
+    const handlePlay = async () => {
+      if (soundLoaded) {
+        try {
+          await soundObject.replayAsync();
+        } catch (error) {
+          console.error('Error replaying the sound:', error);
+        }
+      } else {
+        try {
+          await soundObject.loadAsync(require('../../assets/sfx/steps.wav'));
+          await soundObject.playAsync();
+          setSoundLoaded(true);
+        } catch (error) {
+          console.error('Error loading or playing the sound:', error);
+        }
+      }
+    };
+
+    handlePlay();
+
+    return () => {
+      if (soundLoaded) {
+        soundObject.unloadAsync();
+      }
+    };
+  }, [soundLoaded]);
+
 
   const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { steps, setSteps } = useContext(ReferenceDataContext);
