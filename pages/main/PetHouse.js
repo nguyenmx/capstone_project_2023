@@ -302,6 +302,34 @@ const PetHouse = () => {
   //const orientation = UseOrientation();
   //console.log(orientation)
 
+  const [tapCount, setTapCount] = useState(0);
+  const [lastTapTime, setLastTapTime] = useState(0)
+  const tapThreshold = 5; // Define the threshold for number of taps
+  const tapInterval = 1000; // Define the interval in milliseconds within which taps will be counted
+
+  const handleDuckTap = () => {
+    const currentTime = new Date().getTime();
+    if (currentTime - lastTapTime < tapInterval) {
+      // If the time difference between the current tap and the last tap is less than the defined interval
+      setTapCount(prevCount => prevCount + 1);
+    } else {
+      // Reset tap count if the interval has elapsed since the last tap
+      setTapCount(1);
+    }
+
+    // Update the last tap time
+    setLastTapTime(currentTime);
+    
+    // Check if the tap count exceeds the threshold
+    if (tapCount >= tapThreshold) {
+      console.log('You are tapping too much on the pet!');
+      decreaseHealth();
+      setTapCount(0);
+    } 
+    else {
+      console.log('Duck tapped!');
+    }
+  };
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
@@ -310,8 +338,8 @@ const PetHouse = () => {
 
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
-            <Image source={profileIcon} style={styles.profileIcon} />
-            {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
+            {/* <Image source={profileIcon} style={styles.profileIcon} /> */}
+            <Image source={profileImagePath} style={styles.profileIcon} />
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
@@ -338,9 +366,10 @@ const PetHouse = () => {
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
 
+        <TouchableOpacity onPress={handleDuckTap}>
+          <Duck duckType={selectedDuck} Optional={duckPosition}/>
+        </TouchableOpacity>
 
-        <Duck duckType={selectedDuck} Optional={duckPosition} />
-        
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
           <Image source={light} style={position = 'absolute'}/>
         </TouchableOpacity>
