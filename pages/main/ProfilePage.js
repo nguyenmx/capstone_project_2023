@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
     alignItems: 'left',
     right: 55,
+    right: 55,
   },
   attributeNames: {
     zIndex: 2,
@@ -169,6 +170,8 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     width: 175,
+    height: 60,
+    borderWidth: 4,
     height: 60,
     borderWidth: 4,
     borderColor: 'rgba(160, 200, 220, 0.9)',

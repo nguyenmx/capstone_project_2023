@@ -52,7 +52,6 @@ const LossScreen = ({ navigation }) => {
 
   let duckContent;
 
-  // Get the sprite frames for selectedDuck
   const spriteFrames = getSpriteFrames(selectedDuck);
 
   if (selectedDuck === 5 || selectedDuck === 6) {

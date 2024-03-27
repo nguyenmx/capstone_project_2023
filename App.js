@@ -38,7 +38,6 @@ import StepsConversion from './pages/combat/StepsConversion';
 import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
 import { TasksProvider } from './components/TasksContext';
 import Timer from './pages/main/Timer';
-
 import { Audio } from 'expo-av';
 
 //import {AppleHealthKit} from 'react-native-health';

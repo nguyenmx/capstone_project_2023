@@ -64,6 +64,7 @@ class Shop extends React.Component {
 
         console.log('Timer has reached 0');
         this.switchShopItems();
+        this.switchShopItems();
       }
     }, 1000);
   };
@@ -179,11 +180,21 @@ class Shop extends React.Component {
                 {this.renderShopItem(item)}
               </React.Fragment>
             ))}
+            {foodItems.map((item, index) => (
+              <React.Fragment key={index}>
+                {this.renderShopItem(item)}
+              </React.Fragment>
+            ))}
           </View>
         </View>
 
         <View style={[styles.container, { marginBottom: 40 }]}>
           <View style={styles.shopItem}>
+            {otherItems.map((item, index) => (
+              <React.Fragment key={index}>
+                {this.renderShopItem(item)}
+              </React.Fragment>
+            ))}
             {otherItems.map((item, index) => (
               <React.Fragment key={index}>
                 {this.renderShopItem(item)}
@@ -220,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 5,
     
+    
   },
   buyBttn: {
     width: 109,
@@ -228,6 +240,7 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 85,
     height: 85,
+    marginVertical: -23,
     marginVertical: -23,
   },
   itemPrice: {
