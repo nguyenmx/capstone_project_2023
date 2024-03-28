@@ -40,6 +40,8 @@ const BattleScreen = ({ navigation }) => {
   const [oppAttack, setOppAttackVisible] = useState(false);
   const [playerDamageTaken, setPlayerDamageTaken] = useState(0);
   const [oppDamageTaken, setOppDamageTaken] = useState(0);
+  const [blockVisible, setBlockVisible] = useState(false);
+
 
   const { steps, setSteps } = useContext(ReferenceDataContext)
   const moveAnimation = new Animated.Value(0);
@@ -148,30 +150,41 @@ const warningAnimation = (playerWon) => {
 const DamageAnimation = () => {
   
 }
+
 const attackAnimation = (playerWon) => {
   if (playerWon) {
     setTimeout(() => {
-    setPlayerAttackVisible(true);
-    setTimeout(() => {
-      setPlayerAttackVisible(false);
-    }, 2300)
-  }, 2200);
+      setPlayerAttackVisible(true);
+      setTimeout(() => {
+        setPlayerAttackVisible(false);
+        // Hide the block after player's attack animation finishes
+        setBlockVisible(false);
+      }, 2300);
+    }, 2200);
   }
-  if(playerWon == false) {
+  if (playerWon === false) {
     setTimeout(() => {
-    setOppAttackVisible(true);
-    setTimeout(() => {
-      setOppAttackVisible(false);
-    }, 2300)
-  }, 2200);
+      setOppAttackVisible(true);
+      setTimeout(() => {
+        setOppAttackVisible(false);
+        // Hide the block after opponent's attack animation finishes
+        setBlockVisible(false);
+      }, 2300);
+    }, 2200);
   }
-  if (playerWon == null) {
+  if (playerWon === null) {
+    setTimeout(() => {
+      // Hide the block after a small delay for the tie scenario
+      setBlockVisible(false);
+    }, 2300);
     setPlayerAttackVisible(false);
     setOppAttackVisible(false);
   }
-}
+};
 
 const handlePress = (move) => {
+  setBlockVisible(true);
+
   combatMode.playerPowerDamage(steps);
   combatMode.oppPowerDamage(getRandomNumber());
   //combatMode.oppPowerDamage(60000); // high number to make testing losses easier
@@ -204,6 +217,8 @@ const handlePress = (move) => {
 
       }
       console.log("Player wins!");
+      // Hide the block after updating opponent's health
+      //setBlockVisible(false);
     }, 2500); // Adjust the delay timing as needed
   } else {
     // If player loses, introduce a delay before updating the player's health bar
@@ -221,9 +236,12 @@ const handlePress = (move) => {
         completeTask(3);
       }
       console.log("Player loses!");
+      // Hide the block after updating player's health
+      //setBlockVisible(false);
     }, 2500); // Adjust the delay timing as needed
   }
 };
+
   const getImageForMove = (move) => {
     switch (move) {
       case 'rock':
@@ -282,6 +300,7 @@ const handlePress = (move) => {
         </View>
       
         {/* <Image source={banner} style={styles.banner}></Image> */}
+        {blockVisible && <View style={styles.block}></View>}
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => handlePress("rock")}>
             <Image source={rock} style={styles.image} />
@@ -302,6 +321,15 @@ const handlePress = (move) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  block: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0)', // Semi-transparent black
+    zIndex: 9999, // Ensure it's above other elements
   },
   botName: {
     right: 10,
