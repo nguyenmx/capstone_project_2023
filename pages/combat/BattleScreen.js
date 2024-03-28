@@ -20,6 +20,7 @@ import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.p
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import { useTasks } from '../../components/TasksContext';
 import { useCurrency } from '../../components/CurrencyContext'; 
+import { Audio } from 'expo-av';
 
 const window = Dimensions.get('window');
 
@@ -49,10 +50,38 @@ const BattleScreen = ({ navigation }) => {
 function getRandomNumber() {
   return Math.floor(Math.random() * (21000 - 1000 + 1)) + 1000;
 }
+
+const handlePlayPlayer = async () => {
+  const soundObject = new Audio.Sound();
+
+  try {
+    await soundObject.loadAsync(require('../../assets/sfx/explosion.wav'));
+    await soundObject.playAsync();
+    // You can also unload the sound when finished playing
+    // await soundObject.unloadAsync();
+  } catch (error) {
+    console.error('Failed to load the sound', error);
+  }
+};
+
+const handlePlayOpp = async () => {
+  const soundObject = new Audio.Sound();
+
+  try {
+    await soundObject.loadAsync(require('../../assets/sfx/explosion2.wav'));
+    await soundObject.playAsync();
+    // You can also unload the sound when finished playing
+    // await soundObject.unloadAsync();
+  } catch (error) {
+    console.error('Failed to load the sound', error);
+  }
+};
+
 explosionAnimation = (playerWon) => {
   if (playerWon) {
     setTimeout(() => {
     setOppExplodeVisible(true);
+    handlePlayPlayer();
     setTimeout(() => {
       setOppExplodeVisible(false);
     }, 2400)
@@ -61,6 +90,7 @@ explosionAnimation = (playerWon) => {
   if(playerWon == false) {
     setTimeout(() => {
     setPlayerExplodeVisible(true);
+    handlePlayOpp();
     setTimeout(() => {
       setPlayerExplodeVisible(false);
     }, 2400)
