@@ -4,7 +4,6 @@ import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
-import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar';
 import profileIcon from '../../images/PetHouse/Portrait/ProfileButton.png';
 import medicineIcon from '../../images/PetHouse/Portrait/medicineIcon.png';
@@ -26,10 +25,9 @@ import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
-// import tasks from '../../components/main_game_logic/suggested_tasks';
-import {useTasks} from '../../components/TasksContext';
-//import tasks from '../../components/TasksContext';
+import {useTasks} from '../../components/main_game_logic/TasksContext';
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
+import { useTap } from '../../components/main_game_logic/TapContext';
 
 const window = Dimensions.get('window');
 
@@ -49,6 +47,7 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
+  const { handleTap } = useTap();
 
   const profileImages = {
     0: p3,//wave
@@ -292,42 +291,9 @@ const PetHouse = () => {
     }
   };
 
-  // function getRandomInt_forTasks(max) {
-  //   return Math.floor(Math.random() * (max - 0) + 0);
-  // }
-
-  // console.log("Random number is: ", getRandomInt_forTasks(6));
-  // console.log("Task is: ", tasks);
-
-  //const orientation = UseOrientation();
-  //console.log(orientation)
-
-  const [tapCount, setTapCount] = useState(0);
-  const [lastTapTime, setLastTapTime] = useState(0)
-  const tapThreshold = 5; // Define the threshold for number of taps
-  const tapInterval = 1000; // Define the interval in milliseconds within which taps will be counted
-
   const handleDuckTap = () => {
-    const currentTime = new Date().getTime();
-    if (currentTime - lastTapTime < tapInterval) {
-      // If the time difference between the current tap and the last tap is less than the defined interval
-      setTapCount(prevCount => prevCount + 1);
-    } else {
-      // Reset tap count if the interval has elapsed since the last tap
-      setTapCount(1);
-    }
-
-    // Update the last tap time
-    setLastTapTime(currentTime);
-    
-    // Check if the tap count exceeds the threshold
-    if (tapCount >= tapThreshold) {
-      console.log('You are tapping too much on the pet!');
+    if (handleTap()) {
       decreaseHealth();
-      setTapCount(0);
-    } 
-    else {
-      console.log('Duck tapped!');
     }
   };
 
@@ -367,7 +333,7 @@ const PetHouse = () => {
          
 
         <TouchableOpacity onPress={handleDuckTap}>
-          <Duck duckType={selectedDuck} Optional={duckPosition}/>
+          <Duck duckType={selectedDuck} Optional={duckPosition} decreaseHealth = {decreaseHealth}/>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>

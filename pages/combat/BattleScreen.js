@@ -18,7 +18,7 @@ import paperBubble from '../../images/CombatScreen/cartoon-thought-paper.png';
 import rockBubble from '../../images/CombatScreen/cartoon-thought-rock.png';
 import scissorsBubble from '../../images/CombatScreen/cartoon-thought-scissors.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
-import { useTasks } from '../../components/TasksContext';
+import { useTasks } from '../../components/main_game_logic/TasksContext';
 import { useCurrency } from '../../components/CurrencyContext'; 
 import { Audio } from 'expo-av';
 

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { useTap } from '../components/main_game_logic/TapContext';
 
 const window = Dimensions.get('window');
 
@@ -11,10 +12,13 @@ const SpriteAnimation = ({
   deadFrames,
   playDead, // Prop to trigger playDead animation
   playCelebrate, // Prop to trigger playCelebrate animation
+  decreaseHealth
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
   const [isPlaying, setIsPlaying] = useState(true);
+  const { handleTap } = useTap();
+  
 
   const animations = {
     idle: idleFrames,
@@ -22,6 +26,8 @@ const SpriteAnimation = ({
     celebrate: celebrateFrames,
     dead: deadFrames,
   };
+
+  
 
   const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
@@ -41,6 +47,7 @@ const SpriteAnimation = ({
   };
 
   const switchToNextAnimation = () => {
+  
     setAnimationType((prevType) => {
       if (playDead && prevType !== 'dead') {
         setIsPlaying(false);
@@ -57,8 +64,13 @@ const SpriteAnimation = ({
       }
     });
   };
+  
 
   const handleSpritePress = () => {
+    if(handleTap()) {
+      decreaseHealth();
+    }
+  
     switchToNextAnimation();
     setTimeout(() => {
       switchToNextAnimation();

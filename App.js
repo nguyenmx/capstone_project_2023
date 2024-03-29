@@ -36,8 +36,9 @@ import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
 import StepsConversion from './pages/combat/StepsConversion';
 import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
-import { TasksProvider } from './components/TasksContext';
+import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
+import { TapProvider } from './components/main_game_logic/TapContext';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -83,6 +84,7 @@ export default function App() {
 
   return (
     <ReferenceDataContextProvider>
+    <TapProvider>
     <CurrencyProvider>
     <TasksProvider>
       <NavigationContainer>
@@ -113,6 +115,7 @@ export default function App() {
       </NavigationContainer>
     </TasksProvider>
     </CurrencyProvider>
+    </TapProvider>
     </ReferenceDataContextProvider>
   );
 }

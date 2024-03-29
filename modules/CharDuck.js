@@ -110,7 +110,7 @@ export const getSpriteFrames = duckType => {
   }
 };
 
-const Duck = ({ duckType, Optional: customStyle }) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth }) => {
   let duckContent;
   let duckInfo;
 
@@ -133,6 +133,7 @@ const Duck = ({ duckType, Optional: customStyle }) => {
         walkFrames={spriteFrames.walkFrames}
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
+        decreaseHealth={decreaseHealth}
       />
     );
   } else {

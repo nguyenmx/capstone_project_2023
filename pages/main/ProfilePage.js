@@ -40,8 +40,8 @@ const ProfilePage = ({ navigation }) => {
         <TouchableOpacity>
            <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
-          <Image source={profileIcon} style={styles.profileIcon} />
-          {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
+          {/* <Image source={profileIcon} style={styles.profileIcon} /> */}
+          <Image source={profileImagePath} style={styles.profileIcon} />
 
           <View style={styles.attributesContainer}>
             <Text style={styles.attributeNames}>Name</Text>

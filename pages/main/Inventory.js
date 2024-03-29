@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
-import { useTasks } from '../../components/TasksContext';
+import { useTasks } from '../../components/main_game_logic/TasksContext';
 
 const window = Dimensions.get('window');
 
@@ -39,7 +39,7 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
   return (
     <>
       <TouchableOpacity onPress={openModal} style={{width: 50, height: 50}}>
-        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:""}}/>
+        <Image source={foodIcon} style={{width: 65, height: 65}}/>
       </TouchableOpacity>
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>
