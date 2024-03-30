@@ -36,9 +36,9 @@ import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
 import StepsConversion from './pages/combat/StepsConversion';
 import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
-import { TasksProvider } from './components/TasksContext';
-import Timer from './pages/main/Timer';
+import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
+import { TapProvider } from './components/main_game_logic/TapContext';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -47,43 +47,13 @@ const window = Dimensions.get('window');
 const backgroundImage = require('./images/Backgrounds/background.gif');
 var selectedDuck = 0;
 
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     "NiceTango-K7XYo": require("./assets/fonts/NiceTango-K7XYo.ttf"),
     "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf"),
-    "BowlbyOneSC-Regular": require("./assets/fonts/BowlbyOneSC-Regular.ttf"),
-    "Gunkid-0W9yv": require("./assets/fonts/Gunkid-0W9yv.otf"),
-  });
-
-  const [audio, setAudio] = useState(null);
-
-  useEffect(() => {
-    async function playAudio() {
-      try {
-        const { sound } = await Audio.Sound.createAsync(
-          require('./assets/music/Main_bgm.wav'),
-          { isLooping: true } // Add this option to loop the audio
-        );
-        setAudio(sound);
-        await sound.playAsync();
-      } catch (error) {
-        console.error('Error playing audio:', error);
-      }
-    }
-
-    async function prepare() {
-      await SplashScreen.preventAutoHideAsync();
-    }
-
-    prepare();
-    playAudio();
-
-    return () => {
-      if (audio) {
-        audio.unloadAsync();
-      }
-    };
-  }, []);
+    "BowlbyOneSC-Regular": require("./assets/fonts/BowlbyOneSC-Regular.ttf")
+  })
 
   useEffect(() => {
     async function getSelectedDuck() {
@@ -97,18 +67,24 @@ export default function App() {
         console.error('Error getting selectedDuck from AsyncStorage:', error);
       }
     }
-
+  
     getSelectedDuck();
-  }, []);
 
-  if (!fontsLoaded) {
-    return null; // or loading indicator
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, [])
+
+  if (!fontsLoaded){
+    return undefined;
   } else {
     SplashScreen.hideAsync();
   }
 
   return (
     <ReferenceDataContextProvider>
+    <TapProvider>
     <CurrencyProvider>
     <TasksProvider>
       <NavigationContainer>
@@ -135,11 +111,11 @@ export default function App() {
           <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
           <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
           <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
-          <Stack.Screen name="Timer" component={Timer} options={{ headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>
     </TasksProvider>
     </CurrencyProvider>
+    </TapProvider>
     </ReferenceDataContextProvider>
   );
 }

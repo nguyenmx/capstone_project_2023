@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableNativeFeedback, TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
-import { useTasks } from '../../components/TasksContext';
+import { useTasks } from '../../components/main_game_logic/TasksContext';
 
 const window = Dimensions.get('window');
 
@@ -89,6 +89,7 @@ const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onIte
 
 const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
   const [pan] = React.useState(new Animated.ValueXY());
+  const [fadeAnim] = React.useState(new Animated.Value(1)); // Initialize opacity value with 1
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -113,15 +114,23 @@ const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
         moveY < window.height / 2.1 + window.width * 0.50;
 
       if (isOverlapping) {
-        onDrop(); // Assuming image is the item being dropped
-        onFeed(); // Also feed the duck when an item is dropped
+        // Fade out animation
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500, // Adjust duration as needed
+          useNativeDriver: false
+        }).start(() => {
+          // After the fade-out animation completes, trigger onDrop and onFeed
+          onDrop();
+          onFeed();
+        });
+      } else {
+        // If not dropped on the duck, reset the position of the item
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          useNativeDriver: false
+        }).start();
       }
-
-      // Reset the position of the item after release
-      Animated.spring(pan, {
-        toValue: { x: 0, y: 0 },
-        useNativeDriver: false
-      }).start();
     }
   });
 
@@ -130,11 +139,12 @@ const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
       {...panResponder.panHandlers}
       source={image}
       style={[
-        { width: 55, height: 55, marginBottom: 3 },
+        { width: 55, height: 55, marginBottom: 3, opacity: fadeAnim }, // Apply fade animation to opacity
         { transform: [{ translateX: pan.x }, { translateY: pan.y }] }
       ]}
     />
   );
 };
+
 
 export default Inventory;

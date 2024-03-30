@@ -25,12 +25,12 @@ const window = Dimensions.get('window');
 const backgroundImage = pp;
 
 const ProfilePage = ({ navigation }) => {
-  const { name, setName, playerHealth} = useContext(ReferenceDataContext);
+  const { name, setName, playerHealth } = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
-  
+
   const profileImages = {
-    0: p3,//wave
-    1: p1,//Capy
+    0: p3, //wave
+    1: p1, //Capy
     2: p6, //Rizz
     3: p5, //Coffe
     4: p2, // Banana
@@ -40,25 +40,30 @@ const ProfilePage = ({ navigation }) => {
 
   const profileImagePath = profileImages[selectedDuck];
 
+  const navigateToScreen1 = () => {
+    navigation.navigate('PetHouse');
+  };
+
+  const navigateToScreen2 = () => {
+    navigation.navigate('PetHouse');
+  };
+
   return (
     <View>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <BackArrow />
-      </TouchableOpacity>
-      <Text style={styles.TitleText}>Player Profile</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <BackArrow />
+        </TouchableOpacity>
+        <Text style={styles.TitleText}>Player Profile</Text>
 
         <View style={styles.profileContainer}>
-
           <TouchableOpacity>
             <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
-          <Image source={profileIcon} style={styles.profileIcon} />
-          
-          <Text style={styles.nameText}>{name}</Text>
-          
-      
-          {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
+          <View style={styles.profileIconContainer}>
+            <Image source={profileIcon} style={styles.profileIcon} />
+            <Text style={styles.profileIconText}>{name}</Text>
+          </View>
 
           <View style={styles.imagesContainer}>
             {/* Map through profileImages and render each image */}
@@ -67,18 +72,12 @@ const ProfilePage = ({ navigation }) => {
             ))}
           </View>
 
-          {/* <Duck duckType={selectedDuck} Optional={{top:200, zIndex: 999, position: 'absolute'}}/> */}
-
-          {/* Updated rectangle style */}
           <View style={styles.rectangle}>
             <View style={styles.topHalf} />
             <View style={styles.bottomHalf} />
-            <Image source={profileImagePath} style={{width: 55, height: 55, top: 60, left: 59, position:'absolute'}} />
+            <Image source={profileImagePath} style={{ width: 55, height: 55, bottom: 170, right: 70, position: 'absolute' }} />
           </View>
-          {/* Header Section */}
-          <View style={{ backgroundColor: 'orange', padding: 3, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-              <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>{name}</Text>
-            </View>
+
           <View style={styles.attributesContainer}>
             <Text style={styles.attributeNames}>Pets</Text>
             <Text style={styles.attributeNames}> </Text>
@@ -86,15 +85,24 @@ const ProfilePage = ({ navigation }) => {
             <Text style={styles.attributeNames}>Favorite pet</Text>
             <Text style={styles.attributeNames}>Achievements</Text>
 
-          <View style={styles.awardsContainer}>
-            <Image source={award1} style={styles.awardImage} />
-            <Image source={award2} style={styles.awardImage} />
-            <Image source={award3} style={styles.awardImage} />
-            <Image source={award4} style={styles.awardImage} />
-          </View>
+            <View style={styles.awardsContainer}>
+              <Image source={award1} style={styles.awardImage} />
+              <Image source={award2} style={styles.awardImage} />
+              <Image source={award3} style={styles.awardImage} />
+              <Image source={award4} style={styles.awardImage} />
+            </View>
           </View>
         </View>
 
+        {/* Buttons at the bottom for navigation */}
+        <View style={styles.bottomButtonContainer}>
+          <TouchableOpacity style={styles.bottomButton} onPress={navigateToScreen1}>
+            <Text style={styles.bottomButtonText}>Screen 1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.bottomButton} onPress={navigateToScreen2}>
+            <Text style={styles.bottomButtonText}>Screen 2</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -111,22 +119,20 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: 'center',
-    top: window.height * .04
+    top: window.height * -.02
   },
-
   rectangle: {
     width: '85%',
-    height: '95%', 
+    height: '95%',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
     top: 140,
-  
   },
   topHalf: {
-    flex: .2,
-    borderTopLeftRadius:59,
-    borderTopRightRadius:59,
+    flex: .22,
+    borderTopLeftRadius: 59,
+    borderTopRightRadius: 59,
     backgroundColor: '#FABABA',
     width: '101%',
   },
@@ -134,26 +140,33 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     width: '101%',
-    borderWidth: 5, 
+    borderWidth: 5,
     borderColor: '#FABABA',
-    borderBottomLeftRadius:59,
-    borderBottomRightRadius:59,
+    borderBottomLeftRadius: 59,
+    borderBottomRightRadius: 59,
   },
-  backButton:{
-    top:34,
+  backButton: {
+    top: 34,
     left: -159
   },
   settings: {
     width: 70,
     height: 70,
-    left: 140,
-    top: 30,
+    left: 145,
+  },
+  profileIconContainer: {
+    alignItems: 'center',
   },
   profileIcon: {
     width: 120,
     height: 120,
-    zIndex: 2,
-    marginBottom: 10,
+    zIndex: 1000,
+  },
+  profileIconText: {
+    fontFamily: 'NiceTango-K7XYo',
+    fontSize: 45,
+    color: 'white',
+    zIndex: 999,
   },
   attributesContainer: {
     zIndex: 2,
@@ -168,33 +181,7 @@ const styles = StyleSheet.create({
     color: 'rgba(137, 40, 125, 0.70)',
     fontFamily: 'NiceTango-K7XYo',
   },
-  nameContainer: {
-    width: 175,
-    height: 60,
-    borderWidth: 4,
-    height: 60,
-    borderWidth: 4,
-    borderColor: 'rgba(160, 200, 220, 0.9)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(184, 240, 260, 1)',
-    borderRadius: 18,
-    shadowOffset: { width: 4, height: 4 },
-    shadowColor: 'rgba(117, 82, 103, 0.8)',
-    shadowOpacity: 1,
-    zIndex:998,
-    marginTop: 10,
-    position: 'absolute'
-  },
-  nameText: {
-    fontFamily: 'Gunkid-0W9yv',
-    fontSize: 55,
-    color: 'black',
-    zIndex: 999,
-    marginTop: window.height * .25,
-    position: 'absolute'
-  },
- TitleText: {
+  TitleText: {
     fontFamily: 'Gunkid-0W9yv',
     fontSize: 38,
     color: 'black',
@@ -212,25 +199,48 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   awardImage: {
-    width: 60, 
-    height: 60, 
-    marginHorizontal: 5, 
+    width: 60,
+    height: 60,
+    marginHorizontal: 5,
     tintColor: 'black'
   },
   imagesContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Allow items to wrap to the next line
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 256,
     left: 34,
     zIndex: 999,
-    width: '55%', // Ensure the container spans the entire width]
+    width: '55%',
     position: 'absolute'
   },
+  petImagesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   petImage: {
-    width: '23%', // Adjusted width to fit 4 images in a row with some spacing
-    aspectRatio: 1, // Maintain aspect ratio to prevent distortion
-    margin: '1%', // Add some margin around each image
+    width: '23%',
+    aspectRatio: 1,
+    margin: '1%',
+  },
+  bottomButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    position: 'absolute',
+    bottom: 20,
+  },
+  bottomButton: {
+    backgroundColor: 'rgba(137, 40, 125, 0.70)',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+  },
+  bottomButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

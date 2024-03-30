@@ -4,7 +4,6 @@ import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
-import MainGameLogic from '../../components/MainGameLogic';
 import HealthBar from '../../modules/HealthBar';
 import profileIcon from '../../images/PetHouse/Portrait/ProfileButton.png';
 import medicineIcon from '../../images/PetHouse/Portrait/medicineIcon.png';
@@ -26,11 +25,11 @@ import p3 from '../../images/PetHouse/Asset7.png'
 import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
-import zzz from '../../images/PetHouse/zzz.gif'
-// import tasks from '../../components/main_game_logic/suggested_tasks';
-import {useTasks} from '../../components/TasksContext';
-//import tasks from '../../components/TasksContext';
+import {useTasks} from '../../components/main_game_logic/TasksContext';
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
+import { useTap } from '../../components/main_game_logic/TapContext';
+import zzz from '../../images/PetHouse/zzz.gif'
+
 
 const window = Dimensions.get('window');
 
@@ -50,6 +49,7 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
+  const { handleTap } = useTap();
 
   const profileImages = {
     0: p3,//wave
@@ -62,6 +62,7 @@ const PetHouse = () => {
   };
 
   const profileImagePath = profileImages[selectedDuck];
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,8 +73,6 @@ const PetHouse = () => {
       clearTimeout(timer);
     };
   }, []); 
-
-
 
   const toggleDayNight = () => {
     setIsNight(!isNight);
@@ -115,7 +114,7 @@ const PetHouse = () => {
     setSound(sound);
 
     console.log('Playing Sound');
-    sound.playAsync({ isLooping: true });
+    sound.playAsync({ isLooping: false });
     sound.setVolumeAsync(volume);
   }
 
@@ -223,12 +222,6 @@ const PetHouse = () => {
     left: isLandscape ? -250 : window.width * -0.08
   };
 
-  // const inventoryPos = {
-  //   position: 'absolute',
-  //   top: isLandscape ? 20 : 100,
-  //   left: isLandscape ? 20 : 10, 
-  // };
-
   const diamondAndCoinContainer = {
     flexDirection: 'row',
     top: isLandscape ? -230 : 0,
@@ -282,16 +275,23 @@ const PetHouse = () => {
     }
   };
 
-  // function getRandomInt_forTasks(max) {
-  //   return Math.floor(Math.random() * (max - 0) + 0);
-  // }
+  
 
-  // console.log("Random number is: ", getRandomInt_forTasks(6));
-  // console.log("Task is: ", tasks);
+  const handleDuckTap = () => {
+    if (handleTap()) {
+      decreaseHealth();
+    }
+  };
 
-  //const orientation = UseOrientation();
-  //console.log(orientation)
-
+  // play main bgm
+  useEffect(() => {
+    playSound(); 
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, []);
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
@@ -301,7 +301,6 @@ const PetHouse = () => {
           <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
             <Image source={profileImagePath} style={styles.profileIcon} />
-            {/* <Image source={profileImagePath} style={styles.profileIcon} /> */}
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
@@ -310,11 +309,9 @@ const PetHouse = () => {
       
             <Inventory 
               foodIcon={foodIcon} 
-              // inventoryPos={inventoryPos}
               onItemDrop={() => decreaseHealth()} // Example for decreasing health
               onItemDropBy={(amount) => decreaseHealthBy(amount)} // Example for decreasing health by custom amount
               onItemFeed={() => increaseHealth()} // Example for increasing health
-              //Optional: styles = {{top: 23}}
             />
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
@@ -329,13 +326,15 @@ const PetHouse = () => {
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
          {isNight && (
-        <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: 270, left: 80, transform: [{ scale: .5 }] }} />
+        <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: 255, left: 69, transform: [{ scale: .5 }] }} />
         )}
 
-        <Duck duckType={selectedDuck} Optional={duckPosition} />
-        
+        <TouchableOpacity onPress={handleDuckTap}>
+          <Duck duckType={selectedDuck} Optional={duckPosition} decreaseHealth = {decreaseHealth}/>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
-          <Image source={light} style={{position:'absolute'}}/>
+          <Image source={light} style={{position:'relative'}}/>
         </TouchableOpacity>
  
           <View style={bottomNavContainer}>
@@ -381,12 +380,6 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: -70
   },
-  backgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    marginTop: -70
-  },
   nameContainer: {
     width: 175,
     height: 60, 
@@ -398,19 +391,6 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(117, 82, 103, 0.8)',
     shadowOpacity: 1,
   },
-  // currencyContainer: {
-  //   width: '25%',
-  //   height: '32%', 
-  //   borderWidth: 8, 
-  //   borderColor: 'rgba(160, 200, 220, 0.9)',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   backgroundColor: 'rgba(184, 240, 260, 1)',
-  //   borderRadius: 18,
-  //   shadowOffset: { width: 4, height: 4 },
-  //   shadowColor: 'rgba(117, 82, 103, 0.8)',
-  //   shadowOpacity: 1,
-  // },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 35,
@@ -424,12 +404,6 @@ const styles = StyleSheet.create({
     marginBottom: -100,
     marginTop: 175
   },
-  //This needs to be modified as a static component to correct the layout when the screen is flipped
-  //   topNavContainer: {
-  //   flexDirection: 'row',
-  //   left: window.width * -0.05,
-  //   marginTop: 65,
-  // },
   nameText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 32,
@@ -475,52 +449,9 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
-  },
-
-  title: {
-    fontSize: window.width * 0.09,
-    top: -130,
-    fontFamily: 'NiceTango-K7XYo',
-    color: 'white',
-  },
-
-
-
-  // settingButtonImage: {
-  //   position: 'absolute',
-  //   left: window.width * 0.3,
-  //   top: window.height * -0.78,
-  //   width: 75,
-  //   height: 75,
-  //   zIndex: 999,
-  // },
-
-  // settingsText: {
-  //   fontSize: 50,
-  //   fontFamily: 'NiceTango-K7XYo',
-  //   color: 'black',
-  // },
-  // popUp: {
-  //   backgroundColor: 'pink',
-  //   marginTop: 80,
-  //   margin: 50,
-  //   padding: 40,
-  //   borderRadius: 10,
-  //   flex: 0.80,
-  // },
-  // shopButton: {
-  //   position: 'absolute',
-  //   bottom: 20, // Adjust the position as needed
-  //   right: 20, // Adjust the position as needed
-  //   zIndex: 999,
-  // },
-  // shopIcon: {
-  //   width: 50,
-  //   height: 50,
-  //   // Adjust the size and styles as needed
-  // },
+    zIndex: 999,
+    textAlign: 'center'
+  }
 });
-
-
 
 export default PetHouse;
