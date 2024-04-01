@@ -21,7 +21,7 @@ class Shop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timer: 30, 
+      timer: 30,
       foodItems: [
         { imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' },
         { imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' },
@@ -31,13 +31,13 @@ class Shop extends React.Component {
         { imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' },
         { imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' },
         { imageSource: require('../../images/Food/CannedFood_Fish.png'), price: 1, currencyType: 'diamonds' }
-      ]
+      ],
+      isModalVisible: false // Initialize isModalVisible to false
     };
     this.soundObject = new Audio.Sound();
   }
 
   handleFoodItemPress = (item) => {
-    console.log(item);
     this.setState({ selectedItem: item.imageSource, isModalVisible: true });
   };
 
@@ -166,7 +166,7 @@ class Shop extends React.Component {
         resizeMode="stretch"
       >
         <View>
-          <Currency optionalStyles={{ top: 140, left: 15 }} />
+          <Currency optionalStyles={{ top: 140, left: window.width * .12 }} />
         </View>
 
         <View style={[styles.container, { top: 150 }]}>
