@@ -10,12 +10,9 @@ import CombatModeScreen from './pages/combat/CombatModeScreen';
 import StepTracker from './pages/steps/StepTracker';
 import TestChatGPT from "./pages/story/TestChatGPT";
 import { ReferenceDataContextProvider } from "./components/ReferenceDataContext";
-import { useEffect, useContext, useState } from 'react';
+import { useEffect} from 'react';
 import { useFonts } from 'expo-font';
-import Swiper from 'react-native-swiper';
 import { Image } from 'react-native';
-import LeftArrow from './images/LeftArrow.png';
-import RightArrow from './images/RightArrow.png';
 import * as SplashScreen from 'expo-splash-screen';
 import TestingScreen from './pages/combat/TestingScreen';
 import WinScreen from './pages/combat/WinScreen';
@@ -25,7 +22,6 @@ import PetHouse from './pages/main/PetHouse';
 import Title from './images/Logos/Denwa_Petto.png'
 import { ReferenceDataContext } from './components/ReferenceDataContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Duck from './modules/CharDuck';
 import SpriteAnimation from './modules/SpriteAnimation';
 import TinderPage from './pages/story/TinderSwipePage';
 import Shop from './pages/main/Shop';
@@ -38,13 +34,13 @@ import StepsConversion from './pages/combat/StepsConversion';
 import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
 import { TasksProvider } from './components/TasksContext';
 import { Audio } from 'expo-av';
+import CharacterSelector from './modules/CharacterSelector';
 
 //import {AppleHealthKit} from 'react-native-health';
 
 const Stack = createStackNavigator();
 const window = Dimensions.get('window');
 const backgroundImage = require('./images/Backgrounds/background.gif');
-var selectedDuck = 0;
 
 
 export default function App() {
@@ -118,23 +114,6 @@ export default function App() {
 }
 
 export function HomeScreen({ navigation }) {
-  const { setSelectedDuck } = useContext(ReferenceDataContext);
-  const [isAnimated, setIsAnimated] = useState(false);
-
-  function saveSelectedDuck(index) {
-    setSelectedDuck(index);
-  }
-
-  const duckImages = [
-    require('./images/PlayableAnimals/duckWave.gif'),
-    require('./images/PlayableAnimals/capyKnife.gif'),
-    require('./images/PlayableAnimals/duckRizz.gif'),
-    require('./images/PlayableAnimals/duckCoffee.gif'),
-    require('./images/PlayableAnimals/ducky.gif'),
-    SpriteAnimation,
-    SpriteAnimation
-  ];
-
 
   return (
     <View style={styles.container}>
@@ -163,27 +142,9 @@ export function HomeScreen({ navigation }) {
 
             </TouchableOpacity>
           </View>
-          <Swiper
-            style={styles.swiperContainer}
-            showsButtons={true}
-            prevButton={<Image source={LeftArrow} style={styles.arrowButton} />}
-            nextButton={<Image source={RightArrow} style={styles.arrowButton} />}
-            onIndexChanged={(index) => saveSelectedDuck(index)}
-          >
-            {duckImages.map((duckImage, index) => (
-              <View style={styles.swiperSlide} key={index}>
-                {isAnimated ? (
-                  index === selectedDuck ? (
-                    <Duck duckType={index} image={duckImage} />
-                  ) : (
-                    <SpriteAnimation duckType={index} image={duckImage} />
-                  )
-                ) : (
-                  <Duck duckType={index} image={duckImage} />
-                )}
-              </View>
-            ))}
-          </Swiper>
+          
+        <CharacterSelector></CharacterSelector>
+
         </View>
       </ImageBackground>
     </View>
