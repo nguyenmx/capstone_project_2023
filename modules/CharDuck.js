@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
-import SpriteAnimation from './SpriteAnimation'; // Import the SpriteAnimation component
+import SpriteAnimation from './SpriteAnimation';
 
 const window = Dimensions.get('window');
 
-// Data for different types of ducks
 const duckData = {
   0: {
     name: 'Quacky',
@@ -44,6 +43,21 @@ export const getSpriteFrames = duckType => {
       idleFrames: [
         require('../images/CharacterSheet/CharacterSheet-0.png'),
         require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-2.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+
       ],
       walkFrames: [
         require('../images/CharacterSheet/CharacterSheet-21.png'),
@@ -58,6 +72,10 @@ export const getSpriteFrames = duckType => {
         require('../images/CharacterSheet/CharacterSheet-13.png'),
       ],
       deadFrames: [
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
+        require('../images/CharacterSheet/CharacterSheet-0.png'),
+        require('../images/CharacterSheet/CharacterSheet-1.png'),
         require('../images/CharacterSheet/CharacterSheet-34.png'),
         require('../images/CharacterSheet/CharacterSheet-35.png'),
         require('../images/CharacterSheet/CharacterSheet-36.png'),
@@ -89,6 +107,10 @@ export const getSpriteFrames = duckType => {
         require('../images/Squid_Character/tile059.png'),
       ],
       deadFrames: [
+        require('../images/Squid_Character/tile000.png'),
+        require('../images/Squid_Character/tile001.png'),
+        require('../images/Squid_Character/tile002.png'),
+        require('../images/Squid_Character/tile003.png'),
         require('../images/Squid_Character/tile048.png'),
         require('../images/Squid_Character/tile049.png'),
         require('../images/Squid_Character/tile050.png'),
@@ -110,21 +132,18 @@ export const getSpriteFrames = duckType => {
   }
 };
 
-const Duck = ({ duckType, Optional: customStyle }) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth }) => {
   let duckContent;
   let duckInfo;
 
-  // Check if duckType is valid
   if (duckData.hasOwnProperty(duckType)) {
     duckInfo = duckData[duckType];
   } else {
-    // Default to duckType 0 if not found
     duckInfo = duckData[0];
   }
 
   const spriteFrames = getSpriteFrames(duckType);
 
-  // Set duckContent based on duckType
   if (duckType === 5 || duckType === 6) {
     duckContent = (
       <SpriteAnimation
@@ -133,6 +152,7 @@ const Duck = ({ duckType, Optional: customStyle }) => {
         walkFrames={spriteFrames.walkFrames}
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
+        decreaseHealth={decreaseHealth}
       />
     );
   } else {

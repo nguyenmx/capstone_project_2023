@@ -1,11 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
+import { TouchableNativeFeedback, TouchableOpacity, Modal, View, Text, Image, PanResponder, Animated, Dimensions } from 'react-native';
 import { useCurrency } from '../../components/CurrencyContext';
-import { useTasks } from '../../components/TasksContext';
+import { useTasks } from '../../components/main_game_logic/TasksContext';
 
 const window = Dimensions.get('window');
 
-const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, onItemFeed }) => {
+const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onItemDropBy, onItemFeed }) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency();
   const { completeTask } = useTasks();
 
@@ -39,7 +39,7 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
   return (
     <>
       <TouchableOpacity onPress={openModal} style={{width: 50, height: 50}}>
-        <Image source={foodIcon} style={{width: 65, height: 65, justifyContent:""}}/>
+        <Image source={foodIcon} style={{width: 65, height: 65, zIndex: 997}}/>
       </TouchableOpacity>
 
       <Modal transparent={true} visible={modalVisible} animationType='fade'>
@@ -60,21 +60,26 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
               <Text style={{ fontSize: 20, fontFamily: 'NiceTango-K7XYo', color: 'rgba(254, 252, 229, 1)', textAlign: 'center', letterSpacing: 2 }}>meals</Text>
             </View>
 
-            <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 4, borderColor: 'orange', justifyContent: 'space-evenly' }}>
-
-              {inventoryItems.map((item, index) => {
-                return (
-                  <DraggableItem
-                    key={index}
-                    image={item}
-                    onDrop={() => handleRemoveItem(item)} // Handle dropping item
-                    onDropBy={(amount) => handleRemoveItemBy(item, amount)} // Handle dropping item by custom amount
-                    onFeed={() => handleFeedDuck()} // Handle feeding the duck
-                  />
-                );
-              })}
-
-            </View>
+            
+            {inventoryItems.length === 0 ? ( // Check if inventory is empty
+              <View style={{ padding: 10 }}>
+                <Text style={{ fontSize: 16, fontFamily: 'NiceTango-K7XYo', color: 'gray', textAlign: 'center' }}>Nothing’s here...</Text>
+              </View>
+            ) : (
+              <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 1, borderColor: 'orange', justifyContent: 'space-evenly' }}>
+                {inventoryItems.map((item, index) => {
+                  return (
+                    <DraggableItem
+                      key={index}
+                      image={item}
+                      onDrop={() => handleRemoveItem(item)} 
+                      onDropBy={(amount) => handleRemoveItemBy(item, amount)} 
+                      onFeed={() => handleFeedDuck()} 
+                    />
+                  );
+                })}
+              </View>
+            )}
           </View>
         </TouchableOpacity>
       </Modal>
@@ -84,6 +89,7 @@ const Inventory = ({ foodIcon, inventoryPos, styles, onItemDrop, onItemDropBy, o
 
 const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
   const [pan] = React.useState(new Animated.ValueXY());
+  const [fadeAnim] = React.useState(new Animated.Value(1)); // Initialize opacity value with 1
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -103,21 +109,28 @@ const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
       // Check if the item is dropped on top of the Duck
       const isOverlapping =
         moveX > window.width / -4.1 &&
-        moveX < window.width / 4.4 + window.width * 0.58 &&
-        moveY > window.height / 4.4 &&
-        moveY < window.height / 2.1 + window.width * 0.58;
+        moveX < window.width / 4.4 + window.width * 0.60 &&
+        moveY > window.height / 2.4 &&
+        moveY < window.height / 2.1 + window.width * 0.50;
 
       if (isOverlapping) {
-        // Call onDrop function to remove the item from inventory
-        onDrop(); // Assuming image is the item being dropped
-        onFeed(); // Also feed the duck when an item is dropped
+        // Fade out animation
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500, // Adjust duration as needed
+          useNativeDriver: false
+        }).start(() => {
+          // After the fade-out animation completes, trigger onDrop and onFeed
+          onDrop();
+          onFeed();
+        });
+      } else {
+        // If not dropped on the duck, reset the position of the item
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          useNativeDriver: false
+        }).start();
       }
-
-      // Reset the position of the item after release
-      Animated.spring(pan, {
-        toValue: { x: 0, y: 0 },
-        useNativeDriver: false
-      }).start();
     }
   });
 
@@ -126,11 +139,12 @@ const DraggableItem = ({ image, onDrop, onDropBy, onFeed }) => {
       {...panResponder.panHandlers}
       source={image}
       style={[
-        { width: 55, height: 55, marginBottom: 3 },
+        { width: 55, height: 55, marginBottom: 3, opacity: fadeAnim }, // Apply fade animation to opacity
         { transform: [{ translateX: pan.x }, { translateY: pan.y }] }
       ]}
     />
   );
 };
+
 
 export default Inventory;

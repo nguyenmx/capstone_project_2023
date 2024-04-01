@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOp
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import HealthBar from '../../modules/HealthBar';
-import SpriteAnimation from '../../modules/SpriteAnimation'; // Import the SpriteAnimation component
-import { getSpriteFrames } from '../../modules/CharDuck'; // Import getSpriteFrames function
+import SpriteAnimation from '../../modules/SpriteAnimation';
+import { getSpriteFrames } from '../../modules/CharDuck';
 import { Audio } from 'expo-av';
 
 const window = Dimensions.get('window');
@@ -32,12 +32,10 @@ const WinScreen = ({navigation}) => {
     }
   }, [playerHealth]);
 
-  // Get the sprite frames for selectedDuck
   const spriteFrames = getSpriteFrames(selectedDuck);
 
   let duckContent;
 
-  // Check if selectedDuck is a SpriteAnimation (duckType 5 or 6)
   if (selectedDuck === 5 || selectedDuck === 6) {
     duckContent = (
       <SpriteAnimation
@@ -46,7 +44,7 @@ const WinScreen = ({navigation}) => {
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
         playCelebrate={celebrate}
-        playDead={false} // Or set to true to trigger dead animation
+        playDead={false}
       />
     );
   } else {

@@ -32,9 +32,10 @@ import { CurrencyProvider } from './components/CurrencyContext';
 import Inventory from './pages/main/Inventory';
 import StepsConversion from './pages/combat/StepsConversion';
 import FriendshipLevel from './components/main_game_logic/FriendshipLevel';
-import { TasksProvider } from './components/TasksContext';
+import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
 import CharacterSelector from './modules/CharacterSelector';
+import { TapProvider } from './components/main_game_logic/TapContext';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -47,7 +48,8 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "NiceTango-K7XYo": require("./assets/fonts/NiceTango-K7XYo.ttf"),
     "StayPixelRegular-EaOxl": require("./assets/fonts/StayPixelRegular-EaOxl.ttf"),
-    "BowlbyOneSC-Regular": require("./assets/fonts/BowlbyOneSC-Regular.ttf")
+    "BowlbyOneSC-Regular": require("./assets/fonts/BowlbyOneSC-Regular.ttf"),
+    "Gunkid-0W9yv": require("./assets/fonts/Gunkid-0W9yv.otf"),
   })
 
   useEffect(() => {
@@ -79,6 +81,7 @@ export default function App() {
 
   return (
     <ReferenceDataContextProvider>
+    <TapProvider>
     <CurrencyProvider>
     <TasksProvider>
       <NavigationContainer>
@@ -109,6 +112,7 @@ export default function App() {
       </NavigationContainer>
     </TasksProvider>
     </CurrencyProvider>
+    </TapProvider>
     </ReferenceDataContextProvider>
   );
 }

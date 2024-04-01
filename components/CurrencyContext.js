@@ -1,4 +1,3 @@
-//CurrencyContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const CurrencyContext = createContext();
@@ -13,17 +12,20 @@ export const withCurrency = (WrappedComponent) => {
 };
 
 export const CurrencyProvider = ({ children }) => {
-  const [coins, setCoins] = useState(0);
-  const [diamonds, setDiamonds] = useState(0);
+  const [coins, setCoins] = useState(50); // start with 50 coins
+  const [diamonds, setDiamonds] = useState(5); // start with 5 diamonds
   const [inventoryItems, setInventoryItems] = useState([]);
 
   const earnCurrency = (type) => {
+    const MAX_COINS = 999;
+    const MAX_DIAMONDS = 999;
+
     if (type === 'coins') {
       setCoins((prevCoins) => Math.min(prevCoins + 50, MAX_COINS));
     } else if (type === 'diamonds') {
       setDiamonds((prevDiamonds) => Math.min(prevDiamonds + 50, MAX_DIAMONDS));
     }
-  }
+  };
 
   const spendCurrency = (type, price) => {
     if (type === 'coins') {
@@ -45,14 +47,25 @@ export const CurrencyProvider = ({ children }) => {
       setInventoryItems(updatedInventory);
     }
   };
-  
-  
+
   const MAX_COINS = 999;
   const MAX_DIAMONDS = 999;
 
   return (
-    <CurrencyContext.Provider value={{ coins, diamonds, earnCurrency, spendCurrency,inventoryItems, addItemToInventory, removeItemFromInventory }}>
+    <CurrencyContext.Provider
+      value={{
+        coins,
+        diamonds,
+        earnCurrency,
+        spendCurrency,
+        inventoryItems,
+        addItemToInventory,
+        removeItemFromInventory,
+      }}
+    >
       {children}
     </CurrencyContext.Provider>
   );
 };
+
+export default CurrencyContext;

@@ -72,7 +72,8 @@ const TestChatGPT = ({ navigation, route }) => {
         userInput,
         currentProfile.personality,
         currentProfile.name,
-        currentProfile.age
+        currentProfile.age,
+        currentProfile.occupation
       );
   
       const newBotMessage = {
@@ -152,7 +153,7 @@ const TestChatGPT = ({ navigation, route }) => {
           <Text style={styles.animalName}>{currentProfile.name}</Text>
           <Text style={styles.animalName}>{`, ${currentProfile.age}`}</Text>
           {currentProfile.verified && <Image source={verify} style={styles.verifiedIcon} />}
-          <ImageBackground source={profileIcon} style={styles.profileIcon} />
+          {/* <ImageBackground source={profileIcon} style={styles.profileIcon} /> */}
           <TouchableWithoutFeedback onPress={clearChat}>
             <Image source={eraserIcon} style={styles.eraseIcon} />
           </TouchableWithoutFeedback>
@@ -208,8 +209,9 @@ const styles = StyleSheet.create({
   },
   animalName: {
     top: 45,
-    fontSize: 25,
+    fontSize: 30,
     left: 5,
+    // fontFamily: 'NiceTango-K7XYo'
   },
   topNavContainer: {
     padding: 11,
@@ -233,10 +235,10 @@ const styles = StyleSheet.create({
   eraseIcon: {
     width: 33,
     height: 41,
-    left: 360,
-    top: 55,
+    left: 335,
+    top: 50,
     position: 'absolute',
-    pointerEvents: 'box-only', // Add this line
+    //pointerEvents: 'box-only', // Add this line
   },
   inputToolbarContainer: {
     padding: 5,
