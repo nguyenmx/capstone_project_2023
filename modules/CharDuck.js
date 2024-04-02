@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import {React, useContext} from 'react';
+import { View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import SpriteAnimation from './SpriteAnimation';
+// import { useTap } from '../components/main_game_logic/TapContext';
 
 const window = Dimensions.get('window');
+// const { handleTap, handleSwipe } = useTap();
 
 const duckData = {
   0: {
@@ -132,7 +134,7 @@ export const getSpriteFrames = duckType => {
   }
 };
 
-const Duck = ({ duckType, Optional: customStyle, decreaseHealth }) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth, }) => {
   let duckContent;
   let duckInfo;
 
@@ -153,6 +155,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth }) => {
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
         decreaseHealth={decreaseHealth}
+        //onCircularMotion={onCircularMotion}
       />
     );
   } else {
@@ -168,9 +171,16 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth }) => {
   const imageWidth = window.width * 0.58;
   const imageHeight = imageWidth;
 
+  const handleDuckTap = () => {
+    handleTap()
+    //handleSwipe();
+  };
+
   return (
     <View style={[{ position: 'relative' }, customStyle]}>
+      {/* <TouchableWithoutFeedback onPress={handleDuckTap} ref={duckRef}> */}
       {duckContent}
+      {/* </TouchableWithoutFeedback> */}
     </View>
   );
 };

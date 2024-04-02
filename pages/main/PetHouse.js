@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef} from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated, PanResponder, TouchableWithoutFeedback, TouchableNativeFeedbackComponent} from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
@@ -28,6 +28,8 @@ import p6 from '../../images/PetHouse/Asset13.png'
 import {useTasks} from '../../components/main_game_logic/TasksContext';
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
 import { useTap } from '../../components/main_game_logic/TapContext';
+import { TapProvider } from '../../components/main_game_logic/TapContext';
+// import { TouchableWithoutFeedback } from 'react-native-web';
 import zzz from '../../images/PetHouse/zzz.gif'
 
 
@@ -49,7 +51,7 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
-  const { handleTap } = useTap();
+  const { handleTap, handleSwipe } = useTap();
 
   const profileImages = {
     0: p3,//wave
@@ -281,7 +283,23 @@ const PetHouse = () => {
     if (handleTap()) {
       decreaseHealth();
     }
+    
   };
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gestureState) => {
+        //console.log('hello');
+        handleSwipe(gestureState); // Pass the gesture state to handleSwipe
+        // if (handleSwipe(gestureState)) {
+        //   console.log('duck has been petted.');
+        //increaseHealth();
+        // }
+      },
+      // Add other necessary PanResponder handlers
+    })
+  ).current;
 
   // play main bgm
   useEffect(() => {
@@ -295,17 +313,18 @@ const PetHouse = () => {
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
-      <View style={styles.container}>
+      <TapProvider>
+      <View style={styles.container}{...panResponder.panHandlers}>
         <View style = {topNavContainer}>
 
-          <TouchableOpacity onPress={navigateToProfile} style={styles.shopButton}>
+          <TouchableWithoutFeedback onPress={navigateToProfile} style={styles.shopButton}>
             <View style = {styles.profileContainer}>
             <Image source={profileImagePath} style={styles.profileIcon} />
               <View style={styles.nameContainer}>
                 <Text style={styles.nameText}>{name}</Text>
               </View>
             </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
       
             <Inventory 
               foodIcon={foodIcon} 
@@ -328,10 +347,18 @@ const PetHouse = () => {
          {isNight && (
         <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: 255, left: 69, transform: [{ scale: .5 }] }} />
         )}
-
-        <TouchableOpacity onPress={handleDuckTap}>
-          <Duck duckType={selectedDuck} Optional={duckPosition} decreaseHealth = {decreaseHealth}/>
-        </TouchableOpacity>
+         {/* <View style = {styles.test}{...panResponder.panHandlers}> */}
+          <TouchableOpacity onPress={handleDuckTap}>
+            <View>
+            <Duck 
+            duckType={selectedDuck} 
+            Optional={duckPosition} 
+            decreaseHealth = {decreaseHealth}
+            //onCircularMotion={panResponder.panHandlers}
+            />
+            </View>
+          </TouchableOpacity>
+        {/* </View> */}
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
           <Image source={light} style={{position:'relative'}}/>
@@ -364,7 +391,9 @@ const PetHouse = () => {
          </View>
 
       </View>
+      </TapProvider>
     </ImageBackground>
+
   );
 };
 
