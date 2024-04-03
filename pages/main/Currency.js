@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   currencyText: {
-    fontSize: 35,
+    fontSize: 38,
     color: 'white',
     fontFamily: 'NiceTango-K7XYo',
   },

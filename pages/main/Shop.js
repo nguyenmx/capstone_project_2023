@@ -133,22 +133,15 @@ class Shop extends React.Component {
       </TouchableOpacity>
   
       <TouchableOpacity onPress={() => this.handleBuyPress(item)}>
-        <Text style={styles.itemPrice}>
-          {item.price + ' '}
-          {item.currencyType === 'coins' ? (
-            <>
-              <Image source={coin} style={styles.currencyIcon} />
-            </>
-          ) : (
-            <>
-              <Image source={diamond} style={styles.currencyIcon} />
-            </>
-          )}
-        </Text>
+        <View style={styles.priceContainer}>
+          <Text style={styles.itemPrice}>{item.price}</Text>
+          <Image source={item.currencyType === 'coins' ? coin : diamond} style={styles.currencyIcon} />
+        </View>
         <Image source={require('../../images/BuyButton.png')} style={styles.buyBttn} />
       </TouchableOpacity>
     </View>
   );
+  
   
 
   render() {
@@ -169,7 +162,7 @@ class Shop extends React.Component {
           <Currency optionalStyles={{ top: 140, left: window.width * .12 }} />
         </View>
 
-        <View style={[styles.container, { top: 150 }]}>
+        <View style={[styles.container, { top: 160 }]}>
           <Text style={styles.timerText}>
             {'Restocking in... ' + minutes + ':' + seconds}
           </Text>
@@ -232,21 +225,23 @@ const styles = StyleSheet.create({
   },
   itemPrice: {
     fontFamily: 'NiceTango-K7XYo',
-    fontSize: 33,
+    fontSize: 36,
     color: 'white',
-    top: 43,
+    top: 45,
     left: 25,
     zIndex: 998,
   },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',     zIndex: 998,
+  },
   currencyIcon: {
     width: 25,
-    height: 25,
-    marginLeft: 5,
+    height: 25, top: 42, left: 32
   },
   currencyText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 16,
-    marginLeft: 5,
   },
   timerText: {
     fontFamily: 'NiceTango-K7XYo',

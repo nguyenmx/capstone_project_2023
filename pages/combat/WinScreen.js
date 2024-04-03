@@ -6,6 +6,7 @@ import HealthBar from '../../modules/HealthBar';
 import SpriteAnimation from '../../modules/SpriteAnimation';
 import { getSpriteFrames } from '../../modules/CharDuck';
 import { Audio } from 'expo-av';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/background.gif');
@@ -53,6 +54,26 @@ const WinScreen = ({navigation}) => {
     );
   }
 
+  const incrementWinCount = async () => {
+    try {
+      // Retrieve the current win count or default to 0 if it doesn't exist
+      let winCount = await AsyncStorage.getItem('winCount');
+      winCount = parseInt(winCount) || 0;
+
+      // Increment the win count
+      winCount++;
+
+      // Store the updated win count
+      await AsyncStorage.setItem('winCount', winCount.toString());
+    } catch (error) {
+      console.error('Error updating win count:', error);
+    }
+  };
+
+  // Call incrementWinCount when the component mounts
+  useEffect(() => {
+    incrementWinCount();
+  }, []);
 
   handlePlay = async () => {
     if (this.soundObject._loaded) {

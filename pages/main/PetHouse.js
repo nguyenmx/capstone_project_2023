@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef} from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Dimensions, Button, Modal, Animated, PanResponder, TouchableWithoutFeedback, TouchableNativeFeedbackComponent} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TouchableNativeFeedback, Image, Dimensions, Button, Modal, Animated, PanResponder, TouchableWithoutFeedback, TouchableNativeFeedbackComponent} from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
@@ -55,7 +55,7 @@ const PetHouse = () => {
 
   const profileImages = {
     0: p3,//wave
-    1: p1,//Capy
+    1: p1, //Capy
     2: p6, //Rizz
     3: p5, //Coffe
     4: p2, // Banana
@@ -65,7 +65,6 @@ const PetHouse = () => {
 
   const profileImagePath = profileImages[selectedDuck];
   
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -104,7 +103,7 @@ const PetHouse = () => {
   const increaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.increaseHealth();
-      setPlayerHealth(playerHealth + 10);
+      setPlayerHealth(playerHealth + 5);
     }
   };
 
@@ -328,9 +327,9 @@ const PetHouse = () => {
       
             <Inventory 
               foodIcon={foodIcon} 
-              onItemDrop={() => decreaseHealth()} // Example for decreasing health
-              onItemDropBy={(amount) => decreaseHealthBy(amount)} // Example for decreasing health by custom amount
-              onItemFeed={() => increaseHealth()} // Example for increasing health
+              onItemDrop={() => console.log("item dropped")} 
+              onItemDropBy={(amount) => console.log("debug")} 
+              onItemFeed={() => increaseHealth()} 
             />
 
           <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>

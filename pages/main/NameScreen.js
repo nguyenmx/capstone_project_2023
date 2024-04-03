@@ -11,7 +11,7 @@ const NameScreen = () => {
   const backgroundImage = require('../../images/Backgrounds/clouds.png');
   const { name, setName } = useContext(ReferenceDataContext);
   const navigation = useNavigation(); // Get the navigation object
-  const MAX_NAME_LENGTH = 20; // Set your desired character limit
+  const MAX_NAME_LENGTH = 12; // Set your desired character limit
 
   //sets "PetName" as a key then saves name inside it
   const save = async() => {
@@ -80,7 +80,7 @@ const NameScreen = () => {
           onChangeText={handleNameChange}
           maxLength={MAX_NAME_LENGTH} 
         />
-        <Text style={styles.text}> {name ? `${name.length}/${MAX_NAME_LENGTH}` : '0/20'}</Text>
+        <Text style={styles.text}> {name ? `${name.length}/${MAX_NAME_LENGTH}` : '0/12'}</Text>
         <Button onPress={save} title="Save me!" style={styles.button} />
         <Button onPress={remove} title="Delete me!" style={styles.button} />
         

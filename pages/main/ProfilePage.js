@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import rectangle from '../../images/ProfilePage/rectangle.png';
 import pp from '../../images/ProfilePage/pink_stripes.gif';
-
 import profileIcon from '../../images/ProfilePage/girl.png';
 import settingsButton from '../../images/settingButton.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
@@ -20,6 +19,8 @@ import award2 from '../../images/ProfilePage/Achievements/food_complete.png'
 import award3 from '../../images/ProfilePage/Achievements/paw.png'
 import award4 from '../../images/ProfilePage/Achievements/ribbon.png'
 import BackArrow from '../../modules/BackArrow';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const window = Dimensions.get('window');
 const backgroundImage = pp;
@@ -27,6 +28,7 @@ const backgroundImage = pp;
 const ProfilePage = ({ navigation }) => {
   const { name, setName, playerHealth } = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
+  const [winCount, setWinCount] = useState(0);
 
   const profileImages = {
     0: p3, //wave
@@ -47,6 +49,20 @@ const ProfilePage = ({ navigation }) => {
   const navigateToScreen2 = () => {
     navigation.navigate('PetHouse');
   };
+
+    // Retrieve the win count from AsyncStorage when the component mounts
+    useEffect(() => {
+      const getWinCount = async () => {
+        try {
+          const storedWinCount = await AsyncStorage.getItem('winCount');
+          setWinCount(parseInt(storedWinCount) || 0);
+        } catch (error) {
+          console.error('Error retrieving win count:', error);
+        }
+      };
+  
+      getWinCount();
+    }, []);
 
   return (
     <View>
@@ -78,10 +94,12 @@ const ProfilePage = ({ navigation }) => {
             <Image source={profileImagePath} style={{ width: 55, height: 55, bottom: 170, right: 70, position: 'absolute' }} />
           </View>
 
+          <Text style={{color: 'black', fontFamily: 'NiceTango-K7XYo', position: 'absolute', top: 415, right: 15, fontSize: 30  }}>{winCount}</Text>
+
           <View style={styles.attributesContainer}>
             <Text style={styles.attributeNames}>Pets</Text>
             <Text style={styles.attributeNames}> </Text>
-            <Text style={styles.attributeNames}>Wins|Loses</Text>
+            <Text style={styles.attributeNames}>Wins</Text>
             <Text style={styles.attributeNames}>Favorite pet</Text>
             <Text style={styles.attributeNames}>Achievements</Text>
 
@@ -97,10 +115,10 @@ const ProfilePage = ({ navigation }) => {
         {/* Buttons at the bottom for navigation */}
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity style={styles.bottomButton} onPress={navigateToScreen1}>
-            <Text style={styles.bottomButtonText}>Screen 1</Text>
+            <Text style={styles.bottomButtonText}>Menu</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.bottomButton} onPress={navigateToScreen2}>
-            <Text style={styles.bottomButtonText}>Screen 2</Text>
+            <Text style={styles.bottomButtonText}>Pets</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -156,6 +174,7 @@ const styles = StyleSheet.create({
   },
   profileIconContainer: {
     alignItems: 'center',
+    zIndex: 999
   },
   profileIcon: {
     width: 120,

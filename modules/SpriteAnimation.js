@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Dimensions } from 'react-native';
 import { useTap } from '../components/main_game_logic/TapContext';
 
 const window = Dimensions.get('window');
@@ -71,10 +71,10 @@ const SpriteAnimation = ({
       decreaseHealth();
     }
   
-    switchToNextAnimation();
-    setTimeout(() => {
-      switchToNextAnimation();
-    }, animations[animationType].length * 150);
+    //switchToNextAnimation();
+   // setTimeout(() => {
+   //   switchToNextAnimation();
+    //}, animations[animationType].length * 150);
   };
 
   useEffect(() => {
@@ -103,12 +103,12 @@ const SpriteAnimation = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleSpritePress}>
+      <TouchableNativeFeedback onPress={handleSpritePress}>
         <Image
           source={animations[animationType][frameIndex]}
           style={styles.sprite}
         />
-      </TouchableOpacity>
+      </TouchableNativeFeedback>
     </View>
   );
 };
