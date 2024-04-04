@@ -71,10 +71,10 @@ const SpriteAnimation = ({
       decreaseHealth();
     }
   
-    //switchToNextAnimation();
-   // setTimeout(() => {
-   //   switchToNextAnimation();
-    //}, animations[animationType].length * 150);
+    switchToNextAnimation();
+    setTimeout(() => {
+     switchToNextAnimation();
+    }, animations[animationType].length * 150);
   };
 
   useEffect(() => {

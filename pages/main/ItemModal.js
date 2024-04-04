@@ -2,41 +2,59 @@ import React from 'react';
 import { Modal, View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import closeIcon from '../../images/PetHouse/close.png';
 
-const ItemModal = ({ visible, item, onClose }) => {
+
+const ItemModal = ({ visible, item, itemID, onClose }) => {
   // Define title and description based on the item
   let title = '';
   let description = '';
-  if (item === 72) { // Replace 'your_item_source_here' with your logic to determine item source
-    title = 'Lemonade';
-    description = 'Lemony Fresh :)';
-  } else if (item === 70) { // Replace 'your_other_item_source_here' with your logic
-    title = 'Burger';
-    description = 'The best burgers come from the best cows';
-  } else if (item === 71) { // Replace 'your_other_item_source_here' with your logic
-    title = 'Shrimp';
-    description = 'As shrimple as that';
-  }
-  else if (item === 68) { // Replace 'your_other_item_source_here' with your logic
-    title = 'Matcha Boba';
-    description = 'Matcha Boba';
-  }
-  else if (item === 69) { // Replace 'your_other_item_source_here' with your logic
-    title = 'Salad';
-    description = 'Lettuce harmonizes with the crisp notes of cucumber, creating a refreshing melody on your palate';
-  } 
-  else if (item === 137) { // Replace 'your_other_item_source_here' with your logic
+  if (itemID === 1) {
+    title = 'Apple';
+    description = '...';
+
+  }  else if (itemID === 2) {
     title = 'Bread';
     description = 'It\'s like a breadstick, but bigger and loafier—because why settle for less?';
-  }
-  else if (item === 140) { 
-    title = 'Steak';
-    description = 'love is in the air              —and it\'s medium rare';
-  }
-  else if (item === 141) { 
-    title = 'Can O\' Fish';
-    description = 'smells...fishy';
-  }
 
+  }  else if (itemID === 3) {
+    title = 'Cake';
+    description = '...';
+
+  }  else if (itemID === 4) {
+    title = '2% Milk';
+    description = 'Life is short, milk it';
+
+  }  else if (itemID === 5) {
+    title = 'Steak';
+    description = '...';
+
+  }  else if (itemID === 6) {
+    title = 'Can Tuna';
+    description = '...';
+
+  }  else if (itemID === 7) {
+    title = 'Boba';
+    description = '...';
+
+  }  else if (itemID === 8) {
+    title = 'Shrimp';
+    description = 'As shrimple as that';
+
+  }  else if (itemID === 9) {
+    title = 'Mango';
+    description = '...';
+
+  }  else if (itemID === 10) {
+    title = 'Salad';
+    description = 'Lettuce harmonizes with the crisp notes of cucumber, creating a refreshing melody on your palate';
+
+  }  else if (itemID === 11) {
+    title = 'Burger';
+    description = 'The best burgers come from the best cows';
+
+  }  else if (itemID === 12) {
+    title = 'Lemonade';
+    description = 'Lemony Fresh :)';
+  }
 
 
   return (
@@ -65,7 +83,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFE7B8',
     borderRadius: 15,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'center', // Center content horizontally
+    justifyContent: 'center', // Center content vertically
     borderColor: '#663A31',
     borderWidth: 10,
     width: 290,
