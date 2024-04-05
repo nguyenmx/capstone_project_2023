@@ -23,14 +23,14 @@ class Shop extends React.Component {
     this.state = {
       timer: 30,
       foodItems: [
-        { imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' },
-        { imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' },
-        { imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' }
+        { id: 1, imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' },
+        { id: 2, imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' },
+        { id: 3, imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' }
       ],
       otherItems: [
-        { imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' },
-        { imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' },
-        { imageSource: require('../../images/Food/CannedFood_Fish.png'), price: 1, currencyType: 'diamonds' }
+        { id: 4, imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' },
+        { id: 5, imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' },
+        { id: 6, imageSource: require('../../images/Food/CannedFood_Fish.png'), price: 1, currencyType: 'diamonds' }
       ],
       isModalVisible: false // Initialize isModalVisible to false
     };
@@ -38,11 +38,11 @@ class Shop extends React.Component {
   }
 
   handleFoodItemPress = (item) => {
-    this.setState({ selectedItem: item.imageSource, isModalVisible: true });
+    this.setState({ selectedItem: item.imageSource, ItemID: item.id, isModalVisible: true });
   };
 
   handleCloseModal = () => {
-    this.setState({ selectedItem: null, isModalVisible: false });
+    this.setState({ selectedItem: null, ItemID: null, isModalVisible: false });
   };
 
   componentDidMount() {
@@ -69,20 +69,20 @@ class Shop extends React.Component {
   };
 
   switchShopItems = () => {
-
     this.setState({
       foodItems: [
-        { imageSource: boba, price: 4, currencyType: 'coins' },
-        { imageSource: shrimp, price: 24, currencyType: 'coins' },
-        { imageSource: mango, price: 12, currencyType: 'coins' }
+        { id: 7, imageSource: boba, price: 4, currencyType: 'coins' },
+        { id: 8, imageSource: shrimp, price: 24, currencyType: 'coins' },
+        { id: 9, imageSource: mango, price: 12, currencyType: 'coins' }
       ],
       otherItems: [
-        { imageSource: salad, price: 8, currencyType: 'coins' },
-        { imageSource: burger, price: 11, currencyType: 'coins' },
-        { imageSource: lemonade, price: 4, currencyType: 'diamonds' }
+        { id: 10, imageSource: salad, price: 8, currencyType: 'coins' },
+        { id: 11, imageSource: burger, price: 11, currencyType: 'coins' },
+        { id: 12, imageSource: lemonade, price: 4, currencyType: 'diamonds' }
       ]
     });
   };
+  
 
   handleBuyPress = async (item) => {
 
@@ -145,7 +145,7 @@ class Shop extends React.Component {
   
 
   render() {
-    const { timer, foodItems, otherItems, isModalVisible, selectedItem } = this.state;
+    const { timer, foodItems, otherItems, isModalVisible, selectedItem, itemID } = this.state;
     const minutes = Math.floor(timer / 60);
     let seconds = timer % 60;
     if (seconds < 10) {
@@ -185,7 +185,7 @@ class Shop extends React.Component {
           </View>
         </View>
 
-        <ItemModal visible={isModalVisible} item={selectedItem} onClose={this.handleCloseModal} />
+        <ItemModal visible={isModalVisible} item={selectedItem} itemID={this.state.ItemID} onClose={this.handleCloseModal} />
 
       </ImageBackground>
     );
