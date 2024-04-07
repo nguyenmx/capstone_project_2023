@@ -254,7 +254,16 @@ const PetHouse = () => {
       shadowOffset: { width: 4, height: 4 },
       shadowColor: 'rgba(102, 58, 49, 0.8)',
       shadowOpacity: 1,
-  }
+  };
+
+  const zzzPostion = {
+    position: 'absolute', 
+    zIndex: 997, 
+    bottom: 255, 
+    left: 69, 
+    transform: [{ scale: .5 }]
+  };
+
 
   useEffect(() => {
     // Set up an effect to move to the next task when the current one is completed
@@ -291,9 +300,9 @@ const PetHouse = () => {
       onPanResponderMove: (event, gestureState) => {
         //console.log('hello');
         handleSwipe(gestureState); // Pass the gesture state to handleSwipe
-        // if (handleSwipe(gestureState)) {
+        // if (handleSwipe(gestureState) === 1) {
         //   console.log('duck has been petted.');
-        //increaseHealth();
+        //   increaseHealth();
         // }
       },
       // Add other necessary PanResponder handlers
@@ -344,7 +353,8 @@ const PetHouse = () => {
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
          {isNight && (
-        <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: 255, left: 69, transform: [{ scale: .5 }] }} />
+          <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: isLandscape ? 40 : 290 , left: isLandscape ? 250 :20, transform: [{ scale: .5 }] }} />
+        // <Image source={zzz} style={zzzPostion}> </Image>
         )}
          {/* <View style = {styles.test}{...panResponder.panHandlers}> */}
           <TouchableOpacity onPress={handleDuckTap}>

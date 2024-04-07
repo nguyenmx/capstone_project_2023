@@ -9,7 +9,7 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
   let description = '';
   if (itemID === 1) {
     title = 'Apple';
-    description = '...';
+    description = 'Doctors fear me the most...';
 
   }  else if (itemID === 2) {
     title = 'Bread';
@@ -17,7 +17,7 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
 
   }  else if (itemID === 3) {
     title = 'Cake';
-    description = '...';
+    description = 'That\'s one thick piece of cake';
 
   }  else if (itemID === 4) {
     title = '2% Milk';
@@ -37,11 +37,11 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
 
   }  else if (itemID === 8) {
     title = 'Shrimp';
-    description = 'As shrimple as that';
+    description = 'As shrimple as that. Be one in a krillion.';
 
   }  else if (itemID === 9) {
     title = 'Mango';
-    description = '...';
+    description = '';
 
   }  else if (itemID === 10) {
     title = 'Salad';
