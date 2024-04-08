@@ -192,13 +192,13 @@ const PetHouse = () => {
     position: 'relative',
     flexDirection: 'row',
     left: isLandscape ? -240 : window.width * -0.05,
-    marginTop: isLandscape ? 100 : 100,
+    marginTop: isLandscape ? 80 : 90,
     top: isLandscape ? -20 : 10
   };
 
   const bottomNavContainer = {
     flexDirection: 'row',
-    marginBottom: isLandscape ? -80 : -100,
+    marginBottom: isLandscape ? -80 : -110,
     marginTop: isLandscape ? -240: 160,
     top: 10
   };
@@ -225,12 +225,12 @@ const PetHouse = () => {
 
   const diamondAndCoinContainer = {
     flexDirection: 'row',
-    top: isLandscape ? -230 : 0,
+    top: isLandscape ? -230 : 15,
     right: isLandscape ? -400 : 0
   };
 
   const itemShopImg = {
-    top: isLandscape ? -2 : -33,
+    top: isLandscape ? -8 : -28,
     left: isLandscape ? 150: 0
    };
 
@@ -243,7 +243,7 @@ const PetHouse = () => {
 
   const dialogueContainer = {
       width: '100%',
-      top: isLandscape ? window.width * 0.02 : 14,
+      top: isLandscape ? 18 : 22,
       height: isLandscape ? '14%' : '10.8%', 
       borderWidth: 7, 
       borderColor: 'rgba(77, 49, 45, 0.9)',

@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   petImage: {
-    width: 250,
-    height: 250,
+    width: window.width * 0.58, 
+    height: window.width * 0.58,
     resizeMode: 'contain',
   },
   petName: {
