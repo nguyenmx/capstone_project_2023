@@ -141,9 +141,11 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
   const [isInteraction, setInteraction] = useState(false);
   // Timer reference
   const timerRef = useRef(null);
+  const { handleTap, handleSwipe } = useTap();
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
+
     onPanResponderGrant: () => {
       console.log("PanResponder granted");
       // Start the timer when panning begins
@@ -152,6 +154,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
         setPanningDuration(prevDuration => prevDuration + 1000);
       }, 1000); // Update duration every second
     },
+
     onPanResponderRelease: () => {
       console.log("PanResponder released");
       // Stop the timer and reset duration when panning ends
@@ -167,18 +170,33 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
       }
 
     },
+
     onPanResponderTerminate: () => {
       console.log("PanResponder terminated");
       // Stop the timer and reset duration if the responder is terminated abruptly
       clearInterval(timerRef.current);
       setPanningDuration(0);
     },
-  });
 
+    onPanResponderMove: (event, gestureState) => {
+      handleSwipe(gestureState);
+    },
+  });
 
   useEffect(() => {
     console.log("Panning duration:", panningDuration / 1000);
   }, [panningDuration]);
+
+  // const handCursor = useRef(
+  //   PanResponder.create({
+  //     onStartShouldSetPanResponder: () => true,
+  //     onPanResponderMove: (event, gestureState) => {
+  //       handleSwipe(gestureState);
+    
+  //     },
+  //     // Add other necessary PanResponder handlers
+  //   })
+  // ).current;
 
   // const handleDuckTap = () => {
   //   if (handleTap()) {
@@ -214,6 +232,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
     duckContent = (
       // <TouchableOpacity onPress={handleDuckTap}>
       <Image
+        // {...handCursor.panHandlers}
         {...panResponder.panHandlers}
         source={duckInfo.imageSource}
         style={{ width: window.width * 0.58, height: window.width * 0.58 }}
@@ -231,7 +250,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
       {duckContent}
       {isInteraction && (
         <Image
-          source={require('../images/cartoon-thought_fight.png')} // Replace with actual hand pointer image
+          source={require('../images/cartoon-thought_fight.png')}
           style={{
             position: 'absolute',
             top: -60, 

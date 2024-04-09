@@ -19,7 +19,7 @@ const SpriteAnimation = ({
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
   const [isPlaying, setIsPlaying] = useState(true);
-  const { handleTap } = useTap();
+  const { handleTap, handleSwipe } = useTap();
   
 
   const animations = {
@@ -102,14 +102,15 @@ const SpriteAnimation = ({
       setAnimationType('celebrate');
     } 
   }, [playCelebrate]);
+  
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
-  // const { handleTap, handleSwipe } = useTap();
-  // const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
   const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
   const [isInteraction, setInteraction] = useState(false);
   // Timer reference
   const timerRef = useRef(null);
+
+  
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -118,7 +119,6 @@ const SpriteAnimation = ({
       console.log("PanResponder granted");
       // Start the timer when panning begins
       // Call sprite animation method - animates and checks player's taps
-      handleSpritePress();
       setInteraction(true);
       timerRef.current = setInterval(() => {
         setPanningDuration(prevDuration => prevDuration + 1000);
@@ -127,6 +127,7 @@ const SpriteAnimation = ({
 
     onPanResponderRelease: () => {
       console.log("PanResponder released");
+      handleSpritePress();
       // Stop the timer and reset duration when panning ends
       setInteraction(false);
       clearInterval(timerRef.current);
@@ -146,6 +147,10 @@ const SpriteAnimation = ({
       clearInterval(timerRef.current);
       setPanningDuration(0);
     },
+
+    onPanResponderMove: (event, gestureState) => {
+      handleSwipe(gestureState);
+    },
   });
 
 
@@ -159,19 +164,7 @@ const SpriteAnimation = ({
         <Image
           {...panResponder.panHandlers}
           source={animations[animationType][frameIndex]}
-          style={styles.sprite}
-          {...isInteraction && (
-            <Image
-              source={require('../images/cartoon-thought_fight.png')} // Replace with actual hand pointer image
-              style={{
-                position: 'absolute',
-                top: -60, 
-                left: 155,
-                width: 140, 
-                height: 120,
-              }}
-            />
-          )}
+          style={styles.sprite} 
         />
       {/* </TouchableNativeFeedback> */}
     </View>

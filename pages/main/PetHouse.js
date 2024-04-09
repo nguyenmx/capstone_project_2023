@@ -293,27 +293,22 @@ const PetHouse = () => {
   };
 
 
-  const handleDuckTap = () => {
-    // if (handleTap()) {
-    //   decreaseHealth();
-    // }
-    if (!isPettingLongEnough) {
-      increaseHealth();
-    }
-
-  };
+  // const handleDuckTap = () => {
+  //   if (handleTap()) {
+  //     decreaseHealth();
+  //   }
+  //   if (!isPettingLongEnough) {
+  //     increaseHealth();
+  //   }
+  // };
 
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gestureState) => {
-        //console.log('hello');
-        handleSwipe(gestureState); // Pass the gesture state to handleSwipe
-        // if (handleSwipe(gestureState) === 1) {
-        //   console.log('duck has been petted.');
-        //   increaseHealth();
-        // }
+        handleSwipe(gestureState);
+    
       },
       // Add other necessary PanResponder handlers
     })
@@ -332,7 +327,7 @@ const PetHouse = () => {
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
       <TapProvider>
-      <View style={styles.container}{...panResponder.panHandlers}>
+      <View style={styles.container}>
         <View style = {topNavContainer}>
 
           <TouchableWithoutFeedback onPress={navigateToProfile} style={styles.shopButton}>

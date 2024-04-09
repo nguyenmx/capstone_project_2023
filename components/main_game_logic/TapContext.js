@@ -81,8 +81,8 @@ export const TapProvider = ({ children }) => {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            left: handPosition.x - 40,
-            top: handPosition.y - 40,
+            left: handPosition.x - 90,
+            top: handPosition.y ,
           }}
           onPress={() => setShowHandImage(false)}
           {...panResponder.panHandlers}
