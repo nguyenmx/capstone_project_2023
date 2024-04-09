@@ -11,6 +11,9 @@ const ReferenceDataContext = createContext({
   setTime: () => {},
   playerHealth: 100,
   setPlayerHealth: () => {},
+  isPettingLongEnough: false,
+  setIsPettingLongEnough: () => {},
+  
 });
 
 const ReferenceDataContextProvider = ({ children }) => {
@@ -19,6 +22,7 @@ const ReferenceDataContextProvider = ({ children }) => {
   const [steps, setSteps] = useState('');
   const [selectedDuck, setSelectedDuck] = useState(0);
   const [playerHealth, setPlayerHealth] = useState(100);
+  const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
 
   // Modify setPlayerHealth to ensure it stays between 0 and 100
   const clampedPlayerHealth = (newHealth) => {
@@ -38,6 +42,8 @@ const ReferenceDataContextProvider = ({ children }) => {
         setTime,
         playerHealth,
         setPlayerHealth: (newHealth) => setPlayerHealth(clampedPlayerHealth(newHealth)),
+        isPettingLongEnough,
+        setIsPettingLongEnough
       }}
     >
       {children}

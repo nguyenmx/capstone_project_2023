@@ -28,7 +28,7 @@ const CharacterSelector = ({ navigation }) => {
     getSelectedDuck();
 
     async function prepare() {
-      await SplashScreen.preventAutoHideAsync();
+      // await SplashScreen.preventAutoHideAsync();
     }
     prepare();
   }, []);

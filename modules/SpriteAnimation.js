@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Dimensions } from 'react-native';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { View, Image, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Dimensions, PanResponder } from 'react-native';
 import { useTap } from '../components/main_game_logic/TapContext';
+import { useCurrency } from '../components/CurrencyContext';
+import { ReferenceDataContext } from '../components/ReferenceDataContext';
 
 const window = Dimensions.get('window');
 
@@ -100,15 +102,78 @@ const SpriteAnimation = ({
       setAnimationType('celebrate');
     } 
   }, [playCelebrate]);
+  const {earnCurrency} = useCurrency();
+  const [panningDuration, setPanningDuration] = useState(0);
+  // const { handleTap, handleSwipe } = useTap();
+  // const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
+  const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
+  const [isInteraction, setInteraction] = useState(false);
+  // Timer reference
+  const timerRef = useRef(null);
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+
+    onPanResponderGrant: () => {
+      console.log("PanResponder granted");
+      // Start the timer when panning begins
+      // Call sprite animation method - animates and checks player's taps
+      handleSpritePress();
+      setInteraction(true);
+      timerRef.current = setInterval(() => {
+        setPanningDuration(prevDuration => prevDuration + 1000);
+      }, 1000);
+    },
+
+    onPanResponderRelease: () => {
+      console.log("PanResponder released");
+      // Stop the timer and reset duration when panning ends
+      setInteraction(false);
+      clearInterval(timerRef.current);
+      setPanningDuration(0);
+      
+      if (panningDuration >= 4000) {
+        console.log("You have played with the pet for 5 seconds.");
+        setIsPettingLongEnough(true);
+        earnCurrency('diamonds');
+        console.log(isPettingLongEnough);
+      }
+
+    },
+    onPanResponderTerminate: () => {
+      console.log("PanResponder terminated");
+      // Stop the timer and reset duration if the responder is terminated abruptly
+      clearInterval(timerRef.current);
+      setPanningDuration(0);
+    },
+  });
+
+
+  useEffect(() => {
+    console.log("Panning duration:", panningDuration / 1000);
+  }, [panningDuration]);
 
   return (
     <View style={styles.container}>
-      <TouchableNativeFeedback onPress={handleSpritePress}>
+      {/* <TouchableNativeFeedback onPress={handleSpritePress}> */}
         <Image
+          {...panResponder.panHandlers}
           source={animations[animationType][frameIndex]}
           style={styles.sprite}
+          {...isInteraction && (
+            <Image
+              source={require('../images/cartoon-thought_fight.png')} // Replace with actual hand pointer image
+              style={{
+                position: 'absolute',
+                top: -60, 
+                left: 155,
+                width: 140, 
+                height: 120,
+              }}
+            />
+          )}
         />
-      </TouchableNativeFeedback>
+      {/* </TouchableNativeFeedback> */}
     </View>
   );
 };

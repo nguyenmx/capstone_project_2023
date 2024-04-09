@@ -52,6 +52,8 @@ const PetHouse = () => {
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
   const { handleTap, handleSwipe } = useTap();
+  const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
+
 
   const profileImages = {
     0: p3,//wave
@@ -105,7 +107,12 @@ const PetHouse = () => {
       healthBarRef.current.increaseHealth();
       setPlayerHealth(playerHealth + 5);
     }
+    // if (isPettingLongEnough) {
+    //   healthBarRef.current.increaseHealth();
+    //   setPlayerHealth(playerHealth + 5);
+    // }
   };
+
 
   async function playSound() {
     console.log('Loading Sound');
@@ -285,14 +292,17 @@ const PetHouse = () => {
     }
   };
 
-  
 
   const handleDuckTap = () => {
-    if (handleTap()) {
-      decreaseHealth();
+    // if (handleTap()) {
+    //   decreaseHealth();
+    // }
+    if (!isPettingLongEnough) {
+      increaseHealth();
     }
-    
+
   };
+
 
   const panResponder = useRef(
     PanResponder.create({
@@ -356,18 +366,16 @@ const PetHouse = () => {
           <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: isLandscape ? 40 : 290 , left: isLandscape ? 250 :20, transform: [{ scale: .5 }] }} />
         // <Image source={zzz} style={zzzPostion}> </Image>
         )}
-         {/* <View style = {styles.test}{...panResponder.panHandlers}> */}
-          <TouchableOpacity onPress={handleDuckTap}>
+
             <View>
-            <Duck 
-            duckType={selectedDuck} 
-            Optional={duckPosition} 
-            decreaseHealth = {decreaseHealth}
-            //onCircularMotion={panResponder.panHandlers}
-            />
+              {/* <TouchableOpacity onPress={handleDuckTap}> */}
+                <Duck 
+                duckType={selectedDuck} 
+                Optional={duckPosition} 
+                decreaseHealth = {decreaseHealth} 
+                />
+              {/* </TouchableOpacity> */}
             </View>
-          </TouchableOpacity>
-        {/* </View> */}
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
           <Image source={light} style={{position:'relative'}}/>
