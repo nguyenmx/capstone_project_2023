@@ -72,7 +72,7 @@ const SpriteAnimation = ({
     if(handleTap()) {
       decreaseHealth();
     }
-  
+
     switchToNextAnimation();
     setTimeout(() => {
      switchToNextAnimation();
@@ -170,10 +170,10 @@ const SpriteAnimation = ({
           source={require('../images/cartoon-thought_fight.png')}
           style={{
             position: 'absolute',
-            top: -60, 
-            left: 155,
-            width: 140, 
-            height: 120,
+            top: -30, 
+            left: 160,
+            width: 130, 
+            height: 110,
           }}
         />
       )}

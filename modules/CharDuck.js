@@ -166,7 +166,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
       if (panningDuration >= 4000) {
         console.log("You have played with the pet for 5 seconds.");
         setIsPettingLongEnough(true);
-        earnCurrency('diamonds');
+        earnCurrency('coins');
         console.log(isPettingLongEnough);
       }
     },
