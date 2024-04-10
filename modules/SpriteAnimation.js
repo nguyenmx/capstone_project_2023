@@ -160,16 +160,27 @@ const SpriteAnimation = ({
 
   return (
     <View style={styles.container}>
-      {/* <TouchableNativeFeedback onPress={handleSpritePress}> */}
         <Image
           {...panResponder.panHandlers}
           source={animations[animationType][frameIndex]}
           style={styles.sprite} 
         />
-      {/* </TouchableNativeFeedback> */}
+         {isInteraction && (
+        <Image
+          source={require('../images/cartoon-thought_fight.png')}
+          style={{
+            position: 'absolute',
+            top: -60, 
+            left: 155,
+            width: 140, 
+            height: 120,
+          }}
+        />
+      )}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

@@ -42,7 +42,7 @@ export const TapProvider = ({ children }) => {
     } 
     else {
       setShowHandImage(false);
-      console.log('Duck tapped!');
+      //console.log('Duck tapped!');
       return false;
     }
   };
@@ -60,7 +60,6 @@ export const TapProvider = ({ children }) => {
     swipeTimeout.current = setTimeout(() => {
       setShowHandImage(false);
     }, 200);
-  
    
   };
 

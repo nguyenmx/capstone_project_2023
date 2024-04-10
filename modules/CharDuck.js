@@ -7,7 +7,6 @@ import { useCurrency } from '../components/CurrencyContext';
 
 const window = Dimensions.get('window');
 
-
 const duckData = {
   0: {
     name: 'Quacky',
@@ -135,8 +134,6 @@ export const getSpriteFrames = duckType => {
 const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) => {
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
-  // const { handleTap, handleSwipe } = useTap();
-  // const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
   const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
   const [isInteraction, setInteraction] = useState(false);
   // Timer reference
@@ -147,8 +144,12 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
     onStartShouldSetPanResponder: () => true,
 
     onPanResponderGrant: () => {
-      console.log("PanResponder granted");
+      //console.log("PanResponder granted");
       // Start the timer when panning begins
+      if (handleTap()) {
+        console.log("Too much tapping bruh");
+        //decrease health bar here
+      }
       setInteraction(true);
       timerRef.current = setInterval(() => {
         setPanningDuration(prevDuration => prevDuration + 1000);
@@ -156,7 +157,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
     },
 
     onPanResponderRelease: () => {
-      console.log("PanResponder released");
+      //console.log("PanResponder released");
       // Stop the timer and reset duration when panning ends
       setInteraction(false);
       clearInterval(timerRef.current);
@@ -168,7 +169,6 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
         earnCurrency('diamonds');
         console.log(isPettingLongEnough);
       }
-
     },
 
     onPanResponderTerminate: () => {
@@ -224,7 +224,6 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
         decreaseHealth={decreaseHealth}
-        
       />
     );
   } else {
