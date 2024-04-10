@@ -21,6 +21,7 @@ import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import { useTasks } from '../../components/main_game_logic/TasksContext';
 import { useCurrency } from '../../components/CurrencyContext'; 
 import { Audio } from 'expo-av';
+import CharacterSelector from '../../modules/CharacterSelector';
 
 const window = Dimensions.get('window');
 
@@ -292,7 +293,8 @@ const handlePress = (move) => {
             {playerWarning && <Image source={warningIcon} style={styles.playerWarningIcon}></Image>}
           </View>
           <View style={styles.duckContainer}>
-          <Animal duckType={selectedDuck}></Animal>
+          <CharacterSelector> </CharacterSelector>
+          {/* <Animal duckType={selectedDuck}></Animal> */}
           {playerMoveBubble && <Image source={getImageForMove(playerMove)} style={styles.bubbleImageP} />}
           {playerAttack && <Image source={attack} style={styles.attackMove}></Image>}
           {playerExplode && <Image source={explosion} style={styles.explosionImageMe}></Image>}

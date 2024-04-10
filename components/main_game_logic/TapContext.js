@@ -80,8 +80,9 @@ export const TapProvider = ({ children }) => {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            left: handPosition.x - 90,
-            top: handPosition.y ,
+            //increasing the number subtracted will move the cursor to the left
+            left: handPosition.x - 68,
+            top: handPosition.y,
           }}
           onPress={() => setShowHandImage(false)}
           {...panResponder.panHandlers}
