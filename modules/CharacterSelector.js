@@ -8,17 +8,25 @@ import { SplashScreen } from 'expo';
 const window = Dimensions.get('window');
 
 const CharacterSelector = ({ navigation }) => {
-
-  const { setSelectedDuck } = useContext(ReferenceDataContext);
-  const [selectedDuckState, setSelectedDuckState] = useState(0);
+  const { selectedDuck, setSelectedDuck } = useContext(ReferenceDataContext);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const petSprites = [
+    { name: 'Wave Duck', image: require('../images/PlayableAnimals/duckWave.gif') },
+    { name: 'Capybara', image: require('../images/PlayableAnimals/capyKnife.gif') },
+    { name: 'Rizz Duck', image: require('../images/PlayableAnimals/duckRizz.gif') },
+    { name: 'Coffee Duck', image: require('../images/PlayableAnimals/duckCoffee.gif') },
+    { name: 'Banana Duck', image: require('../images/PlayableAnimals/ducky.gif') },
+    { name: 'Bird', image: require('../images/PlayableAnimals/simpleBird.gif') },
+    { name: 'Squid', image: require('../images/PlayableAnimals/simpleSquid.gif') },
+  ];
 
   useEffect(() => {
     async function getSelectedDuck() {
       try {
         const value = await AsyncStorage.getItem('selectedDuck');
         if (value !== null) {
-          saveSelectedDuck(parseInt(value, 10));
+          setSelectedDuck(parseInt(value, 10));
         }
       } catch (error) {
         console.error('Error getting selectedDuck from AsyncStorage:', error);
@@ -33,20 +41,6 @@ const CharacterSelector = ({ navigation }) => {
     prepare();
   }, []);
 
-  function saveSelectedDuck(index) {
-    setSelectedDuck(index);
-  }
-
-  const petSprites = [
-    { name: 'Wave Duck', image: require('../images/PlayableAnimals/duckWave.gif') },
-    { name: 'Capybara', image: require('../images/PlayableAnimals/capyKnife.gif') },
-    { name: 'Rizz Duck', image: require('../images/PlayableAnimals/duckRizz.gif') },
-    { name: 'Coffee Duck', image: require('../images/PlayableAnimals/duckCoffee.gif') },
-    { name: 'Banana Duck', image: require('../images/PlayableAnimals/ducky.gif') },
-    { name: 'Bird', image: require('../images/PlayableAnimals/simpleBird.gif') },
-    { name: 'Squid', image: require('../images/PlayableAnimals/simpleSquid.gif') },
-  ];
-
   const openModal = () => {
     setModalVisible(true);
   };
@@ -56,8 +50,7 @@ const CharacterSelector = ({ navigation }) => {
   };
 
   const selectDuck = (index) => {
-    saveSelectedDuck(index);
-    setSelectedDuckState(index);
+    setSelectedDuck(index);
     closeModal();
   };  
 
@@ -74,7 +67,7 @@ const CharacterSelector = ({ navigation }) => {
       <View style={styles.centeredContainer}>
         <TouchableOpacity onLongPress={handleLongPress}>
           <View style={styles.swiperContainer}>
-            <Image source={petSprites[selectedDuckState].image} style={styles.petImage} />
+            <Image source={petSprites[selectedDuck].image} style={styles.petImage} />
           </View>
         </TouchableOpacity>
       </View>
