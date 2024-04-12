@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Dimensions, PanResponder } from 'react-native';
+import { View, Image, StyleSheet, Dimensions, PanResponder } from 'react-native';
 import { useTap } from '../components/main_game_logic/TapContext';
 import { useCurrency } from '../components/CurrencyContext';
 import { ReferenceDataContext } from '../components/ReferenceDataContext';
+import angy from '../images/PetHouse/angy.png';
 
 const window = Dimensions.get('window');
 
@@ -12,8 +13,8 @@ const SpriteAnimation = ({
   walkFrames,
   celebrateFrames,
   deadFrames,
-  playDead, // Prop to trigger playDead animation
-  playCelebrate, // Prop to trigger playCelebrate animation
+  playDead,
+  playCelebrate,
   decreaseHealth,
   increaseHealth
 }) => {
@@ -21,7 +22,8 @@ const SpriteAnimation = ({
   const [animationType, setAnimationType] = useState('idle');
   const [isPlaying, setIsPlaying] = useState(true);
   const { handleTap, handleSwipe } = useTap();
-  
+  const [showAngy, setShowAngy] = useState(false);
+  const [isCelebrating, setIsCelebrating] = useState(false); // State to track celebration
 
   const animations = {
     idle: idleFrames,
@@ -29,8 +31,6 @@ const SpriteAnimation = ({
     celebrate: celebrateFrames,
     dead: deadFrames,
   };
-
-  
 
   const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
@@ -50,39 +50,49 @@ const SpriteAnimation = ({
   };
 
   const switchToNextAnimation = () => {
-  
     setAnimationType((prevType) => {
-      if (playDead && prevType !== 'dead') {
-        setIsPlaying(false);
-        return 'dead';
-      } else if (playCelebrate && prevType !== 'celebrate') {
-        setIsPlaying(false);
-        return 'celebrate';
+      const randomAnimation = Math.random(); // Generate a random number between 0 and 1
+  
+      // Define the probability thresholds for each animation
+      const walkThreshold = 0.5; // 50% probability for 'walk'
+      const runThreshold = 1.0; // 50% probability for 'run'
+  
+      // Determine which animation to switch to based on the random number
+      let nextAnimation;
+      if (randomAnimation < walkThreshold) {
+        nextAnimation = 'walk';
+      } else if (randomAnimation < runThreshold) {
+        nextAnimation = 'celebrate';
       } else {
-        setIsPlaying(true);
-        const animationTypes = Object.keys(animations);
-        let currentIndex = animationTypes.indexOf(prevType);
-        currentIndex = (currentIndex + 1) % animationTypes.length;
-        return animationTypes[currentIndex];
+        nextAnimation = 'idle'; // Fallback to 'idle' animation
       }
+  
+      setIsPlaying(true); // Start playing the animation
+  
+      return nextAnimation;
     });
   };
   
 
   const handleSpritePress = () => {
-    if(handleTap()) {
+    if (handleTap()) {
       decreaseHealth();
+      setIsDecreased(true);
+      setShowAngy(true);
+      setTimeout(() => {
+        setShowAngy(false);
+      }, 500);
     }
 
     switchToNextAnimation();
     setTimeout(() => {
-     switchToNextAnimation();
+      switchToNextAnimation();
     }, animations[animationType].length * 150);
   };
 
   useEffect(() => {
     if (isPlaying) {
-      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle');
+      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle' || animationType === 'walk');
     }
   }, [isPlaying, animationType]);
 
@@ -101,25 +111,27 @@ const SpriteAnimation = ({
   useEffect(() => {
     if (playCelebrate && animationType !== 'celebrate') {
       setAnimationType('celebrate');
-    } 
+      // Start celebrating
+      setIsCelebrating(true);
+      // Stop celebrating after 2 seconds
+      setTimeout(() => {
+        setIsCelebrating(false);
+      }, 2000);
+    }
   }, [playCelebrate]);
-  
-  const {earnCurrency} = useCurrency();
-  const [panningDuration, setPanningDuration] = useState(0);
-  const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
-  const [isInteraction, setInteraction] = useState(false);
-  // Timer reference
-  const timerRef = useRef(null);
 
-  
+  const { earnCurrency } = useCurrency();
+  const [panningDuration, setPanningDuration] = useState(0);
+  const { isPettingLongEnough, setIsPettingLongEnough } = useContext(ReferenceDataContext);
+  const [isInteraction, setInteraction] = useState(false);
+  const timerRef = useRef(null);
+  const [isDecreased, setIsDecreased] = useState(false);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
 
     onPanResponderGrant: () => {
       console.log("PanResponder granted");
-      // Start the timer when panning begins
-      // Call sprite animation method - animates and checks player's taps
       setInteraction(true);
       timerRef.current = setInterval(() => {
         setPanningDuration(prevDuration => prevDuration + 1000);
@@ -129,23 +141,19 @@ const SpriteAnimation = ({
     onPanResponderRelease: () => {
       console.log("PanResponder released");
       handleSpritePress();
-      // Stop the timer and reset duration when panning ends
       setInteraction(false);
       clearInterval(timerRef.current);
       setPanningDuration(0);
-      
+
       if (panningDuration >= 4000) {
         console.log("You have played with the pet for 5 seconds.");
         setIsPettingLongEnough(true);
-        // earnCurrency('coins');
         increaseHealth();
         console.log(isPettingLongEnough);
       }
-
     },
     onPanResponderTerminate: () => {
       console.log("PanResponder terminated");
-      // Stop the timer and reset duration if the responder is terminated abruptly
       clearInterval(timerRef.current);
       setPanningDuration(0);
     },
@@ -155,27 +163,47 @@ const SpriteAnimation = ({
     },
   });
 
-
   useEffect(() => {
     console.log("Panning duration:", panningDuration / 1000);
+    if (panningDuration >= 4000 && !isCelebrating) {
+      // Trigger celebrate animation if panning duration is >= 4000 and not already celebrating
+      setAnimationType('celebrate');
+      setIsCelebrating(true);
+      // Stop celebrating after 2 seconds
+      setTimeout(() => {
+        setIsCelebrating(false);
+      }, 2000);
+    }
   }, [panningDuration]);
 
   return (
     <View style={styles.container}>
-        <Image
-          {...panResponder.panHandlers}
-          source={animations[animationType][frameIndex]}
-          style={styles.sprite} 
-        />
-         {isInteraction && (
+      <Image
+        {...panResponder.panHandlers}
+        source={animations[animationType][frameIndex]}
+        style={styles.sprite}
+      />
+      {isInteraction && (
         <Image
           source={require('../images/cartoon-thought_fight.png')}
           style={{
             position: 'absolute',
-            top: -30, 
+            top: -30,
             left: 160,
-            width: 130, 
+            width: 130,
             height: 110,
+          }}
+        />
+      )}
+      {showAngy && (
+        <Image
+          source={angy}
+          style={{
+            position: 'absolute',
+            top: 90,
+            left: 50,
+            width: 70,
+            height: 70,
           }}
         />
       )}
@@ -183,11 +211,7 @@ const SpriteAnimation = ({
   );
 };
 
-
 const styles = StyleSheet.create({
-  container: {
-
-  },
   sprite: {
     width: window.width * 0.58,
     height: window.width * 0.58,

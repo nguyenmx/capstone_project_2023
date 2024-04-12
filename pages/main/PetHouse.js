@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef} from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TouchableNativeFeedback, Image, Dimensions, Button, Modal, Animated, PanResponder, TouchableWithoutFeedback, TouchableNativeFeedbackComponent} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, LogBox, TouchableNativeFeedback, Image, Dimensions, Button, Modal, Animated, PanResponder, TouchableWithoutFeedback, TouchableNativeFeedbackComponent} from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import Duck from '../../modules/CharDuck';
@@ -35,6 +35,11 @@ import zzz from '../../images/PetHouse/zzz.gif'
 // import RenderHealthBar from '../../modules/RenderHealthBar';
 // import { HealthProvider}from '../../modules/HealthContext';
 // import { useHealth } from '../../modules/HealthContext';
+import angy from '../../images/PetHouse/angy.png'
+
+// Ignore specific warnings by adding the warning message to the ignored list
+LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
+
 
 
 const window = Dimensions.get('window');
@@ -56,7 +61,8 @@ const PetHouse = () => {
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
   //const {increaseHealth} = useHealth();
-  
+  const [isImagePressed, setIsImagePressed] = useState(false);
+
 
   const profileImages = {
     0: p3,//wave
@@ -152,6 +158,26 @@ const PetHouse = () => {
   }, [fadeAnim, sound]);
 
 
+  useEffect(() => {
+    const hideTimer = setTimeout(() => {
+      setIsImagePressed(false); // Hide the reflected image after 10 seconds
+    }, 10000);
+
+    const showTimer = setTimeout(() => {
+      setIsImagePressed(true); // Show the reflected image after 30 seconds
+    }, 30000);
+
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(showTimer);
+    };
+  }, []);
+
+  const handleImagePress = () => {
+    setIsImagePressed(true); 
+    navigation.navigate('CombatModeScreen');
+  };
+
   const onVolumeChange = (value) => {
     if (sound) {
       sound.setVolumeAsync(value);
@@ -177,11 +203,27 @@ const PetHouse = () => {
   };
 
   const navigateToProfile = () => {
-    navigation.navigate('ProfilePage');
+    navigation.navigate('ProfilePage', { playSound: playSound });
   };
   
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
+  const angerPosition = {
+    0: {bottom: window.height * -0.005,
+        right:window.height * 0.07, },
+    1: {bottom: window.height * -0.005,
+        right:window.height * 0.07,},
+    2: {bottom: window.height * -0.005,
+        right:window.height * 0.07,},
+    3: {bottom: window.height * -0.005,
+        right:window.height * 0.07, },
+    4: {bottom: window.height * -0.005,
+        right:window.height * 0.07,},
+    5: {bottom: window.height * -0.04,
+        right:window.height * 0.07,},
+    6: {bottom: window.height * -0.09,
+        right:window.height * 0.05,},
+  };
 
   //custom styles start here -- should put these in their own class
   const duckPosition = {
@@ -337,6 +379,7 @@ const PetHouse = () => {
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
+
          {isNight && (
           <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: isLandscape ? 40 : 290 , left: isLandscape ? 250 :20, transform: [{ scale: .5 }] }} />
           )}
@@ -472,6 +515,19 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     zIndex: 999,
     textAlign: 'center'
+  },
+  anger_container: {
+    flex: 1,
+ 
+    position: 'absolute',
+    zIndex: 999
+  },
+  anger: {
+    transform: [{ scaleX: -1 }],
+    width: window.width * 0.1525,
+    height: window.height * 0.06,
+    position: 'absolute',
+    zIndex: 999,
   }
 });
 

@@ -19,8 +19,9 @@ import award2 from '../../images/ProfilePage/Achievements/food_complete.png'
 import award3 from '../../images/ProfilePage/Achievements/paw.png'
 import award4 from '../../images/ProfilePage/Achievements/ribbon.png'
 import BackArrow from '../../modules/BackArrow';
+import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { playSound } from '../../pages/main/PetHouse';
 
 const window = Dimensions.get('window');
 const backgroundImage = pp;
@@ -47,7 +48,7 @@ const ProfilePage = ({ navigation }) => {
   };
 
   const navigateToScreen2 = () => {
-    navigation.navigate('PetHouse');
+    navigation.navigate('PetProfile');
   };
 
     // Retrieve the win count from AsyncStorage when the component mounts
@@ -76,9 +77,17 @@ const ProfilePage = ({ navigation }) => {
           <TouchableOpacity>
             <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
+
+          <Settings playSound={playSound} />
+
+
           <View style={styles.profileIconContainer}>
+
+          <TouchableOpacity>
             <Image source={profileIcon} style={styles.profileIcon} />
-            <Text style={styles.profileIconText}>{name}</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.profileIconText}>☀️ {name} ☀️</Text>
           </View>
 
           <View style={styles.imagesContainer}>
@@ -245,7 +254,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     width: '100%',
     paddingHorizontal: 20,
     position: 'absolute',

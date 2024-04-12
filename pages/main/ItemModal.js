@@ -25,15 +25,15 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
 
   }  else if (itemID === 5) {
     title = 'Steak';
-    description = '...';
+    description = 'love is in the air, \n and it\'s medium rare';
 
   }  else if (itemID === 6) {
     title = 'Can Tuna';
-    description = '...';
+    description = 'You CAN tuna fish';
 
   }  else if (itemID === 7) {
     title = 'Boba';
-    description = '...';
+    description = 'It\'s bobalicious!';
 
   }  else if (itemID === 8) {
     title = 'Shrimp';
@@ -41,7 +41,7 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
 
   }  else if (itemID === 9) {
     title = 'Mango';
-    description = '';
+    description = 'A fruit that\'s so good, it\'ll make you question all your life choices';
 
   }  else if (itemID === 10) {
     title = 'Salad';

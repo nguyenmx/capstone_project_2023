@@ -36,6 +36,7 @@ import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
 import CharacterSelector from './modules/CharacterSelector';
 import { TapProvider } from './components/main_game_logic/TapContext';
+import Slider from '@react-native-community/slider';
 
 //import {AppleHealthKit} from 'react-native-health';
 
