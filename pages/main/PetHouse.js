@@ -31,6 +31,10 @@ import { useTap } from '../../components/main_game_logic/TapContext';
 import { TapProvider } from '../../components/main_game_logic/TapContext';
 // import { TouchableWithoutFeedback } from 'react-native-web';
 import zzz from '../../images/PetHouse/zzz.gif'
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import RenderHealthBar from '../../modules/RenderHealthBar';
+// import { HealthProvider}from '../../modules/HealthContext';
+// import { useHealth } from '../../modules/HealthContext';
 
 
 const window = Dimensions.get('window');
@@ -51,9 +55,8 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
-  const { handleTap, handleSwipe } = useTap();
-  const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
-
+  //const {increaseHealth} = useHealth();
+  
 
   const profileImages = {
     0: p3,//wave
@@ -96,21 +99,19 @@ const PetHouse = () => {
     }
   };
 
-  const decreaseHealthBy = (amount) => {
-    if (healthBarRef.current) {
-      healthBarRef.current.decreaseHealth_2(amount);
-    }
-  };
+  // const decreaseHealthBy = (amount) => {
+  //   if (healthBarRef.current) {
+  //     healthBarRef.current.decreaseHealth_2(amount);
+  //   }
+  // };
 
   const increaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.increaseHealth();
       setPlayerHealth(playerHealth + 5);
     }
-    // if (isPettingLongEnough) {
-    //   healthBarRef.current.increaseHealth();
-    //   setPlayerHealth(playerHealth + 5);
-    // }
+
+    console.log('success');
   };
 
 
@@ -263,15 +264,6 @@ const PetHouse = () => {
       shadowOpacity: 1,
   };
 
-  const zzzPostion = {
-    position: 'absolute', 
-    zIndex: 997, 
-    bottom: 255, 
-    left: 69, 
-    transform: [{ scale: .5 }]
-  };
-
-
   useEffect(() => {
     // Set up an effect to move to the next task when the current one is completed
     if (currentTaskIndex !== null && tasks[currentTaskIndex].completed) {
@@ -292,27 +284,15 @@ const PetHouse = () => {
     }
   };
 
-
-  // const handleDuckTap = () => {
-  //   if (handleTap()) {
-  //     decreaseHealth();
-  //   }
-  //   if (!isPettingLongEnough) {
-  //     increaseHealth();
-  //   }
-  // };
-
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (event, gestureState) => {
-        handleSwipe(gestureState);
+  // const panResponder = useRef(
+  //   PanResponder.create({
+  //     onStartShouldSetPanResponder: () => true,
+  //     onPanResponderMove: (event, gestureState) => {
+  //       handleSwipe(gestureState);
     
-      },
-      // Add other necessary PanResponder handlers
-    })
-  ).current;
+  //     },
+  //   })
+  // ).current;
 
   // play main bgm
   useEffect(() => {
@@ -326,6 +306,7 @@ const PetHouse = () => {
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
+      {/* <HealthProvider showHealthBar = {true}> */}
       <TapProvider>
       <View style={styles.container}>
         <View style = {topNavContainer}>
@@ -351,25 +332,22 @@ const PetHouse = () => {
           </TouchableOpacity>
 
         </View>
-
-
+        {/* <RenderHealthBar> </RenderHealthBar> */}
          <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={playerHealth} />
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
          {isNight && (
           <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: isLandscape ? 40 : 290 , left: isLandscape ? 250 :20, transform: [{ scale: .5 }] }} />
-        // <Image source={zzz} style={zzzPostion}> </Image>
-        )}
+          )}
 
             <View>
-              {/* <TouchableOpacity onPress={handleDuckTap}> */}
                 <Duck 
                 duckType={selectedDuck} 
                 Optional={duckPosition} 
                 decreaseHealth = {decreaseHealth} 
+                increaseHealth = {increaseHealth}
                 />
-              {/* </TouchableOpacity> */}
             </View>
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
@@ -399,11 +377,13 @@ const PetHouse = () => {
           </View>
 
           <View style={dialogueContainer}>
-            <Text style={styles.dialogueText}>Current Task: {tasks[currentTaskIndex].text} </Text>
+            {/* <Text style={styles.dialogueText}>Current Task: {tasks[currentTaskIndex].text} </Text> */}
+            <Text style={styles.dialogueText}>Current Task: <Text>{tasks[currentTaskIndex].text}</Text></Text>
          </View>
 
       </View>
       </TapProvider>
+      {/* </HealthProvider> */}
     </ImageBackground>
 
   );

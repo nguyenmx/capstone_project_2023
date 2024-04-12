@@ -15,7 +15,7 @@ export const withTap = (WrappedComponent) => {
   };
 };
 
-export const TapProvider = ({ children }) => {
+export const TapProvider = ({ children}) => {
   const [tapCount, setTapCount] = useState(0);
   const tapThreshold = 15;
   const swipeTimeout = useRef(null);
@@ -81,7 +81,7 @@ export const TapProvider = ({ children }) => {
           style={{
             position: 'absolute',
             //increasing the number subtracted will move the cursor to the left
-            left: handPosition.x - 68,
+            left: handPosition.x - 55,
             top: handPosition.y,
           }}
           onPress={() => setShowHandImage(false)}

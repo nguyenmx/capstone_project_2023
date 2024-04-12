@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOp
 import Duck from '../../modules/CharDuck';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import { Audio } from 'expo-av';
+import CharacterSelector from '../../modules/CharacterSelector';
 
 const window = Dimensions.get('window');
 const backgroundImage = require('../../images/Backgrounds/combatModeBackground.png');
@@ -70,7 +71,7 @@ const CombatModeScreen = ({ navigation }) => {
         >
           <Text style={homeButtonStyles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
-        <Duck duckType={selectedDuck} />
+        <CharacterSelector></CharacterSelector>
       </ImageBackground>
     </View>
   );

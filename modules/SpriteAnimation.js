@@ -14,7 +14,8 @@ const SpriteAnimation = ({
   deadFrames,
   playDead, // Prop to trigger playDead animation
   playCelebrate, // Prop to trigger playCelebrate animation
-  decreaseHealth
+  decreaseHealth,
+  increaseHealth
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
@@ -136,7 +137,8 @@ const SpriteAnimation = ({
       if (panningDuration >= 4000) {
         console.log("You have played with the pet for 5 seconds.");
         setIsPettingLongEnough(true);
-        earnCurrency('diamonds');
+        // earnCurrency('coins');
+        increaseHealth();
         console.log(isPettingLongEnough);
       }
 

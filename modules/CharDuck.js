@@ -131,7 +131,7 @@ export const getSpriteFrames = duckType => {
     };
   }
 };
-const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth }) => {
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
   const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
@@ -148,7 +148,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
       // Start the timer when panning begins
       if (handleTap()) {
         console.log("Too much tapping bruh");
-        //decrease health bar here
+        decreaseHealth();
       }
       setInteraction(true);
       timerRef.current = setInterval(() => {
@@ -166,7 +166,8 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
       if (panningDuration >= 4000) {
         console.log("You have played with the pet for 5 seconds.");
         setIsPettingLongEnough(true);
-        earnCurrency('coins');
+        // earnCurrency('coins');
+        increaseHealth();
         console.log(isPettingLongEnough);
       }
     },
@@ -224,6 +225,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, handlePet }) =>
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
         decreaseHealth={decreaseHealth}
+        increaseHealth={increaseHealth}
       />
     );
   } else {
