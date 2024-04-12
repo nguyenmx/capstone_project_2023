@@ -1,6 +1,7 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Heart from '../images/Heart.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const window = Dimensions.get('window');
 
@@ -12,20 +13,46 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
   const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
 
 
+  useEffect(() => {
+    loadHealth();
+  }, []); // Load health when the component mounts
+
+  const saveHealth = async (value) => {
+    try {
+      await AsyncStorage.setItem('currentHealth', JSON.stringify(value));
+    } catch (error) {
+      console.error('Error saving health:', error);
+    }
+  };
+
+  const loadHealth = async () => {
+    try {
+      const value = await AsyncStorage.getItem('currentHealth');
+      if (value !== null) {
+        setHealth(JSON.parse(value));
+      }
+    } catch (error) {
+      console.error('Error loading health:', error);
+    }
+  };
+
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
+    saveHealth(newHealth);
     console.log("Decreasing health to:", newHealth);
   };
 
   const decreaseHealth_2 = (number) => {
     const newHealth = Math.max(0, health - number);
     setHealth(newHealth);
+    saveHealth(newHealth);
     console.log("Decreasing health by", number, "to:", newHealth);
   };
 
   const increaseHealth = () => {
     const newHealth = Math.min(maxHealth, health + 10);
+    saveHealth(newHealth);
     setHealth(newHealth);
   };
 
