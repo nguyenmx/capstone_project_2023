@@ -18,7 +18,7 @@ const ReferenceDataContext = createContext({
 
 const ReferenceDataContextProvider = ({ children }) => {
   const [name, setName] = useState('');
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState('0');
   const [steps, setSteps] = useState('');
   const [selectedDuck, setSelectedDuck] = useState(0);
   const [playerHealth, setPlayerHealth] = useState(100);
