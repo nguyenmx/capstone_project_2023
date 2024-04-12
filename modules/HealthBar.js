@@ -47,6 +47,7 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.max(0, health - number);
     setHealth(newHealth);
     saveHealth(newHealth);
+    console.log("test");
     console.log("Decreasing health by", number, "to:", newHealth);
   };
 
