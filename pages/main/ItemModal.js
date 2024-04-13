@@ -55,6 +55,20 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
     title = 'Lemonade';
     description = 'Lemony Fresh :)';
   }
+  else if (itemID === 13) {
+    title = '???';
+    description = '???';
+  }
+  else if (itemID === 14) {
+    title = 'Pal potion';
+    description = 'Unlock 1 Friendship Heart instantly';
+  }  else if (itemID === 15) {
+    title = 'Full Heal';
+    description = 'Regain full health for your pet';
+  }  else if (itemID === 16) {
+    title = 'Heal';
+    description = 'Regain a portion of health for your pet';
+  }
 
 
   return (

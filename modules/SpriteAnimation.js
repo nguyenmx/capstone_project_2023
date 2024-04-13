@@ -4,11 +4,13 @@ import { useTap } from '../components/main_game_logic/TapContext';
 import { useCurrency } from '../components/CurrencyContext';
 import { ReferenceDataContext } from '../components/ReferenceDataContext';
 import angy from '../images/PetHouse/angy.png';
+import HG from '../images/HG.gif'; // Import HG.gif image
+import { isNight } from '../pages/main/PetHouse';
 
 const window = Dimensions.get('window');
 
 const SpriteAnimation = ({
-  onIdleAnimationFinish,
+  animType,
   idleFrames,
   walkFrames,
   celebrateFrames,
@@ -16,7 +18,9 @@ const SpriteAnimation = ({
   playDead,
   playCelebrate,
   decreaseHealth,
-  increaseHealth
+  increaseHealth,
+  isNight, // Add isNight prop
+
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [animationType, setAnimationType] = useState('idle');
@@ -24,6 +28,7 @@ const SpriteAnimation = ({
   const { handleTap, handleSwipe } = useTap();
   const [showAngy, setShowAngy] = useState(false);
   const [isCelebrating, setIsCelebrating] = useState(false); // State to track celebration
+  const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
 
   const animations = {
     idle: idleFrames,
@@ -31,6 +36,24 @@ const SpriteAnimation = ({
     celebrate: celebrateFrames,
     dead: deadFrames,
   };
+
+  useEffect(() => {
+    if (isNight) {
+      // If it's night, trigger the celebrate animation
+      setAnimationType('celebrate');
+      setIsCelebrating(true);
+    } else if  (!isNight){
+      // If it's not night, play the idle animation
+      setAnimationType('idle');
+      setIsPlaying(true);
+    } else {
+      // If it's not night, play the idle animation
+      setAnimationType('idle');
+      setIsPlaying(true);
+    }
+  }, [isNight]);
+  
+
 
   const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
@@ -50,12 +73,13 @@ const SpriteAnimation = ({
   };
 
   const switchToNextAnimation = () => {
+
     setAnimationType((prevType) => {
       const randomAnimation = Math.random(); // Generate a random number between 0 and 1
   
       // Define the probability thresholds for each animation
       const walkThreshold = 0.5; // 50% probability for 'walk'
-      const runThreshold = 1.0; // 50% probability for 'run'
+      const runThreshold = 0.5; // 50% probability for 'run'
   
       // Determine which animation to switch to based on the random number
       let nextAnimation;
@@ -81,7 +105,7 @@ const SpriteAnimation = ({
       setShowAngy(true);
       setTimeout(() => {
         setShowAngy(false);
-      }, 500);
+      }, 300);
     }
 
     switchToNextAnimation();
@@ -165,14 +189,15 @@ const SpriteAnimation = ({
 
   useEffect(() => {
     console.log("Panning duration:", panningDuration / 1000);
-    if (panningDuration >= 4000 && !isCelebrating) {
-      // Trigger celebrate animation if panning duration is >= 4000 and not already celebrating
+    if (panningDuration >= 4000 && !isCelebrating && !isHGShown) {
       setAnimationType('celebrate');
       setIsCelebrating(true);
+      setIsHGShown(true); // Set isHGShown to true to prevent showing HG.gif again
       // Stop celebrating after 2 seconds
       setTimeout(() => {
         setIsCelebrating(false);
-      }, 2000);
+        setIsHGShown(false); // Reset isHGShown after 5 seconds
+      }, 5000); // Change this to 5000 to show HG for 5 seconds
     }
   }, [panningDuration]);
 
@@ -183,6 +208,21 @@ const SpriteAnimation = ({
         source={animations[animationType][frameIndex]}
         style={styles.sprite}
       />
+      {/* Display HG.gif when the conditions are met */}
+      {isHGShown && (
+        <Image
+          source={HG}
+          style={{
+            position: 'absolute',
+            bottom: 100,
+            right: -60,
+            width: 350, // Assuming HG.gif should cover the whole screen
+            height: 350,
+            zIndex:2000
+          }}
+        />
+      )}
+      {/* Render additional images */}
       {isInteraction && (
         <Image
           source={require('../images/cartoon-thought_fight.png')}
@@ -200,8 +240,8 @@ const SpriteAnimation = ({
           source={angy}
           style={{
             position: 'absolute',
-            top: 90,
-            left: 50,
+            top: 25,
+            left: 45,
             width: 70,
             height: 70,
           }}

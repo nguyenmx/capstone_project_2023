@@ -202,6 +202,10 @@ const PetHouse = () => {
     navigation.navigate('Shop');
   };
 
+  const navigateToItemShop = () => {
+    navigation.navigate('ItemShop');
+  };
+
   const navigateToProfile = () => {
     navigation.navigate('ProfilePage', { playSound: playSound });
   };
@@ -229,13 +233,15 @@ const PetHouse = () => {
   const duckPosition = {
     left: isLandscape ? 10 : 10,
     top: isLandscape ? -140 : 80,
+    zIndex:999
   };
 
   const lightPosition = {
     right: isLandscape ? 293 : 75,
     top: isLandscape ? 2 : 220,
     transform: [{ scale: .15 }],
-    position: 'absolute'
+    position: 'absolute',
+    zIndex:700
   };
 
   const topNavContainer = {
@@ -369,7 +375,7 @@ const PetHouse = () => {
               onItemFeed={() => increaseHealth()} 
             />
 
-          <TouchableOpacity onPress={navigateToShop} style={styles.shopButton}>
+          <TouchableOpacity onPress={navigateToItemShop} style={styles.shopButton}>
             <Image source={medicineIcon} style ={styles.navItem}></Image>
           </TouchableOpacity>
 
@@ -394,7 +400,7 @@ const PetHouse = () => {
             </View>
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
-          <Image source={light} style={{position:'relative'}}/>
+          <Image source={light} style={{position:'relative', zIndex:1}}/>
         </TouchableOpacity>
  
           <View style={bottomNavContainer}>
