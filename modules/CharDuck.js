@@ -5,6 +5,7 @@ import { useTap } from '../components/main_game_logic/TapContext';
 import { ReferenceDataContext } from '../components/ReferenceDataContext';
 import { useCurrency } from '../components/CurrencyContext';
 import angy from '../images/PetHouse/angy.png'
+import HG from '../images/HG.gif';
 
 const window = Dimensions.get('window');
 
@@ -148,7 +149,7 @@ export const getSpriteFrames = duckType => {
     };
   }
 };
-const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth }) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth}) => {
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
   const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
@@ -156,6 +157,8 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth 
   // Timer reference
   const timerRef = useRef(null);
   const { handleTap, handleSwipe } = useTap();
+  const [showAngy, setShowAngy] = useState(false);
+  const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -165,9 +168,12 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth 
       // Start the timer when panning begins
       if (handleTap()) {
         console.log("Too much tapping bruh");
+        setShowAngy(true);
+        setTimeout(() => {
+          setShowAngy(false);
+        }, 400);
         decreaseHealth();
       }
-      setInteraction(true);
       timerRef.current = setInterval(() => {
         setPanningDuration(prevDuration => prevDuration + 1000);
       }, 1000); // Update duration every second
@@ -179,15 +185,15 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth 
       setInteraction(false);
       clearInterval(timerRef.current);
       setPanningDuration(0);
-      
+
       if (panningDuration >= 4000) {
         console.log("You have played with the pet for 5 seconds.");
         setIsPettingLongEnough(true);
-        // earnCurrency('coins');
         increaseHealth();
         console.log(isPettingLongEnough);
       }
     },
+
 
     onPanResponderTerminate: () => {
       console.log("PanResponder terminated");
@@ -203,6 +209,17 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth 
 
   useEffect(() => {
     console.log("Panning duration:", panningDuration / 1000);
+    if (panningDuration >= 2000 && !isInteraction) {
+      setInteraction(true);
+    }
+
+    if (panningDuration >= 4000 && !isHGShown) {
+      setIsHGShown(true); // Set isHGShown to true to prevent showing HG.gif again
+      // Stop celebrating after 2 seconds
+      setTimeout(() => {
+        setIsHGShown(false); // Reset isHGShown after 5 seconds
+      }, 5000); // Change this to 5000 to show HG for 5 seconds
+    }
   }, [panningDuration]);
 
   // const handCursor = useRef(
@@ -278,9 +295,34 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth 
           }}
         />
       )}
+      {isHGShown && (
+        <Image
+          source={HG}
+          style={{
+            position: 'absolute',
+            bottom: 100,
+            right: -60,
+            width: 350, // Assuming HG.gif should cover the whole screen
+            height: 350,
+            zIndex:2000
+          }}
+        />
+      )}
+      {showAngy && (
+        <Image
+          source={angy}
+          style={{
+            position: 'absolute',
+            top: 25,
+            left: 10,
+            width: 70,
+            height: 70,
+          }}
+        />
+      )}
       {/* </TouchableWithoutFeedback> */}
     </View>
   );
-};
+}
 
 export default Duck;

@@ -241,7 +241,7 @@ const PetHouse = () => {
     top: isLandscape ? 2 : 220,
     transform: [{ scale: .15 }],
     position: 'absolute',
-    zIndex:700
+    zIndex: 1
   };
 
   const topNavContainer = {
@@ -400,7 +400,7 @@ const PetHouse = () => {
             </View>
 
         <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
-          <Image source={light} style={{position:'relative', zIndex:1}}/>
+          <Image source={light} style={{zIndex:1}}/>
         </TouchableOpacity>
  
           <View style={bottomNavContainer}>

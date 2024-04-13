@@ -81,7 +81,7 @@ export const TapProvider = ({ children}) => {
           style={{
             position: 'absolute',
             //increasing the number subtracted will move the cursor to the left
-            left: handPosition.x - 55,
+            left: handPosition.x - 58,
             top: handPosition.y,
           }}
           onPress={() => setShowHandImage(false)}

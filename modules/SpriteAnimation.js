@@ -150,13 +150,13 @@ const SpriteAnimation = ({
   const [isInteraction, setInteraction] = useState(false);
   const timerRef = useRef(null);
   const [isDecreased, setIsDecreased] = useState(false);
+  
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
 
     onPanResponderGrant: () => {
       console.log("PanResponder granted");
-      setInteraction(true);
       timerRef.current = setInterval(() => {
         setPanningDuration(prevDuration => prevDuration + 1000);
       }, 1000);
@@ -189,6 +189,9 @@ const SpriteAnimation = ({
 
   useEffect(() => {
     console.log("Panning duration:", panningDuration / 1000);
+    if (panningDuration >= 2000 && !isInteraction) {
+      setInteraction(true);
+    }
     if (panningDuration >= 4000 && !isCelebrating && !isHGShown) {
       setAnimationType('celebrate');
       setIsCelebrating(true);

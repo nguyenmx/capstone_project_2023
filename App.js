@@ -36,7 +36,7 @@ import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
 import CharacterSelector from './modules/CharacterSelector';
 import { TapProvider } from './components/main_game_logic/TapContext';
-import Slider from '@react-native-community/slider';
+import { HealthProvider } from './modules/HealthContext';import Slider from '@react-native-community/slider';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -81,40 +81,42 @@ export default function App() {
   }
 
   return (
-    <ReferenceDataContextProvider>
-    <TapProvider>
-    <CurrencyProvider>
-    <TasksProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
-          <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="StoryMode" component={StoryModeScreen} />
-          <Stack.Screen name="CombatModeScreen" component={CombatModeScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
-          <Stack.Screen name="Inventory" component={Inventory}/>
-          <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
-          <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
-          <Stack.Screen name="TestChatGPT" component={TestChatGPT} options={{ headerShown: false }}/>
-          <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
-          <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
-          <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
-          <Stack.Screen name="Shop" component={Shop} options={{ headerShown: false}}/>
-          <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
-          <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
-          <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
-          <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
-          <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
-          <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </TasksProvider>
-    </CurrencyProvider>
-    </TapProvider>
-    </ReferenceDataContextProvider>
+    // <HealthProvider>
+      <ReferenceDataContextProvider>
+        <TapProvider>
+          <CurrencyProvider>
+            <TasksProvider>
+              <NavigationContainer>
+                <Stack.Navigator initialRouteName="Home">
+                  <Stack.Screen name="Home" component={HomeScreen} options={{ headerTransparent: true, title: '' }}/>
+                  <Stack.Screen name="NameScreen" component={NameScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="StoryMode" component={StoryModeScreen} />
+                  <Stack.Screen name="CombatModeScreen" component={CombatModeScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="StepTracker" component={StepTracker} options={{ headerShown: false }}/>
+                  <Stack.Screen name="Inventory" component={Inventory}/>
+                  <Stack.Screen name="HowToPlay" component={HowToPlay} options={{ headerShown: false}}/>
+                  <Stack.Screen name="TestingScreen" component={TestingScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="WinScreen" component={WinScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="LossScreen" component={LossScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="StoryModeScreen" component={StoryModeScreen} />
+                  <Stack.Screen name="TestChatGPT" component={TestChatGPT} options={{ headerShown: false }}/>
+                  <Stack.Screen name="BattleScreen" component={BattleScreen} options={{ headerShown: false}}/>
+                  <Stack.Screen name="PetHouse" component={PetHouse} options={{ headerShown: false}}/>
+                  <Stack.Screen name="SpriteAnimation" component={SpriteAnimation} />
+                  <Stack.Screen name="Shop" component={Shop} options={{ headerShown: false}}/>
+                  <Stack.Screen name="Currency" component={Currency} options={{ headerShown: false}}/>
+                  <Stack.Screen name="TinderSwipePage" component={TinderPage} options={{ headerShown: false}} />
+                  <Stack.Screen name="ItemShop" component={ItemShop} options={{ headerShown: false}} />
+                  <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
+                  <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
+                  <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </TasksProvider>
+          </CurrencyProvider>
+        </TapProvider>
+      </ReferenceDataContextProvider>
+    // </HealthProvider>
   );
 }
 
