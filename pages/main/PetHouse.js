@@ -241,7 +241,6 @@ const PetHouse = () => {
     top: isLandscape ? 2 : 220,
     transform: [{ scale: .15 }],
     position: 'absolute',
-    zIndex: 1
   };
 
   const topNavContainer = {
@@ -379,6 +378,7 @@ const PetHouse = () => {
             <Image source={medicineIcon} style ={styles.navItem}></Image>
           </TouchableOpacity>
 
+
         </View>
         {/* <RenderHealthBar> </RenderHealthBar> */}
          <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={playerHealth} />
@@ -390,6 +390,10 @@ const PetHouse = () => {
           <Image source={zzz} style={{ position: 'absolute', zIndex: 997, bottom: isLandscape ? 40 : 290 , left: isLandscape ? 250 :20, transform: [{ scale: .5 }] }} />
           )}
 
+        <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
+          <Image source={light} style={{zIndex:1}}/>
+        </TouchableOpacity>
+        
             <View>
                 <Duck 
                 duckType={selectedDuck} 
@@ -398,10 +402,6 @@ const PetHouse = () => {
                 increaseHealth = {increaseHealth}
                 />
             </View>
-
-        <TouchableOpacity onPress={toggleDayNight} style={lightPosition}>
-          <Image source={light} style={{zIndex:1}}/>
-        </TouchableOpacity>
  
           <View style={bottomNavContainer}>
     
