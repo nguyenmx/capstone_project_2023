@@ -78,7 +78,7 @@ const ProfilePage = ({ navigation }) => {
             <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
 
-          <Settings playSound={playSound} />
+          <Settings playSound={playSound} Optional={{left: 145}}/>
 
 
           <View style={styles.profileIconContainer}>

@@ -6,6 +6,7 @@ import { ReferenceDataContext } from '../components/ReferenceDataContext';
 import { useCurrency } from '../components/CurrencyContext';
 import angy from '../images/PetHouse/angy.png'
 import HG from '../images/HG.gif';
+import FriendshipLevel from '../components/main_game_logic/FriendshipLevel';
 
 const window = Dimensions.get('window');
 
@@ -65,22 +66,6 @@ export const getSpriteFrames = duckType => {
 
       ],
       walkFrames: [
-        require('../images/CharacterSheet/CharacterSheet-21.png'),
-        require('../images/CharacterSheet/CharacterSheet-22.png'),
-        require('../images/CharacterSheet/CharacterSheet-23.png'),
-        require('../images/CharacterSheet/CharacterSheet-24.png'),
-        require('../images/CharacterSheet/CharacterSheet-21.png'),
-        require('../images/CharacterSheet/CharacterSheet-22.png'),
-        require('../images/CharacterSheet/CharacterSheet-23.png'),
-        require('../images/CharacterSheet/CharacterSheet-24.png'),
-        require('../images/CharacterSheet/CharacterSheet-21.png'),
-        require('../images/CharacterSheet/CharacterSheet-22.png'),
-        require('../images/CharacterSheet/CharacterSheet-23.png'),
-        require('../images/CharacterSheet/CharacterSheet-24.png'),
-        require('../images/CharacterSheet/CharacterSheet-21.png'),
-        require('../images/CharacterSheet/CharacterSheet-22.png'),
-        require('../images/CharacterSheet/CharacterSheet-23.png'),
-        require('../images/CharacterSheet/CharacterSheet-24.png'),
         require('../images/CharacterSheet/CharacterSheet-21.png'),
         require('../images/CharacterSheet/CharacterSheet-22.png'),
         require('../images/CharacterSheet/CharacterSheet-23.png'),

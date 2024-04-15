@@ -16,12 +16,12 @@ const window = Dimensions.get('window');
 
 const ItemShop = () => {
   const [foodItems, setFoodItems] = useState([
-    { id: 13, imageSource: require('../../images/ShopItems/StarPotion_Blue.png'), price: 5, currencyType: 'coins' },
-    { id: 14, imageSource: require('../../images/ShopItems/LovelyPotion_Purple.png'), price: 10, currencyType: 'coins' },
+    { id: 13, imageSource: require('../../images/ShopItems/StarPotion_Blue.png'), price: 25, currencyType: 'diamonds' },
+    { id: 14, imageSource: require('../../images/ShopItems/LovelyPotion_Purple.png'), price: 20, currencyType: 'diamonds' },
   ]);
   const [otherItems, setOtherItems] = useState([
-    { id: 15, imageSource: require('../../images/ShopItems/HealthPotion_Strong.png'), price: 1, currencyType: 'diamonds' },
-    { id: 16, imageSource: require('../../images/ShopItems/HealthPotion_Medium.png'), price: 3, currencyType: 'diamonds' },
+    { id: 15, imageSource: require('../../images/ShopItems/HealthPotion_Strong.png'), price: 10, currencyType: 'diamonds' },
+    { id: 16, imageSource: require('../../images/ShopItems/HealthPotion_Medium.png'), price: 5, currencyType: 'diamonds' },
   ]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);

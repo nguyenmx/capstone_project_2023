@@ -120,6 +120,26 @@ const PetHouse = () => {
     console.log('success');
   };
 
+    // Define keywords to highlight
+    const keywords = ['feed', 'favorite', 'play', 'combat', 'chill'];
+
+    // Function to highlight keywords
+    const highlightKeywords = (text) => {
+      return text.split(' ').map((word, index) => {
+        const isKeyword = keywords.includes(word.toLowerCase());
+        return isKeyword ? <Text key={index} style={styles.highlightedText}>{word} </Text> : <Text key={index}>{word} </Text>;
+      });
+    };
+  
+    // UseEffect to move to the next task when the current one is completed
+    useEffect(() => {
+      if (currentTaskIndex !== null && tasks[currentTaskIndex].completed) {
+        const nextIncompleteTaskIndex = tasks.findIndex(task => !task.completed);
+        if (nextIncompleteTaskIndex !== -1) {
+          setCurrentTaskIndex(nextIncompleteTaskIndex);
+        }
+      }
+    }, [currentTaskIndex, tasks]);
 
   async function playSound() {
     console.log('Loading Sound');
@@ -184,19 +204,6 @@ const PetHouse = () => {
     }
     setVolume(value);
   };
-  
-
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  };
-
-  const hideModal = () => {
-    setModalVisible(false);
-  };
-
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
 
   const navigateToShop = () => {
     navigation.navigate('Shop');
@@ -212,22 +219,6 @@ const PetHouse = () => {
   
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
-  const angerPosition = {
-    0: {bottom: window.height * -0.005,
-        right:window.height * 0.07, },
-    1: {bottom: window.height * -0.005,
-        right:window.height * 0.07,},
-    2: {bottom: window.height * -0.005,
-        right:window.height * 0.07,},
-    3: {bottom: window.height * -0.005,
-        right:window.height * 0.07, },
-    4: {bottom: window.height * -0.005,
-        right:window.height * 0.07,},
-    5: {bottom: window.height * -0.04,
-        right:window.height * 0.07,},
-    6: {bottom: window.height * -0.09,
-        right:window.height * 0.05,},
-  };
 
   //custom styles start here -- should put these in their own class
   const duckPosition = {
@@ -427,7 +418,7 @@ const PetHouse = () => {
 
           <View style={dialogueContainer}>
             {/* <Text style={styles.dialogueText}>Current Task: {tasks[currentTaskIndex].text} </Text> */}
-            <Text style={styles.dialogueText}>Current Task: <Text>{tasks[currentTaskIndex].text}</Text></Text>
+            <Text style={styles.dialogueText}>Current Task: {highlightKeywords(tasks[currentTaskIndex].text)}</Text>
          </View>
 
       </View>
@@ -534,6 +525,9 @@ const styles = StyleSheet.create({
     height: window.height * 0.06,
     position: 'absolute',
     zIndex: 999,
+  },
+  highlightedText: {
+    color: 'rgba(227, 219, 38, 1)', // Set the color to yellow for highlighted words
   }
 });
 

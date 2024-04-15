@@ -36,7 +36,9 @@ import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
 import CharacterSelector from './modules/CharacterSelector';
 import { TapProvider } from './components/main_game_logic/TapContext';
-import { HealthProvider } from './modules/HealthContext';import Slider from '@react-native-community/slider';
+//import { HealthProvider } from './modules/HealthContext';
+import Slider from '@react-native-community/slider';
+import PetProfile from './pages/main/PetProfile';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -110,6 +112,8 @@ export default function App() {
                   <Stack.Screen name="ProfilePage" component={ProfilePage} options={{ headerShown: false}} />
                   <Stack.Screen name="StepsConversion" component={StepsConversion} options={{ headerShown: false}} />
                   <Stack.Screen name="FriendshipLevel" component={FriendshipLevel} options={{ headerShown: false}} />
+                  <Stack.Screen name="PetProfile" component={PetProfile} options={{ headerShown: false}}/>
+
                 </Stack.Navigator>
               </NavigationContainer>
             </TasksProvider>

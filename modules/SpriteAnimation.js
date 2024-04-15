@@ -6,6 +6,7 @@ import { ReferenceDataContext } from '../components/ReferenceDataContext';
 import angy from '../images/PetHouse/angy.png';
 import HG from '../images/HG.gif'; // Import HG.gif image
 import { isNight } from '../pages/main/PetHouse';
+import Duck from './CharDuck';
 
 const window = Dimensions.get('window');
 
@@ -53,7 +54,20 @@ const SpriteAnimation = ({
     }
   }, [isNight]);
   
+  const { selectedDuck } = useContext(ReferenceDataContext);
+  const angyPosition = {
+    5: {bottom: window.height * -0.04,
+        right:window.height * 0.07, position: 'absolute'},
+    6: {bottom: window.height * -0.09,
+        right:window.height * 0.05,position: 'absolute'},
+  };
 
+  const heartPosition = {
+    5: {bottom: window.height * -0.04,
+        right:window.height * 0.07,},
+    6: {bottom: window.height * -0.09,
+        right:window.height * 0.05,},
+  };
 
   const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
@@ -105,7 +119,7 @@ const SpriteAnimation = ({
       setShowAngy(true);
       setTimeout(() => {
         setShowAngy(false);
-      }, 300);
+      }, 350);
     }
 
     switchToNextAnimation();
@@ -212,7 +226,7 @@ const SpriteAnimation = ({
         style={styles.sprite}
       />
       {/* Display HG.gif when the conditions are met */}
-      {isHGShown && (
+      {isHGShown && selectedDuck === 5 && (
         <Image
           source={HG}
           style={{
@@ -225,10 +239,23 @@ const SpriteAnimation = ({
           }}
         />
       )}
+    {isHGShown && selectedDuck === 6 && (
+    <Image
+      source={HG}
+      style={{
+        position: 'absolute',
+        bottom: 70,
+        right: -60,
+        width: 350, // Assuming HG.gif should cover the whole screen
+        height: 350,
+        zIndex:2000
+      }}
+    />
+  )}
       {/* Render additional images */}
       {isInteraction && (
         <Image
-          source={require('../images/cartoon-thought_fight.png')}
+          source={require('../images/cartoon-thought_story.png')}
           style={{
             position: 'absolute',
             top: -30,
@@ -238,18 +265,31 @@ const SpriteAnimation = ({
           }}
         />
       )}
-      {showAngy && (
-        <Image
-          source={angy}
-          style={{
-            position: 'absolute',
-            top: 25,
-            left: 45,
-            width: 70,
-            height: 70,
-          }}
-        />
-      )}
+  {/* Show angy image at corresponding position */}
+  {showAngy && selectedDuck === 5 && (
+    <Image
+      source={angy}
+      style={{
+        position: 'absolute',
+        bottom: window.height * 0.14,
+        right:window.height * 0.15,
+        width: 70,
+        height: 70,
+      }}
+    />
+  )}
+  {showAngy && selectedDuck === 6 && (
+    <Image
+      source={angy}
+      style={{
+        position: 'absolute',
+        bottom: window.height * 0.09,
+        right:window.height * 0.14,
+        width: 70,
+        height: 70,
+      }}
+    />
+  )}
     </View>
   );
 };
