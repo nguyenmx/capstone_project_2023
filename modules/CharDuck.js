@@ -7,8 +7,10 @@ import { useCurrency } from '../components/CurrencyContext';
 import angy from '../images/PetHouse/angy.png'
 import HG from '../images/HG.gif';
 import FriendshipLevel from '../components/main_game_logic/FriendshipLevel';
+import { useTasks } from '../components/main_game_logic/TasksContext';
 
 const window = Dimensions.get('window');
+
 
 const duckData = {
   0: {
@@ -144,6 +146,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth}
   const { handleTap, handleSwipe } = useTap();
   const [showAngy, setShowAngy] = useState(false);
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
+  const { completeTask } = useTasks();
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -196,6 +199,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth}
     console.log("Panning duration:", panningDuration / 1000);
     if (panningDuration >= 2000 && !isInteraction) {
       setInteraction(true);
+      completeTask(1);
     }
 
     if (panningDuration >= 4000 && !isHGShown) {

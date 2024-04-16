@@ -16,14 +16,14 @@ export const TasksProvider = ({ children }) => {
 
   const initialTasks = [
     { id: 0, text: "You need to feed the pet boi", completed: false },
-    { id: 1, text: "Get the most favorite food plssss", completed: false },
-    { id: 2, text: "Play with the pet, otherwise what's the point of having this app", completed: false },
-    { id: 3, text: "Go lose another game in Combat Mode hehe (evil face)", completed: false },
+    { id: 1, text: "Play with the pet, otherwise what's the point of having this app", completed: false },
+    { id: 2, text: "Go lose another game in Combat Mode hehe 😈", completed: false },
+    { id: 3, text: "Get the most favorite food plssss", completed: false },
     { id: 4, text: "Just chill bruh", completed: false },
     { id: 5, text: "We are computer scientists, of course, we made an app", completed: false }
   ];
   
-
+ 
   const [tasks, setTasks] = useState(initialTasks);
 
   const addTask = (task) => {
@@ -31,13 +31,24 @@ export const TasksProvider = ({ children }) => {
   };
 
   const completeTask = (taskId) => {
-    setTasks(prevTasks => {
-      return prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: true } : task
-      );
-    });
-    earnCurrency('coins');
-    console.log("Task " + taskId + " has been completed!");
+    // Find the index of the task in the tasks array
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    
+    // Check if it's the first task or the previous task has been completed
+    if (taskIndex === 0 || (taskIndex > 0 && tasks[taskIndex - 1].completed)) {
+      // Check if the task is already completed
+      if (!tasks[taskIndex].completed) {
+        setTasks(prevTasks => {
+          return prevTasks.map(task =>
+            task.id === taskId ? { ...task, completed: true } : task
+          );
+        });
+        earnCurrency('coins');
+        console.log("Task " + taskId + " has been completed!");
+      }
+    } else {
+      console.log("You can only complete this task after the previous one is completed.");
+    }
   };
 
   return (

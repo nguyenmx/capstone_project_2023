@@ -63,7 +63,6 @@ const PetHouse = () => {
   //const {increaseHealth} = useHealth();
   const [isImagePressed, setIsImagePressed] = useState(false);
 
-
   const profileImages = {
     0: p3,//wave
     1: p1, //Capy
@@ -88,6 +87,7 @@ const PetHouse = () => {
 
   const toggleDayNight = () => {
     setIsNight(!isNight);
+    completeTask(4);
   };
 
   const backgroundImageSource = isNight 

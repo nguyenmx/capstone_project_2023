@@ -7,6 +7,7 @@ import angy from '../images/PetHouse/angy.png';
 import HG from '../images/HG.gif'; // Import HG.gif image
 import { isNight } from '../pages/main/PetHouse';
 import Duck from './CharDuck';
+import { useTasks } from '../components/main_game_logic/TasksContext';
 
 const window = Dimensions.get('window');
 
@@ -30,6 +31,7 @@ const SpriteAnimation = ({
   const [showAngy, setShowAngy] = useState(false);
   const [isCelebrating, setIsCelebrating] = useState(false); // State to track celebration
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
+  const { completeTask } = useTasks();
 
   const animations = {
     idle: idleFrames,
@@ -205,6 +207,7 @@ const SpriteAnimation = ({
     console.log("Panning duration:", panningDuration / 1000);
     if (panningDuration >= 2000 && !isInteraction) {
       setInteraction(true);
+      completeTask(1);
     }
     if (panningDuration >= 4000 && !isCelebrating && !isHGShown) {
       setAnimationType('celebrate');

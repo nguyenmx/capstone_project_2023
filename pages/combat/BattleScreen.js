@@ -234,7 +234,7 @@ const handlePress = (move) => {
         setPlayerHealth(initialPlayerHealth - Math.round(enemyHealthRef.current.getHealth() * 0.15));
         console.log("initial health updated after loss to: ", initialPlayerHealth);
         navigation.navigate('LossScreen');
-        completeTask(3);
+        completeTask(2);
       }
       console.log("Player loses!");
       // Hide the block after updating player's health
