@@ -3,14 +3,17 @@ import { TouchableNativeFeedback, TouchableOpacity, Modal, View, Text, Image, Pa
 import { useCurrency } from '../../components/CurrencyContext';
 import { useTasks } from '../../components/main_game_logic/TasksContext';
 
+
 const window = Dimensions.get('window');
 
 const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onItemDropBy, onItemFeed }) => {
   const { inventoryItems, removeItemFromInventory } = useCurrency();
-  const { completeTask } = useTasks();
-
+  const { completeTask, showModel } = useTasks();
 
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  // console.log("showModel:", showModel);
+  // console.log("inventoryItems:", inventoryItems);
 
   const openModal = () => {
     setModalVisible(true);
@@ -42,14 +45,15 @@ const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onIte
         <Image source={foodIcon} style={{width: 65, height: 65, zIndex: 997}}/>
       </TouchableOpacity>
 
-      <Modal transparent={true} visible={modalVisible} animationType='fade'>
+      <Modal transparent={true} visible={modalVisible && !showModel} animationType='fade'>
         <TouchableOpacity
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}
           onPress={(event) => {
             const isInsideModal = event.target === event.currentTarget;
             if (isInsideModal) {
               closeModal();
-            } else {
+            }
+             else {
               // Close the modal if tapped outside
             }
           }}

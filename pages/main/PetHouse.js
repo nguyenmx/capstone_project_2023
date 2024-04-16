@@ -31,10 +31,6 @@ import { useTap } from '../../components/main_game_logic/TapContext';
 import { TapProvider } from '../../components/main_game_logic/TapContext';
 // import { TouchableWithoutFeedback } from 'react-native-web';
 import zzz from '../../images/PetHouse/zzz.gif'
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import RenderHealthBar from '../../modules/RenderHealthBar';
-// import { HealthProvider}from '../../modules/HealthContext';
-// import { useHealth } from '../../modules/HealthContext';
 import angy from '../../images/PetHouse/angy.png'
 
 // Ignore specific warnings by adding the warning message to the ignored list
@@ -60,7 +56,6 @@ const PetHouse = () => {
   const [isVisible, setIsVisible] = useState(true);
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
-  //const {increaseHealth} = useHealth();
   const [isImagePressed, setIsImagePressed] = useState(false);
 
   const profileImages = {

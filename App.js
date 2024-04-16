@@ -83,7 +83,6 @@ export default function App() {
   }
 
   return (
-    // <HealthProvider>
       <ReferenceDataContextProvider>
         <TapProvider>
           <CurrencyProvider>
@@ -120,7 +119,6 @@ export default function App() {
           </CurrencyProvider>
         </TapProvider>
       </ReferenceDataContextProvider>
-    // </HealthProvider>
   );
 }
 
