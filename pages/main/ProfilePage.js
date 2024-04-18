@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedback, Modal, Button } from 'react-native';
 import rectangle from '../../images/ProfilePage/rectangle.png';
 import pp from '../../images/ProfilePage/pink_stripes.gif';
 import profileIcon from '../../images/ProfilePage/girl.png';
@@ -30,7 +30,49 @@ const ProfilePage = ({ navigation }) => {
   const { name, setName, playerHealth } = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [winCount, setWinCount] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false); 
+  const [profileImage, setProfileImage] = useState(profileIcon);
 
+  const imageSources = [
+    profileIcon,
+    require('../../images/ProfilePage/Avatars/businesswoman_1.png'),
+    require('../../images/ProfilePage/Avatars/hacker.png'),
+    require('../../images/ProfilePage/Avatars/muslim.png'),
+    require('../../images/ProfilePage/Avatars/student.png'),
+    require('../../images/ProfilePage/Avatars/girl2.png'),
+    require('../../images/ProfilePage/Avatars/girl3.png'),
+    require('../../images/ProfilePage/Avatars/postman.png'),
+    require('../../images/ProfilePage/Avatars/assistant2.png'),
+  ];
+
+  const handleImagePress = async (newImage, index) => {
+    try {
+      await AsyncStorage.setItem('profileImageIndex', index.toString());
+      setProfileImage(newImage);
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error('Failed to save image: ', error);
+    }
+  };
+  
+  useEffect(() => {
+    const loadProfileImage = async () => {
+      try {
+        const index = await AsyncStorage.getItem('profileImageIndex');
+        if (index !== null) {
+          setProfileImage(imageSources[parseInt(index)]);
+        }
+      } catch (error) {
+        console.error('Error retrieving profile image: ', error);
+      }
+    };
+    loadProfileImage();
+  }, []);
+  
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   const profileImages = {
     0: p3, //wave
     1: p1, //Capy
@@ -83,8 +125,8 @@ const ProfilePage = ({ navigation }) => {
 
           <View style={styles.profileIconContainer}>
 
-          <TouchableOpacity>
-            <Image source={profileIcon} style={styles.profileIcon} />
+          <TouchableOpacity onPress={toggleModal}>
+          <Image source={profileImage} style={styles.profileIcon} />
             </TouchableOpacity>
 
             <Text style={styles.profileIconText}>☀️ {name} ☀️</Text>
@@ -130,6 +172,31 @@ const ProfilePage = ({ navigation }) => {
             <Text style={styles.bottomButtonText}>Pets</Text>
           </TouchableOpacity>
         </View>
+
+ <Modal
+  visible={isModalVisible}
+  animationType="fade"
+  transparent={true}
+  onRequestClose={toggleModal}
+>
+  <View style={styles.modalContainer}>
+    <View style={styles.modalContent}>
+      <Text style={{ fontFamily: 'NiceTango-K7XYo', fontSize: 30, color: 'rgba(73, 0, 79, 1)' }}>Change Avatar?</Text>
+      
+      <View style={styles.imageGrid}>
+      {imageSources.map((source, index) => (
+        <TouchableOpacity key={index} style={styles.imageContainer} onPress={() => handleImagePress(source, index)}>
+          <Image source={source} style={styles.avatarImage} />
+        </TouchableOpacity>
+      ))}
+
+  </View>
+
+      <Button title="Close" onPress={toggleModal} />
+    </View>
+  </View>
+</Modal>
+
       </ImageBackground>
     </View>
   );
@@ -270,5 +337,39 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'rgba(231, 216, 255, 1)',
+    padding: 20,
+    borderRadius: 20,
+    borderWidth: 5,
+    borderColor: 'rgba(33, 4, 81, 1)',
+    elevation: 5, 
+    alignItems: 'center',
+    width: 300, 
+    height: 300,
+  },
+    imageGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+  },
+  imageContainer: {
+    width: 65, 
+    height: 65,
+    aspectRatio: 1,
+    marginBottom: 1,
+  },
+  avatarImage: {
+    flex: 1,
+    width: 65,
+    height: 65,
+    borderRadius: 10,
   },
 });

@@ -67,7 +67,7 @@ const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onIte
             
             {inventoryItems.length === 0 ? ( // Check if inventory is empty
               <View style={{ padding: 10 }}>
-                <Text style={{ fontSize: 16, fontFamily: 'NiceTango-K7XYo', color: 'gray', textAlign: 'center' }}>Nothing’s here...</Text>
+                <Text style={{ fontSize: 16, fontFamily: 'NiceTango-K7XYo', color: 'gray', textAlign: 'center' }}>nothing’s here...</Text>
               </View>
             ) : (
               <View style={{ padding: 8, flexDirection: 'row', flexWrap: 'wrap', borderWidth: 1, borderColor: 'orange', justifyContent: 'space-evenly' }}>

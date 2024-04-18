@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
-import rectangle from '../../images/ProfilePage/rectangle.png';
 import pp from '../../images/ProfilePage/pink_stripes.gif';
-import profileIcon from '../../images/ProfilePage/girl.png';
 import settingsButton from '../../images/settingButton.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import Duck from '../../modules/CharDuck';
+import { duckData } from '../../modules/CharDuck'; // Adjust path as needed
+
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
 import birdprof from '../../images/PetHouse/Asset12.png'
 import p2 from '../../images/PetHouse/Asset4.png'
@@ -14,10 +14,6 @@ import p4 from '../../images/PetHouse/Asset8.png'
 import p5 from '../../images/PetHouse/Asset11.png'
 import p6 from '../../images/PetHouse/Asset13.png'
 import p1 from '../../images/PetHouse/Asset2.png'
-import award1 from '../../images/ProfilePage/Achievements/label.png'
-import award2 from '../../images/ProfilePage/Achievements/food_complete.png'
-import award3 from '../../images/ProfilePage/Achievements/paw.png'
-import award4 from '../../images/ProfilePage/Achievements/ribbon.png'
 import BackArrow from '../../modules/BackArrow';
 import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,7 +25,7 @@ const backgroundImage = pp;
 const PetProfile = ({ navigation }) => {
   const { name, setName, playerHealth } = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
-  const [winCount, setWinCount] = useState(0);
+  const duckName = duckData[0].age; // Access the duck's name using the selectedDuck index
 
   const profileImages = {
     0: p3, //wave
@@ -69,9 +65,12 @@ const PetProfile = ({ navigation }) => {
   <Duck duckType={selectedDuck}Optional={{position: 'absolute',zIndex: 999}} />
   <View style={styles.rectangle}>
     <View style={styles.topHalf} />
+    <Text style={styles.profileIconText}>☀️ {duckName} ☀️</Text>
+
     <View style={styles.bottomHalf} >
     
-    <Text style={{zIndex:999}}>Hi</Text>
+    <Text style={{zIndex:999}}>{selectedDuck} </Text>
+    <FriendshipLevel></FriendshipLevel>
 
 </View>
 
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: '#FABABA',
     borderBottomLeftRadius: 59,
-    borderBottomRightRadius: 59,
+    borderBottomRightRadius: 59, 
   },
   backButton: {
     top: 34,
