@@ -36,9 +36,11 @@ import { TasksProvider } from './components/main_game_logic/TasksContext';
 import { Audio } from 'expo-av';
 import CharacterSelector from './modules/CharacterSelector';
 import { TapProvider } from './components/main_game_logic/TapContext';
+import { useNavigation } from '@react-navigation/native';
 //import { HealthProvider } from './modules/HealthContext';
 import Slider from '@react-native-community/slider';
 import PetProfile from './pages/main/PetProfile';
+import { useDailyReward } from './modules/DailyReward';
 
 //import {AppleHealthKit} from 'react-native-health';
 
@@ -122,7 +124,14 @@ export default function App() {
   );
 }
 
-export function HomeScreen({ navigation }) {
+const HomeScreen = () => {
+  const navigation = useNavigation();
+  const { handleLogin } = useDailyReward(); // Destructure the handleLogin function from the hook
+
+  // Call handleLogin when the component mounts to check for daily reward
+  useEffect(() => {
+    handleLogin();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -134,12 +143,10 @@ export function HomeScreen({ navigation }) {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NameScreen')}>
               <Text style={styles.buttonText}>Main Game</Text>
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
-
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TinderSwipePage')}>
               <Text style={styles.buttonText}>Story Mode</Text>
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
-
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CombatModeScreen')}>
               <Text style={styles.buttonText}>Combat Mode</Text>
@@ -148,12 +155,9 @@ export function HomeScreen({ navigation }) {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('StepTracker')}>
               <Text style={styles.buttonText}>Steps</Text>
               <Image source={require('./images/OrangeBttn2.png')} style={styles.buttonImage} />
-
             </TouchableOpacity>
           </View>
-          
-        <CharacterSelector></CharacterSelector>
-
+          <CharacterSelector />
         </View>
       </ImageBackground>
     </View>
