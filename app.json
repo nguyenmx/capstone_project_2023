@@ -15,8 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.angelgomezhummel.DenwaPetto"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -26,11 +25,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "bf7db8cc-1d74-4a21-9f89-b091157b2852"
-      }
     }
   }
 }
