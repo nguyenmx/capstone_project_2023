@@ -136,7 +136,7 @@ export const getSpriteFrames = duckType => {
     };
   }
 };
-const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth}) => {
+const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth, currentHealth}) => {
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
   const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
@@ -249,6 +249,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth}
         deadFrames={spriteFrames.deadFrames}
         decreaseHealth={decreaseHealth}
         increaseHealth={increaseHealth}
+        currentHealth= {currentHealth}
       />
     );
   } else {

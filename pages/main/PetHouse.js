@@ -97,6 +97,7 @@ const PetHouse = () => {
   const decreaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.decreaseHealth();
+      console.log(healthBarRef.current.getHealth());
     }
   };
 
@@ -109,11 +110,18 @@ const PetHouse = () => {
   const increaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.increaseHealth();
-      setPlayerHealth(playerHealth + 5);
+      console.log(healthBarRef.current.getHealth());
     }
-
     console.log('success');
   };
+
+  // const getHealth = () => {
+  //   if (healthBarRef.current) {
+  //     healthBarRef.current.getHealth();
+  //     console.log(healthBarRef.current.getHealth());
+  //   }
+  //   console.log('success');
+  // };
 
     // Define keywords to highlight
     const keywords = ['feed', 'favorite', 'play', 'combat', 'chill'];
@@ -317,16 +325,6 @@ const PetHouse = () => {
     }
   };
 
-  // const panResponder = useRef(
-  //   PanResponder.create({
-  //     onStartShouldSetPanResponder: () => true,
-  //     onPanResponderMove: (event, gestureState) => {
-  //       handleSwipe(gestureState);
-    
-  //     },
-  //   })
-  // ).current;
-
   // play main bgm
   useEffect(() => {
     playSound(); 
@@ -386,6 +384,9 @@ const PetHouse = () => {
                 Optional={duckPosition} 
                 decreaseHealth = {decreaseHealth} 
                 increaseHealth = {increaseHealth}
+                // Calling this method will check the current health and play the dead animation for sprites
+                // currentHealth= {0}
+              
                 />
             </View>
  

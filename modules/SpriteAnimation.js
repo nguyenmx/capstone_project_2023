@@ -22,6 +22,7 @@ const SpriteAnimation = ({
   decreaseHealth,
   increaseHealth,
   isNight, // Add isNight prop
+  currentHealth
 
 }) => {
   const [frameIndex, setFrameIndex] = useState(0);
@@ -30,6 +31,7 @@ const SpriteAnimation = ({
   const { handleTap, handleSwipe } = useTap();
   const [showAngy, setShowAngy] = useState(false);
   const [isCelebrating, setIsCelebrating] = useState(false); // State to track celebration
+  const [isDead, setIsDead] = useState(false); // State to track celebration
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
   const { completeTask } = useTasks();
 
@@ -204,6 +206,12 @@ const SpriteAnimation = ({
   });
 
   useEffect(() => {
+    const healthPercentage = (currentHealth / 100) * 100;
+    if (healthPercentage <= 30) {
+      console.log('health is low');
+      setAnimationType('dead');
+      setIsDead(true);
+    }
     console.log("Panning duration:", panningDuration / 1000);
     if (panningDuration >= 2000 && !isInteraction) {
       setInteraction(true);

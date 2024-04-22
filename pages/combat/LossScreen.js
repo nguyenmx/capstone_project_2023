@@ -77,7 +77,9 @@ const LossScreen = ({ navigation }) => {
           <Image source={defeatBanner} style={styles.banner} />
         </View>
         {duckContent}
-        <HealthBar ref={healthBarRef} currentHealthProp={playerHealth} barName="PlayerHealth" />
+        <View style={styles.healthBarContainer}>
+          <HealthBar ref={healthBarRef} currentHealthProp={playerHealth} barName="PlayerHealth" />
+        </View>
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('CombatModeScreen')}
@@ -136,4 +138,10 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     marginTop: window.height * 0.06,
   },
+  healthBarContainer: {
+    left: window.width * 0.1,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

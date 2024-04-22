@@ -72,7 +72,7 @@ export const TasksProvider = ({ children }) => {
             <TouchableOpacity style={styles.closeButton} onPress={() => setShowModel(false)}>
             </TouchableOpacity>
             <Image source={coin} style={styles.modalImage} />
-            <Text style={styles.title}>MAKE IT RAAINNN</Text>
+            <Text style={styles.title}>MAKE IT RAIN!!</Text>
             <Text style={styles.description}>You have completed the task! 😎 that's amazing</Text>
           </View>
         </View>
