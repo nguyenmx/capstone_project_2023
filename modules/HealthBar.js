@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const window = Dimensions.get('window');
 
 const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart }, ref) => {
-  let [health, setHealth] = useState(currentHealthProp);
+  const [health, setHealth] = useState(currentHealthProp);
   const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
   const healthPercentage = (health / maxHealth) * 100;
@@ -37,24 +37,24 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
   };
 
   const decreaseHealth = () => {
-    health = Math.max(0, health - 10);
-    setHealth(health);
-    saveHealth(health);
-    console.log("Decreasing health to:", health);
+    const newHealth = Math.max(0, health - 10);
+    setHealth(newHealth);
+    saveHealth(newHealth);
+    console.log("Decreasing health to:", newHealth);
   };
 
   const decreaseHealth_2 = (number) => {
-    const health = Math.max(0, health - number);
-    setHealth(health);
-    saveHealth(health);
+    const newHealth = Math.max(0, health - number);
+    setHealth(newHealth);
+    saveHealth(newHealth);
     console.log("test");
-    console.log("Decreasing health by", number, "to:", health);
+    console.log("Decreasing health by", number, "to:", newHealth);
   };
 
   const increaseHealth = () => {
-    const health = Math.min(maxHealth, health + 10);
-    saveHealth(health);
-    setHealth(health);
+    const newHealth = Math.min(maxHealth, health + 10);
+    saveHealth(newHealth);
+    setHealth(newHealth);
   };
 
   // const setMaxHealthValue = (newMaxHealth = 100) => {

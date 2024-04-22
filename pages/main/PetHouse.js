@@ -97,7 +97,7 @@ const PetHouse = () => {
   const decreaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.decreaseHealth();
-      console.log(healthBarRef.current.getHealth());
+      //console.log(healthBarRef.current.getHealth());
     }
   };
 
@@ -110,9 +110,8 @@ const PetHouse = () => {
   const increaseHealth = () => {
     if (healthBarRef.current) {
       healthBarRef.current.increaseHealth();
-      console.log(healthBarRef.current.getHealth());
+      //console.log(healthBarRef.current.getHealth());
     }
-    console.log('success');
   };
 
   // const getHealth = () => {
@@ -120,7 +119,7 @@ const PetHouse = () => {
   //     healthBarRef.current.getHealth();
   //     console.log(healthBarRef.current.getHealth());
   //   }
-  //   console.log('success');
+  //   console.log('getHealth() is working');
   // };
 
     // Define keywords to highlight
@@ -385,7 +384,7 @@ const PetHouse = () => {
                 decreaseHealth = {decreaseHealth} 
                 increaseHealth = {increaseHealth}
                 // Calling this method will check the current health and play the dead animation for sprites
-                // currentHealth= {0}
+                // currentHealth= {getHealth()}
               
                 />
             </View>
