@@ -25,7 +25,7 @@ const TimerComponent = ({ navigation }) => {
         }
       } else {
         try {
-          await soundObject.loadAsync(require('../../assets/sfx/steps.wav'));
+          await soundObject.loadAsync(require('../../assets/sfx/steps.wav'),{ shouldPlay: true, isLooping: true });
           await soundObject.playAsync();
           setSoundLoaded(true);
         } catch (error) {
