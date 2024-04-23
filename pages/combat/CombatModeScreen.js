@@ -26,7 +26,7 @@ const CombatModeScreen = ({ navigation }) => {
         }
       } else {
         try {
-          await soundObject.loadAsync(require('../../assets/sfx/combat_mode.wav'));
+          await soundObject.loadAsync(require('../../assets/sfx/combat_mode.wav'),{ shouldPlay: true, isLooping: true });
           await soundObject.playAsync();
           setSoundLoaded(true);
         } catch (error) {
