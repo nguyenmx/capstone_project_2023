@@ -54,7 +54,7 @@ const styles = {
     width: 70,
     height: 70,
     position: 'absolute',
-    left: 145,
+    left: 115,
     // Add any other styles as needed
   },
   modalContent: {

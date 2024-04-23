@@ -11,7 +11,7 @@ import boba from '../../images/Food/Bobba_Green.png';
 import salad from '../../images/Food/Salat.png';
 import burger from '../../images/Food/Burger.png';
 import shrimp from '../../images/Food/Shrimp.png';
-import lemonade from '../../images/Food/Drink_Lemonade.png';
+import coffee from '../../images/Food/Coffee.png';
 import ItemModal from '../main/ItemModal';
 
 
@@ -78,7 +78,7 @@ class Shop extends React.Component {
       otherItems: [
         { id: 10, imageSource: salad, price: 8, currencyType: 'coins' },
         { id: 11, imageSource: burger, price: 11, currencyType: 'coins' },
-        { id: 12, imageSource: lemonade, price: 4, currencyType: 'diamonds' }
+        { id: 12, imageSource: coffee, price: 4, currencyType: 'diamonds' }
       ]
     });
   };

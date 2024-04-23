@@ -23,21 +23,9 @@ const window = Dimensions.get('window');
 const backgroundImage = pp;
 
 const PetProfile = ({ navigation }) => {
-  const { name, setName, playerHealth } = useContext(ReferenceDataContext);
   const { selectedDuck } = useContext(ReferenceDataContext);
-  const duckName = duckData[0].age; // Access the duck's name using the selectedDuck index
 
-  const profileImages = {
-    0: p3, //wave
-    1: p1, //Capy
-    2: p6, //Rizz
-    3: p5, //Coffe
-    4: p2, // Banana
-    5: birdprof, //crow
-    6: p4, //Squid
-  };
-
-  const profileImagePath = profileImages[selectedDuck];
+  console.log(duckData[selectedDuck]);
 
   const navigateToScreen1 = () => {
     navigation.navigate('PetHouse');
@@ -55,31 +43,52 @@ const PetProfile = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={styles.profileContainer}>
-  <TouchableOpacity>
-    <Image source={settingsButton} style={styles.settings} />
-  </TouchableOpacity>
+
 
   <Settings playSound={playSound}/>
 
 
-  <Duck duckType={selectedDuck}Optional={{position: 'absolute',zIndex: 999}} />
+  <Image source={ duckData[selectedDuck].imageSource } style={{position: 'absolute',zIndex: 999, width: 190, height: 190, top: 10}} />
   <View style={styles.rectangle}>
-    <View style={styles.topHalf} />
-    <Text style={styles.profileIconText}>☀️ {duckName} ☀️</Text>
+    <View style={styles.topHalf}> 
+    <Text style={styles.profileIconText}>{duckData[selectedDuck].name}</Text>
+    </View>
 
     <View style={styles.bottomHalf} >
     
-    <Text style={{zIndex:999}}>{selectedDuck} </Text>
-    <FriendshipLevel></FriendshipLevel>
+    <View style={styles.bottomHalf}>
+  <View style={styles.attributeRow}>
+    <Text style={styles.attributeNames}>Species:</Text>
+    <Text style={styles.attributeNames}>  {duckData[selectedDuck].species}</Text>
+  </View>
 
+  <View style={styles.attributeRow}>
+    <Text style={styles.attributeNames}>Favorite Food:  </Text>
+    <Image source= {duckData[selectedDuck].favorite_food} style={styles.itemImage} ></Image>
+  </View>
+
+  <View style={styles.attributeRow}>
+    <Text style={styles.attributeNames}>Hated Food:  </Text>
+    <Image source= {duckData[selectedDuck].hate} style={styles.itemImage} ></Image>
+  </View>
+
+  <View style={styles.attributeRow}>
+    <Text style={styles.attributeNames}>Gender: </Text>
+    <Text style={styles.attributeNames}>{/* Placeholder for gender */}</Text>
+  </View>
+
+
+
+  <FriendshipLevel id={selectedDuck} style={{ marginTop: 10 , left: 10}} />
 </View>
+
 
   </View>
 
-  {/* Pass the name to the Duck component */}
+  </View>
+
 </View>
 
-        {/* Buttons at the bottom for navigation */}
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity style={styles.bottomButton} onPress={navigateToScreen1}>
             <Text style={styles.bottomButtonText}>Menu</Text>
@@ -103,10 +112,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  itemImage: {
+    width: 85,
+    height: 85,
+  },
   profileContainer: {
     alignItems: 'center',
     top: window.height * -.02
   },
+  attributeRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },  
   rectangle: {
     width: 345,
     height: 570,
@@ -119,14 +138,16 @@ const styles = StyleSheet.create({
     flex: .22,
     borderTopLeftRadius: 59,
     borderTopRightRadius: 59,
-    backgroundColor: '#FABABA',
-    width: '101%',
+    backgroundColor: 'rgba(255, 190, 162, 1)',
+    width: '101.9%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center'
   },
   bottomHalf: {
     flex: 1,
     backgroundColor: 'white',
-    width: '101%',
-    borderWidth: 5,
+    width: '100.7%',
     borderColor: '#FABABA',
     borderBottomLeftRadius: 59,
     borderBottomRightRadius: 59, 
@@ -142,18 +163,15 @@ const styles = StyleSheet.create({
   },
   profileIconContainer: {
     alignItems: 'center',
-    zIndex: 999
-  },
-  profileIcon: {
-    width: 120,
-    height: 120,
-    zIndex: 1000,
+    zIndex: 999,
+    justifyContent: 'center'
   },
   profileIconText: {
     fontFamily: 'NiceTango-K7XYo',
     fontSize: 45,
-    color: 'white',
+    color: 'black',
     zIndex: 999,
+    marginBottom:-50,
   },
   attributesContainer: {
     zIndex: 2,
@@ -163,7 +181,7 @@ const styles = StyleSheet.create({
   },
   attributeNames: {
     zIndex: 2,
-    fontSize: 28,
+    fontSize: 26.5,
     marginTop: 35,
     color: 'rgba(137, 40, 125, 0.70)',
     fontFamily: 'NiceTango-K7XYo',

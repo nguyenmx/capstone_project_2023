@@ -5,9 +5,9 @@ import { useCurrency } from '../components/CurrencyContext';
 import { ReferenceDataContext } from '../components/ReferenceDataContext';
 import angy from '../images/PetHouse/angy.png';
 import HG from '../images/HG.gif'; // Import HG.gif image
-import { isNight } from '../pages/main/PetHouse';
-import Duck from './CharDuck';
 import { useTasks } from '../components/main_game_logic/TasksContext';
+import thought_fight from '../images/cartoon-thought_fight.png';
+import thought_story from '../images/cartoon-thought_story.png';
 
 const window = Dimensions.get('window');
 
@@ -89,6 +89,24 @@ const SpriteAnimation = ({
       clearInterval(intervalId);
     };
   };
+
+  function switchthoughts() {
+    const randomThought = Math.random(); 
+
+    const storyChance = 0.1; 
+    const fightChance = 0.9;
+    let nextThought;
+      if (randomThought < storyChance) {
+        nextThought = thought_story;
+        return nextThought;
+      } else if (randomThought < fightChance) {
+        nextThought = thought_fight;
+        return nextThought;
+      } 
+
+
+  };
+
 
   const switchToNextAnimation = () => {
 
@@ -266,7 +284,7 @@ const SpriteAnimation = ({
       {/* Render additional images */}
       {isInteraction && (
         <Image
-          source={require('../images/cartoon-thought_story.png')}
+          source={thought_fight}
           style={{
             position: 'absolute',
             top: -30,
