@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Button, StyleSheet } from 'react-native';
 import heart_empty from "../../images/ProfilePage/heart_empty.png";
 import heart_full from "../../images/ProfilePage/heart_full.png";
@@ -6,8 +6,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MAX_FRIENDSHIP = 5;
 
-const FriendshipLevel = ({ style }) => {
+export const FriendshipLevel = ({ id, style = {} }) => {
   const [friendshipLevel, setFriendshipLevel] = useState(0);
+
+  useEffect(() => {
+    const loadFriendshipLevel = async () => {
+      const level = await AsyncStorage.getItem(`friendshipLevel_${id}`);
+      if (level) {
+        setFriendshipLevel(parseInt(level, 10));
+      }
+    };
+
+    loadFriendshipLevel();
+  }, [id]);
+
+  useEffect(() => {
+    AsyncStorage.setItem(`friendshipLevel_${id}`, friendshipLevel.toString());
+  }, [friendshipLevel, id]);
 
   const updateHearts = () => {
     const hearts = [];
@@ -36,7 +51,7 @@ const FriendshipLevel = ({ style }) => {
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]}> 
       {updateHearts()}
       <View style={styles.buttonsContainer}>
         <Button

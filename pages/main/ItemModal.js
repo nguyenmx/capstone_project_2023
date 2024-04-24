@@ -4,7 +4,6 @@ import closeIcon from '../../images/PetHouse/close.png';
 
 
 const ItemModal = ({ visible, item, itemID, onClose }) => {
-  // Define title and description based on the item
   let title = '';
   let description = '';
   if (itemID === 1) {
@@ -52,8 +51,8 @@ const ItemModal = ({ visible, item, itemID, onClose }) => {
     description = 'The best burgers come from the best cows';
 
   }  else if (itemID === 12) {
-    title = 'Lemonade';
-    description = 'Lemony Fresh :)';
+    title = 'Coffee';
+    description = 'Hello darkness, my old friend';
   }
   else if (itemID === 13) {
     title = '???';

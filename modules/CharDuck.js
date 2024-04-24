@@ -8,46 +8,75 @@ import angy from '../images/PetHouse/angy.png'
 import HG from '../images/HG.gif';
 import FriendshipLevel from '../components/main_game_logic/FriendshipLevel';
 import { useTasks } from '../components/main_game_logic/TasksContext';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const window = Dimensions.get('window');
 
 
-const duckData = {
+export const duckData = {
   0: {
     name: 'Quacky',
+    species: 'Duck',
     age: 2,
-    favorite_food: 'Bread',
+    favorite_food: require('../images/Food/Bread.png'),
+    hate: require('../images/Food/Bobba_Green.png'),
     imageSource: require('../images/PlayableAnimals/duckWave.gif'),
   },
   1: {
-    name: 'Capycutie',
+    name: 'Stabbo',
+    species: 'Capybara',
     age: 1,
-    favorite_food: 'Veggies',
+    favorite_food: require('../images/Food/Salat.png'),
+    hate: require('../images/Food/Coffee.png'),
     imageSource: require('../images/PlayableAnimals/capyKnife.gif'),
   },
   2: {
     name: 'Rizzy',
+    species: 'Duck',
     age: 3,
-    favorite_food: 'Fish',
+    favorite_food: require('../images/Food/Beef_Grilled.png'),
+    hate: require('../images/Food/CannedFood_Fish.png'),
     imageSource: require('../images/PlayableAnimals/duckRizz.gif'),
   },
   3: {
     name: 'Coffee Quacker',
+    species: 'Duck',
     age: 4,
-    favorite_food: 'Coffee (not recommended)',
+    favorite_food: require('../images/Food/Coffee.png'),
+    hate: require('../images/Food/Carton_Blue.png'),
     imageSource: require('../images/PlayableAnimals/duckCoffee.gif'),
   },
   4: {
     name: 'Ducky',
+    species: 'Duck',
     age: 5,
-    favorite_food: 'Seeds',
+    favorite_food: require('../images/Food/Bread.png'),
+    hate: require('../images/Food/Shrimp.png'),
     imageSource: require('../images/PlayableAnimals/ducky.gif'),
+  },
+  5: {
+    name: 'CrowBro',
+    species: 'Crow',
+    age: 5,
+    favorite_food: require('../images/Food/Burger.png'),
+    hate: require('../images/Food/Apple.png'),
+    imageSource: require('../images/PlayableAnimals/simpleBird.gif'),
+  },
+  6: {
+    name: 'Squiddy',
+    species: 'Squid',
+    age: 5,
+    favorite_food: require('../images/Food/Shrimp.png'),
+    hate: require('../images/Food/Burger.png'),
+    imageSource: require('../images/PlayableAnimals/simpleSquid.gif'),
   },
 };
 
 export const getSpriteFrames = duckType => {
   if (duckType === 5) {
-    return {
+    return {      
+      name: 'Crow',
+      age: 5,
+      favorite_food: 'Seeds',
       idleFrames: [
         require('../images/CharacterSheet/CharacterSheet-0.png'),
         require('../images/CharacterSheet/CharacterSheet-1.png'),
@@ -65,7 +94,6 @@ export const getSpriteFrames = duckType => {
         require('../images/CharacterSheet/CharacterSheet-1.png'),
         require('../images/CharacterSheet/CharacterSheet-0.png'),
         require('../images/CharacterSheet/CharacterSheet-1.png'),
-
       ],
       walkFrames: [
         require('../images/CharacterSheet/CharacterSheet-21.png'),
@@ -88,7 +116,9 @@ export const getSpriteFrames = duckType => {
         require('../images/CharacterSheet/CharacterSheet-35.png'),
         require('../images/CharacterSheet/CharacterSheet-36.png'),
       ],
+
     };
+    
   } else if (duckType === 6) {
     return {
       idleFrames: [
@@ -125,6 +155,8 @@ export const getSpriteFrames = duckType => {
         require('../images/Squid_Character/tile052.png'),
 
       ],
+      age: 5,
+      favorite_food: 'Salad'
     };
   } else {
     // Default frames if not a SpriteAnimation duck
@@ -242,7 +274,9 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth,
     duckInfo = duckData[0];
   }
 
+
   const spriteFrames = getSpriteFrames(duckType);
+
 
   if (duckType === 5 || duckType === 6) {
     duckContent = (
@@ -278,6 +312,9 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth,
     <View style={[{ position: 'relative' }, customStyle]}>
       {/* <TouchableWithoutFeedback onPress={handleDuckTap} ref={duckRef}> */}
       {duckContent}
+      <View style={{ display: 'none' }}>
+        <FriendshipLevel id={duckType} />
+      </View>
       {isInteraction && (
         <Image
           source={require('../images/cartoon-thought_fight.png')}

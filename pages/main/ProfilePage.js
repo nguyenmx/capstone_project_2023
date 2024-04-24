@@ -129,7 +129,7 @@ const ProfilePage = ({ navigation }) => {
           <Image source={profileImage} style={styles.profileIcon} />
             </TouchableOpacity>
 
-            <Text style={styles.profileIconText}>☀️ {name} ☀️</Text>
+            <Text style={styles.profileIconText}> {name} </Text>
           </View>
 
           <View style={styles.imagesContainer}>
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     left: 145,
+    opacity: 0
   },
   profileIconContainer: {
     alignItems: 'center',

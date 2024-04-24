@@ -27,6 +27,17 @@ export const CurrencyProvider = ({ children }) => {
     }
   };
 
+  const earnCurrency2 = (type, amount) => {
+    const MAX_COINS = 999;
+    const MAX_DIAMONDS = 999;
+
+    if (type === 'coins') {
+      setCoins((prevCoins) => Math.min(prevCoins + amount, MAX_COINS));
+    } else if (type === 'diamonds') {
+      setDiamonds((prevDiamonds) => Math.min(prevDiamonds + amount, MAX_DIAMONDS));
+    }
+  };
+
   const spendCurrency = (type, price) => {
     if (type === 'coins') {
       setCoins((prevCoins) => Math.max(prevCoins - price, 0)); // Deduct price from coins
@@ -57,6 +68,7 @@ export const CurrencyProvider = ({ children }) => {
         coins,
         diamonds,
         earnCurrency,
+        earnCurrency2,
         spendCurrency,
         inventoryItems,
         addItemToInventory,

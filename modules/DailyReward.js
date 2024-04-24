@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import { useCurrency } from '../components/CurrencyContext';
 
 // Doesnt actually give diamonds yet
 export const useDailyReward = () => {
   const [lastLogin, setLastLogin] = useState(null);
   const [consecutiveDays, setConsecutiveDays] = useState(0);
+  const {earnCurrency2} = useCurrency();
 
   useEffect(() => {
     AsyncStorage.multiGet(['lastLogin', 'consecutiveDays']).then((data) => {
@@ -29,7 +31,9 @@ export const useDailyReward = () => {
     if (!lastLogin || currentDate.getDate() !== lastLogin.getDate()) {
       newConsecutiveDays++;
       
-      Alert.alert('Daily Reward', `You have received ${newConsecutiveDays} diamonds for logging in ${newConsecutiveDays} consecutive days!`);
+      const rewardText = newConsecutiveDays === 1 ? 'diamond' : 'diamonds';
+      const dayText = newConsecutiveDays === 1 ? 'day' : 'days';
+      Alert.alert('Daily Reward', `You have received ${newConsecutiveDays} ${rewardText} for logging in ${newConsecutiveDays} consecutive ${dayText}!`);
 
       AsyncStorage.multiSet([
         ['lastLogin', currentDate.toString()],
@@ -38,6 +42,7 @@ export const useDailyReward = () => {
 
       setLastLogin(currentDate);
       setConsecutiveDays(newConsecutiveDays);
+      earnCurrency2('diamonds', newConsecutiveDays);
     }
   };
 
