@@ -42,7 +42,7 @@ const window = Dimensions.get('window');
 
 const PetHouse = () => {
   const { name, setName, playerHealth, setPlayerHealth} = useContext(ReferenceDataContext);
-  const { selectedDuck } = useContext(ReferenceDataContext);
+  const { selectedDuck, getHealth } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
   const [volume, setVolume] = useState(1);

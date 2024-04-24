@@ -139,7 +139,7 @@ export const getSpriteFrames = duckType => {
 const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth, currentHealth}) => {
   const {earnCurrency} = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
-  const {isPettingLongEnough, setIsPettingLongEnough} = useContext(ReferenceDataContext);
+  const {isPettingLongEnough, setIsPettingLongEnough, playerHealth} = useContext(ReferenceDataContext);
   const [isInteraction, setInteraction] = useState(false);
   // Timer reference
   const timerRef = useRef(null);
@@ -147,6 +147,11 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth,
   const [showAngy, setShowAngy] = useState(false);
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
   const { completeTask } = useTasks();
+
+  // Method to return the current health value
+  const getHealth = () => {
+    return playerHealth;
+  };
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
