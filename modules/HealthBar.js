@@ -5,12 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const window = Dimensions.get('window');
 
-const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart }, ref) => {
+const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart, deadAnimation }, ref) => {
   const [health, setHealth] = useState(currentHealthProp);
   const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
   const healthPercentage = (health / maxHealth) * 100;
   const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
+  const [animationType, setAnimationType] = useState('dead');
 
 
   useEffect(() => {
@@ -40,6 +41,12 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
     saveHealth(newHealth);
+    if (newHealth <= 30) {
+      console.log('health is low');
+      //play dead animation here
+      //start playing sad music
+      //setAnimationType('dead');
+    }
     console.log("Decreasing health to:", newHealth);
   };
 
@@ -47,7 +54,6 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.max(0, health - number);
     setHealth(newHealth);
     saveHealth(newHealth);
-    console.log("test");
     console.log("Decreasing health by", number, "to:", newHealth);
   };
 
@@ -55,6 +61,10 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.min(maxHealth, health + 10);
     saveHealth(newHealth);
     setHealth(newHealth);
+    if (newHealth > 30) {
+      //console.log('health is normal');
+      //stop playing sad music
+    }
   };
 
   // const setMaxHealthValue = (newMaxHealth = 100) => {
