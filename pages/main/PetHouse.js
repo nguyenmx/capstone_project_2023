@@ -41,7 +41,7 @@ LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered
 const window = Dimensions.get('window');
 
 const PetHouse = () => {
-  const { name, setName, playerHealth, setPlayerHealth} = useContext(ReferenceDataContext);
+  const { name, setName} = useContext(ReferenceDataContext);
   const { selectedDuck, getHealth } = useContext(ReferenceDataContext);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [sound, setSound] = useState();
@@ -57,6 +57,7 @@ const PetHouse = () => {
   const { tasks, completeTask } = useTasks(); // Access tasks and completeTask function from context
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
   const [isImagePressed, setIsImagePressed] = useState(false);
+  const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
 
   const profileImages = {
     0: p3,//wave
@@ -155,6 +156,17 @@ const PetHouse = () => {
     sound.setVolumeAsync(volume);
   }
 
+  async function playSound2() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../assets/sfx/dying.wav')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    sound.playAsync({ isLooping: false });
+    sound.setVolumeAsync(volume);
+  }
   const navigation = useNavigation(); // Initialize the navigation hook
 
   useEffect(() => {
@@ -324,14 +336,25 @@ const PetHouse = () => {
     }
   };
 
+  
   // play main bgm
   useEffect(() => {
-    playSound(); 
-    return () => {
-      if (sound) {
-        sound.unloadAsync();
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ", playerHealth)
+    if(parseInt(playerHealth) > 30){
+      playSound(); 
+      return () => {
+        if (sound) {
+          sound.unloadAsync();
+        }
+      };
+    }else{
+      playSound2(); 
+      return () => {
+        if (sound) {
+          sound.unloadAsync();
+        }
       }
-    };
+    }
   }, []);
 
   return (

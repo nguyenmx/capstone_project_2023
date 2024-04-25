@@ -1,7 +1,8 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useEffect,useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Heart from '../images/Heart.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ReferenceDataContext } from "../components/ReferenceDataContext";
 
 const window = Dimensions.get('window');
 
@@ -12,6 +13,8 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
   const healthPercentage = (health / maxHealth) * 100;
   const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
   const [animationType, setAnimationType] = useState('dead');
+  const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
+
 
 
   useEffect(() => {
@@ -41,6 +44,7 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
     saveHealth(newHealth);
+    setPlayerHealth(newHealth.toString());
     if (newHealth <= 30) {
       console.log('health is low');
       //play dead animation here
@@ -61,6 +65,7 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     const newHealth = Math.min(maxHealth, health + 10);
     saveHealth(newHealth);
     setHealth(newHealth);
+    setPlayerHealth(newHealth.toString());
     if (newHealth > 30) {
       //console.log('health is normal');
       //stop playing sad music
@@ -87,6 +92,14 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     return health;
   };
 
+  const song = () => {
+    if(health > 70){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   // const getMaxHealth = () => {
   //   return maxHealth;
   // }
@@ -99,6 +112,7 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     setCurrentHealth,
     //setMaxHealth: setMaxHealthValue,
     getHealth,
+    song
     //getMaxHealth,
   }));
 
