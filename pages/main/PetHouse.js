@@ -406,8 +406,8 @@ const PetHouse = () => {
                 Optional={duckPosition} 
                 decreaseHealth = {decreaseHealth} 
                 increaseHealth = {increaseHealth}
+                currentHealth = {playerHealth}
                 // Calling this method will check the current health and play the dead animation for sprites
-                // currentHealth= {getHealth()}
               
                 />
             </View>
