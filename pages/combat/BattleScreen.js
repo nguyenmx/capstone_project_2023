@@ -5,6 +5,7 @@ import rock from '../../images/CombatScreen/rock.png';
 import scissor from '../../images/CombatScreen/scissor.png';
 import paper from '../../images/CombatScreen/paper.png';
 import HealthBar from '../../modules/HealthBar';
+import EnemyHealthBar from '../../modules/EnemyHealthBar';
 import Animal from '../../modules/CharDuck';
 import OpponentDuck from '../../modules/OpponentDuck';
 import explosion from '../../images/CombatScreen/explosion.gif';
@@ -269,7 +270,7 @@ const handlePress = (move) => {
             <Text style={styles.botName}>Combat Bot</Text>
             <Text style={styles.damageTaken}>{`-${oppDamageTaken} HP`}</Text>
             <View style= {styles.OppHealthBar} >
-              <HealthBar ref={enemyHealthRef} barName="EnemyHealth"/>
+              <EnemyHealthBar ref={enemyHealthRef} barName="EnemyHealth"/>
             </View>
             {/* <Image source={warningIcon} style={styles.warningIcon}></Image> */}
           </View>
