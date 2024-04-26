@@ -48,7 +48,6 @@ const PetHouse = () => {
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  //const [health, setHealth] = useState(100);
   const maxHealth = 100;
   const [isNight, setIsNight] = useState(false);
   const [animationLoaded, setAnimationLoaded] = useState(false);
@@ -58,6 +57,7 @@ const PetHouse = () => {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0); // Initialize the current task index
   const [isImagePressed, setIsImagePressed] = useState(false);
   const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
+  const [health, setHealth] = useState(100);
 
   const profileImages = {
     0: p3,//wave
@@ -172,7 +172,7 @@ const PetHouse = () => {
   useEffect(() => {
     // Set playerHealthRef to the current HealthBar instance
     // replaced this from health to playerHealth now bot stays at 100 health
-    playerHealthRef.current = playerHealth;
+    //playerHealthRef.current = playerHealth;
 
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
@@ -388,7 +388,7 @@ const PetHouse = () => {
 
         </View>
         {/* <RenderHealthBar> </RenderHealthBar> */}
-         <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={playerHealth} />
+         <HealthBar Optional={healthPosition} ref={healthBarRef} currentHealthProp={health} />
 
          {isVisible && (<Image source={ani}  style= {{position: 'absolute', zIndex: 999}}/>)} 
          
@@ -406,10 +406,7 @@ const PetHouse = () => {
                 duckType={selectedDuck} 
                 Optional={duckPosition} 
                 decreaseHealth = {decreaseHealth} 
-                increaseHealth = {increaseHealth}
-                // currentHealth = {playerHealth}
-                // Calling this method will check the current health and play the dead animation for sprites
-              
+                increaseHealth = {increaseHealth}  
                 />
             </View>
  

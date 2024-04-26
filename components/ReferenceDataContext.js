@@ -22,24 +22,25 @@ const ReferenceDataContextProvider = ({ children }) => {
   const [time, setTime] = useState('0');
   const [steps, setSteps] = useState('');
   const [selectedDuck, setSelectedDuck] = useState(0);
-  const [playerHealth, setPlayerHealth] = useState(60);
+  const [playerHealth, setPlayerHealth] = useState(100);
   const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
 
   //Load health from AsyncStorage on component mount
-  // useEffect(() => {
-  //   const loadHealth = async () => {
-  //     try {
-  //       const value = await AsyncStorage.getItem('currentHealth');
-  //       if (value !== null) {
-  //         setPlayerHealth(JSON.parse(value));
-  //       }
-  //     } catch (error) {
-  //       console.error('Error loading health:', error);
-  //     }
-  //   };
+  //Retrieves the player's health after opening the app
+  useEffect(() => {
+    const loadHealth = async () => {
+      try {
+        const value = await AsyncStorage.getItem('currentHealth');
+        if (value !== null) {
+          setPlayerHealth(JSON.parse(value));
+        }
+      } catch (error) {
+        console.error('Error loading health:', error);
+      }
+    };
 
-  //   loadHealth();
-  // }, []);
+    loadHealth();
+  }, []);
 
   // // Update health in AsyncStorage whenever it changes
   // useEffect(() => {
