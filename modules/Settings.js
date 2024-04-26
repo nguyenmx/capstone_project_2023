@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Modal, Text, Button } from 'react-native';
 import settingButton from '../images/settingButton.png';
 import Slider from '@react-native-community/slider';
+import { playSound } from '..//pages/main/PetHouse';
 
 const Settings = ({ playSound }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,13 +26,14 @@ const Settings = ({ playSound }) => {
       <TouchableOpacity onPress={toggleModal}>
         <Image source={settingButton} style={styles.settingButtonImage} />
       </TouchableOpacity>
-      <Modal
+      <Modal 
           transparent={true}
           visible={modalVisible}
         >
-          <View style={{ backgroundColor: '#000000aa', flex: 1 }}>
-            <View style={styles.popUp}>
+            <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
               <Text style={styles.settingsText}>Settings</Text>
+
               <Slider
                 style={{ width: 200, height: 40 }}
                 minimumValue={0}
@@ -40,10 +42,12 @@ const Settings = ({ playSound }) => {
                 value={volume}
                 onValueChange={onVolumeChange}
               />
+
               <Button title="Exit" onPress={hideModal} />
               <Button title="Play Sound" onPress={playSound} />
-            </View>
-          </View>
+              </View>
+              </View>
+
         </Modal>
     </>
   );
@@ -57,12 +61,22 @@ const styles = {
     left: 115,
     // Add any other styles as needed
   },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5, // Add elevation for Android shadow
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'rgba(231, 216, 255, 1)',
+    padding: 20,
+    borderRadius: 20,
+    borderWidth: 5,
+    borderColor: 'rgba(33, 4, 81, 1)',
+    elevation: 5, 
+    alignItems: 'center',
+    width: 300, 
+    height: 300,
   },
   settingsText: {
     fontSize: 20,

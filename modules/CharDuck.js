@@ -8,7 +8,12 @@ import angy from '../images/PetHouse/angy.png'
 import HG from '../images/HG.gif';
 import FriendshipLevel from '../components/main_game_logic/FriendshipLevel';
 import { useTasks } from '../components/main_game_logic/TasksContext';
+import { TasksProvider } from '../components/main_game_logic/TasksContext';
+import girl from '../images/ProfilePage/female-symbol.png';
+import boy from '../images/male.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HealthBar from './HealthBar';
+
 const window = Dimensions.get('window');
 
 
@@ -17,6 +22,8 @@ export const duckData = {
     name: 'Quacky',
     species: 'Duck',
     age: 2,
+    gender:boy,
+    nature: 'Friendly',
     favorite_food: require('../images/Food/Bread.png'),
     hate: require('../images/Food/Bobba_Green.png'),
     imageSource: require('../images/PlayableAnimals/duckWave.gif'),
@@ -24,6 +31,8 @@ export const duckData = {
   1: {
     name: 'Stabbo',
     species: 'Capybara',
+    gender:boy,
+    nature: 'Sassy',
     age: 1,
     favorite_food: require('../images/Food/Salat.png'),
     hate: require('../images/Food/Coffee.png'),
@@ -32,6 +41,8 @@ export const duckData = {
   2: {
     name: 'Rizzy',
     species: 'Duck',
+    gender:boy,
+    nature: 'Bold',
     age: 3,
     favorite_food: require('../images/Food/Beef_Grilled.png'),
     hate: require('../images/Food/CannedFood_Fish.png'),
@@ -40,7 +51,9 @@ export const duckData = {
   3: {
     name: 'Coffee Quacker',
     species: 'Duck',
+    gender:girl,
     age: 4,
+    nature: 'Docile',
     favorite_food: require('../images/Food/Coffee.png'),
     hate: require('../images/Food/Carton_Blue.png'),
     imageSource: require('../images/PlayableAnimals/duckCoffee.gif'),
@@ -48,6 +61,8 @@ export const duckData = {
   4: {
     name: 'Ducky',
     species: 'Duck',
+    gender:girl,
+    nature: 'Quirky',
     age: 5,
     favorite_food: require('../images/Food/Bread.png'),
     hate: require('../images/Food/Shrimp.png'),
@@ -56,6 +71,8 @@ export const duckData = {
   5: {
     name: 'CrowBro',
     species: 'Crow',
+    gender:boy,
+    nature: 'Lax',
     age: 5,
     favorite_food: require('../images/Food/Burger.png'),
     hate: require('../images/Food/Apple.png'),
@@ -64,6 +81,8 @@ export const duckData = {
   6: {
     name: 'Squiddy',
     species: 'Squid',
+    gender:girl,
+    nature: '	Jolly',
     age: 5,
     favorite_food: require('../images/Food/Shrimp.png'),
     hate: require('../images/Food/Burger.png'),
@@ -314,6 +333,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth,
       {duckContent}
       <View style={{ display: 'none' }}>
         <FriendshipLevel id={duckType} />
+
       </View>
       {isInteraction && (
         <Image

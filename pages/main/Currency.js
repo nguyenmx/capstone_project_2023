@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'rea
 import coinImage from '../../images/PetHouse/Portrait/coin.png';
 import diamondImage from '../../images/PetHouse/Portrait/diamond.png';
 import { useCurrency } from '../../components/CurrencyContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const window = Dimensions.get('window');
 
 const Currency = ({ optionalStyles }) => {

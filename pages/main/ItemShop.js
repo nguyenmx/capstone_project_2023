@@ -41,11 +41,19 @@ const ItemShop = () => {
     ]);
   };
 
-  const handleFoodItemPress = (item) => {
-    setSelectedItem(item.imageSource);
-    setItemID(item.id);
-    setIsModalVisible(true);
+  handleAllItemsPurchased = (foodItems = [], otherItems = []) => {
+    if (!Array.isArray(foodItems) || !Array.isArray(otherItems)) {
+      console.error("Invalid items passed to handleAllItemsPurchased");
+      return; // Stop execution if items are not arrays
+    }
+  
+    const allItems = [...foodItems, ...otherItems];
+    const purchasedItems = allItems.filter(item => item.purchased);
+    this.setState({ purchasedItems }, () => {
+      console.log('All items purchased:', this.state.purchasedItems);
+    });
   };
+  
 
   const handleCloseModal = () => {
     setSelectedItem(null);

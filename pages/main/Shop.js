@@ -13,7 +13,7 @@ import burger from '../../images/Food/Burger.png';
 import shrimp from '../../images/Food/Shrimp.png';
 import coffee from '../../images/Food/Coffee.png';
 import ItemModal from '../main/ItemModal';
-
+import Achievements from './Achievements';
 
 const window = Dimensions.get('window');
 
@@ -23,17 +23,17 @@ class Shop extends React.Component {
     this.state = {
       timer: 30,
       foodItems: [
-        { id: 1, imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins' },
-        { id: 2, imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins' },
-        { id: 3, imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins' }
+        { id: 1, imageSource: require('../../images/Food/Apple.png'), price: 5, currencyType: 'coins', purchased: false },
+        { id: 2, imageSource: require('../../images/Food/Bread.png'), price: 10, currencyType: 'coins', purchased: false },
+        { id: 3, imageSource: require('../../images/Food/CakeSlice_Regular.png'), price: 20, currencyType: 'coins', purchased: false }
       ],
       otherItems: [
-        { id: 4, imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds' },
-        { id: 5, imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds' },
-        { id: 6, imageSource: require('../../images/Food/CannedFood_Fish.png'), price: 1, currencyType: 'diamonds' }
+        { id: 4, imageSource: require('../../images/Food/Carton_Blue.png'), price: 1, currencyType: 'diamonds', purchased: false },
+        { id: 5, imageSource: require('../../images/Food/Beef_Grilled.png'), price: 3, currencyType: 'diamonds', purchased: false },
+        { id: 6, imageSource: require('../../images/Food/CannedFood_Fish.png'), price: 1, currencyType: 'diamonds', purchased: false }
       ],
       isModalVisible: false // Initialize isModalVisible to false
-    };
+    };    
     this.soundObject = new Audio.Sound();
   }
 
@@ -62,7 +62,6 @@ class Shop extends React.Component {
       } else {
         clearInterval(this.timerInterval);
 
-        console.log('Timer has reached 0');
         this.switchShopItems();
       }
     }, 1000);
@@ -71,14 +70,14 @@ class Shop extends React.Component {
   switchShopItems = () => {
     this.setState({
       foodItems: [
-        { id: 7, imageSource: boba, price: 4, currencyType: 'coins' },
-        { id: 8, imageSource: shrimp, price: 24, currencyType: 'coins' },
-        { id: 9, imageSource: mango, price: 12, currencyType: 'coins' }
+        { id: 7, imageSource: boba, price: 4, currencyType: 'coins', purchased: false },
+        { id: 8, imageSource: shrimp, price: 24, currencyType: 'coins', purchased: false  },
+        { id: 9, imageSource: mango, price: 12, currencyType: 'coins', purchased: false  }
       ],
       otherItems: [
-        { id: 10, imageSource: salad, price: 8, currencyType: 'coins' },
-        { id: 11, imageSource: burger, price: 11, currencyType: 'coins' },
-        { id: 12, imageSource: coffee, price: 4, currencyType: 'diamonds' }
+        { id: 10, imageSource: salad, price: 8, currencyType: 'coins' , purchased: false },
+        { id: 11, imageSource: burger, price: 11, currencyType: 'coins' , purchased: false },
+        { id: 12, imageSource: coffee, price: 4, currencyType: 'diamonds', purchased: false  }
       ]
     });
   };
@@ -111,20 +110,36 @@ class Shop extends React.Component {
     console.log('Current diamonds:', diamonds);
     console.log('Current inv:', inventoryItems);
 
-
-    if (item.currencyType === 'coins' && coins >= item.price) {
-      console.log('Deducting coins:', item.price);
-      spendCurrency('coins', item.price);
-      addItemToInventory(item.imageSource);
-      console.log(imageSource)
-    } else if (item.currencyType === 'diamonds' && diamonds >= item.price) {
-      console.log('Deducting diamonds:', item.price);
-      spendCurrency('diamonds', item.price);
-      addItemToInventory(item.imageSource); 
-    } else {
-      console.warn('Insufficient funds');
-    }
-  };
+  if (item.currencyType === 'coins' && coins >= item.price) {
+    console.log('Deducting coins:', item.price);
+    spendCurrency('coins', item.price);
+    addItemToInventory(item.imageSource);
+    // Update purchased status
+    this.setState(prevState => ({
+      foodItems: prevState.foodItems.map(foodItem => 
+        foodItem.id === item.id ? { ...foodItem, purchased: true } : foodItem
+      ),
+      otherItems: prevState.otherItems.map(otherItem => 
+        otherItem.id === item.id ? { ...otherItem, purchased: true } : otherItem
+      )
+    }));
+  } else if (item.currencyType === 'diamonds' && diamonds >= item.price) {
+    console.log('Deducting diamonds:', item.price);
+    spendCurrency('diamonds', item.price);
+    addItemToInventory(item.imageSource);
+    // Update purchased status
+    this.setState(prevState => ({
+      foodItems: prevState.foodItems.map(foodItem => 
+        foodItem.id === item.id ? { ...foodItem, purchased: true } : foodItem
+      ),
+      otherItems: prevState.otherItems.map(otherItem => 
+        otherItem.id === item.id ? { ...otherItem, purchased: true } : otherItem
+      )
+    }));
+  } else {
+    console.warn('Insufficient funds');
+  }
+};
 
   renderShopItem = (item) => (
     <View style={styles.itemContainer}>
@@ -142,7 +157,22 @@ class Shop extends React.Component {
     </View>
   );
   
-  
+  areAllItemsPurchased = () => {
+    const { foodItems, otherItems } = this.state;
+    const allItems = [...foodItems, ...otherItems];
+    for (const item of allItems) {
+      if (!item.purchased) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  handleAllItemsPurchased = (allItems) => {
+    const purchasedItems = allItems.filter(item => item.purchased);
+    this.setState({ purchasedItems });
+    console.log("Heeeeeeereeeee")
+  };
 
   render() {
     const { timer, foodItems, otherItems, isModalVisible, selectedItem, itemID } = this.state;
@@ -160,6 +190,10 @@ class Shop extends React.Component {
       >
         <View>
           <Currency optionalStyles={{ top: 140, left: window.width * .12 }} />
+        </View>
+
+        <View style={{ display: 'none' }}>
+        <Achievements shopItems={foodItems.concat(otherItems)} areAllItemsPurchased={this.areAllItemsPurchased()} />
         </View>
 
         <View style={[styles.container, { top: 160 }]}>

@@ -5,8 +5,10 @@ import coin from '../../images/PetHouse/Portrait/coin.png';
 import balloons from '../../images/balloons.gif';
 import sparkles from '../../images/sparkles.gif';
 
-const TasksContext = createContext();
-
+export const TasksContext = createContext({
+  friendshipLevel: 0,
+  incrementFriendship: () => {}
+});
 export const useTasks = () => useContext(TasksContext);
 export const withTasks = (WrappedComponent) => {
   return (props) => {
@@ -19,6 +21,13 @@ export const TasksProvider = ({ children }) => {
   const {earnCurrency} = useCurrency();
   const [completedTaskId, setCompletedTaskId] = useState(null);
   const [showModel, setShowModel] = useState(false);
+  const [friendshipLevel, setFriendshipLevel] = useState(0); // Added state for friendship level
+
+  const incrementFriendship = () => {
+    if (friendshipLevel < 5) {
+      setFriendshipLevel(friendshipLevel + 1);
+    }
+  };
 
   const initialTasks = [
     { id: 0, text: "You need to feed the pet boi", completed: false },
@@ -53,7 +62,7 @@ export const TasksProvider = ({ children }) => {
         console.log("Task " + taskId + " has been completed!");
         setCompletedTaskId(taskId); // Set completed task ID
         setShowModel(true);
-
+          incrementFriendship();
       }
     } else {
       console.log("You can only complete this task after the previous one is completed.");
@@ -61,7 +70,7 @@ export const TasksProvider = ({ children }) => {
   };
 
   return (
-    <TasksContext.Provider value={{ tasks, addTask, completeTask, showModel }}>
+    <TasksContext.Provider value={{ tasks, addTask, completeTask, showModel,  friendshipLevel, incrementFriendship }}>
       {children}
       {showModel && (
         <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPress={() => setShowModel(false)}>

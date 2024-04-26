@@ -22,6 +22,8 @@ import BackArrow from '../../modules/BackArrow';
 import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { playSound } from '../../pages/main/PetHouse';
+import pencil from '../../images/ProfilePage/Icon_Pencil.png'
+import Achievements from './Achievements';
 
 const window = Dimensions.get('window');
 const backgroundImage = pp;
@@ -93,6 +95,10 @@ const ProfilePage = ({ navigation }) => {
     navigation.navigate('PetProfile');
   };
 
+  const navigateToScreen3 = () => {
+    navigation.navigate('NameScreen');
+  };
+
     // Retrieve the win count from AsyncStorage when the component mounts
     useEffect(() => {
       const getWinCount = async () => {
@@ -109,6 +115,7 @@ const ProfilePage = ({ navigation }) => {
 
   return (
     <View>
+
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <BackArrow />
@@ -120,20 +127,24 @@ const ProfilePage = ({ navigation }) => {
             <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
 
-          <Settings playSound={playSound} Optional={{left: 145}}/>
+          <Settings Optional={{left: 145}}/>
 
 
           <View style={styles.profileIconContainer}>
 
           <TouchableOpacity onPress={toggleModal}>
           <Image source={profileImage} style={styles.profileIcon} />
-            </TouchableOpacity>
+          </TouchableOpacity>
 
-            <Text style={styles.profileIconText}> {name} </Text>
+            <Text style={styles.profileIconText}>{name}
+              <TouchableOpacity onPress={navigateToScreen3}>
+                <Image source={pencil} style={{width: 34, height: 41 , transform: [{ scaleX: -1 }, { scaleY: -1 }] }} />
+              </TouchableOpacity>
+            </Text>
+
           </View>
 
           <View style={styles.imagesContainer}>
-            {/* Map through profileImages and render each image */}
             {Object.values(profileImages).map((image, index) => (
               <Image key={index} source={image} style={styles.petImage} />
             ))}
@@ -153,13 +164,9 @@ const ProfilePage = ({ navigation }) => {
             <Text style={styles.attributeNames}>Wins</Text>
             <Text style={styles.attributeNames}>Favorite pet</Text>
             <Text style={styles.attributeNames}>Achievements</Text>
+            
+            <Achievements winCount={winCount} />
 
-            <View style={styles.awardsContainer}>
-              <Image source={award1} style={styles.awardImage} />
-              <Image source={award2} style={styles.awardImage} />
-              <Image source={award3} style={styles.awardImage} />
-              <Image source={award4} style={styles.awardImage} />
-            </View>
           </View>
         </View>
 
@@ -181,7 +188,7 @@ const ProfilePage = ({ navigation }) => {
 >
   <View style={styles.modalContainer}>
     <View style={styles.modalContent}>
-      <Text style={{ fontFamily: 'NiceTango-K7XYo', fontSize: 30, color: 'rgba(73, 0, 79, 1)' }}>Change Avatar?</Text>
+      <Text style={{ fontFamily: 'StayPixelRegular-EaOxl', fontSize: 35, color: 'rgba(73, 0, 79, 1)' }}>Change Avatar?</Text>
       
       <View style={styles.imageGrid}>
       {imageSources.map((source, index) => (

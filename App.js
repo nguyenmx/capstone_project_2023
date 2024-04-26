@@ -41,6 +41,7 @@ import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import PetProfile from './pages/main/PetProfile';
 import { useDailyReward } from './modules/DailyReward';
+import Achievements from './pages/main/Achievements';
 
 //import {AppleHealthKit} from 'react-native-health';
 
