@@ -34,6 +34,7 @@ const SpriteAnimation = ({
   const [isDead, setIsDead] = useState(false); // State to track celebration
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
   const { completeTask } = useTasks();
+  const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
 
   const animations = {
     idle: idleFrames,
@@ -224,7 +225,7 @@ const SpriteAnimation = ({
   });
 
   useEffect(() => {
-    const healthPercentage = (currentHealth / 100) * 100;
+    const healthPercentage = (playerHealth / 100) * 100;
     if (healthPercentage <= 30) {
       console.log('health is low');
       setAnimationType('dead');

@@ -48,7 +48,7 @@ const PetHouse = () => {
   const [volume, setVolume] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [health, setHealth] = useState(100);
+  //const [health, setHealth] = useState(100);
   const maxHealth = 100;
   const [isNight, setIsNight] = useState(false);
   const [animationLoaded, setAnimationLoaded] = useState(false);
@@ -171,7 +171,8 @@ const PetHouse = () => {
 
   useEffect(() => {
     // Set playerHealthRef to the current HealthBar instance
-    playerHealthRef.current = healthBarRef.current;
+    // replaced this from health to playerHealth now bot stays at 100 health
+    playerHealthRef.current = playerHealth;
 
     const fadeOut = Animated.timing(fadeAnim, {
       toValue: 0,
@@ -355,7 +356,7 @@ const PetHouse = () => {
         }
       }
     }
-  }, []);
+  }, [playerHealth]);
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
@@ -406,7 +407,7 @@ const PetHouse = () => {
                 Optional={duckPosition} 
                 decreaseHealth = {decreaseHealth} 
                 increaseHealth = {increaseHealth}
-                currentHealth = {playerHealth}
+                // currentHealth = {playerHealth}
                 // Calling this method will check the current health and play the dead animation for sprites
               
                 />

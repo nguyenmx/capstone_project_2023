@@ -7,49 +7,47 @@ import { ReferenceDataContext } from "../components/ReferenceDataContext";
 const window = Dimensions.get('window');
 
 const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart, deadAnimation }, ref) => {
+  const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
   const [health, setHealth] = useState(currentHealthProp);
   const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
   const healthPercentage = (health / maxHealth) * 100;
   const healthBarColor = healthPercentage > 30 ? 'green' : 'red';
   const [animationType, setAnimationType] = useState('dead');
-  const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
 
 
 
-  useEffect(() => {
-    loadHealth();
-  }, []); // Load health when the component mounts
 
-  const saveHealth = async (value) => {
-    try {
-      await AsyncStorage.setItem('currentHealth', JSON.stringify(value));
-    } catch (error) {
-      console.error('Error saving health:', error);
-    }
-  };
+  // useEffect(() => {
+  //   loadHealth();
+  // }, []); // Load health when the component mounts
 
-  const loadHealth = async () => {
-    try {
-      const value = await AsyncStorage.getItem('currentHealth');
-      if (value !== null) {
-        setHealth(JSON.parse(value));
-      }
-    } catch (error) {
-      console.error('Error loading health:', error);
-    }
-  };
+  // const saveHealth = async (value) => {
+  //   try {
+  //     await AsyncStorage.setItem('currentHealth', JSON.stringify(value));
+  //   } catch (error) {
+  //     console.error('Error saving health:', error);
+  //   }
+  // };
+
+  // const loadHealth = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('currentHealth');
+  //     if (value !== null) {
+  //       setHealth(JSON.parse(value));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading health:', error);
+  //   }
+  // };
 
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
-    saveHealth(newHealth);
+    //saveHealth(newHealth);
     setPlayerHealth(newHealth.toString());
     if (newHealth <= 30) {
       console.log('health is low');
-      //play dead animation here
-      //start playing sad music
-      //setAnimationType('dead');
     }
     console.log("Decreasing health to:", newHealth);
   };
@@ -57,19 +55,15 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
   const decreaseHealth_2 = (number) => {
     const newHealth = Math.max(0, health - number);
     setHealth(newHealth);
-    saveHealth(newHealth);
+    //saveHealth(newHealth);
     console.log("Decreasing health by", number, "to:", newHealth);
   };
 
   const increaseHealth = () => {
     const newHealth = Math.min(maxHealth, health + 10);
-    saveHealth(newHealth);
+    //saveHealth(newHealth);
     setHealth(newHealth);
     setPlayerHealth(newHealth.toString());
-    if (newHealth > 30) {
-      //console.log('health is normal');
-      //stop playing sad music
-    }
   };
 
   // const setMaxHealthValue = (newMaxHealth = 100) => {
