@@ -145,10 +145,10 @@ const SpriteAnimation = ({
       }, 350);
     }
 
-    switchToNextAnimation();
-    setTimeout(() => {
-      switchToNextAnimation();
-    }, animations[animationType].length * 150);
+    // switchToNextAnimation();
+    // setTimeout(() => {
+    //   switchToNextAnimation();
+    // }, animations[animationType].length * 150);
   };
 
   useEffect(() => {
@@ -225,12 +225,23 @@ const SpriteAnimation = ({
   });
 
   useEffect(() => {
-    const healthPercentage = (playerHealth / 100) * 100;
-    if (healthPercentage <= 30) {
-      console.log('health is low');
+    if(parseInt(playerHealth) <= 30){
       setAnimationType('dead');
       setIsDead(true);
     }
+    else {
+      setAnimationType('idle');
+      setIsPlaying(true);
+    }
+  }, [playerHealth]);
+
+  useEffect(() => {
+    // const healthPercentage = (playerHealth / 100) * 100;
+    // if (healthPercentage <= 30) {
+    //   console.log('health is low');
+    //   setAnimationType('dead');
+    //   setIsDead(true);
+    // }
     console.log("Panning duration:", panningDuration / 1000);
     if (panningDuration >= 2000 && !isInteraction) {
       setInteraction(true);
