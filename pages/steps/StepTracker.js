@@ -51,7 +51,7 @@ const TimerComponent = ({ navigation }) => {
 
 
 // these constants are to ensure the timer contunues to run no matter whether the app is running
-  const two_four = 40000; //that's 40 seconds
+  const two_four = 864000000; //that's 40 seconds
   const [difference, setDifference] = useState(0);
   const [initialTime, setInitialTime] = useState(parseInt(time));
   const [timePassed, setTimePassed] = useState(0);
