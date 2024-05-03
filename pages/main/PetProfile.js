@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import pp from '../../images/ProfilePage/pink_stripes.gif';
-import settingsButton from '../../images/settingButton.png';
 import { ReferenceDataContext } from '../../components/ReferenceDataContext';
 import { duckData } from '../../modules/CharDuck'; // Adjust path as needed
 import FriendshipLevel from '../../components/main_game_logic/FriendshipLevel';
@@ -10,17 +9,18 @@ import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { playSound } from '../../pages/main/PetHouse';
 import pencil from '../../images/ProfilePage/Icon_Pencil.png'
-import Achievements from './Achievements';
 import FlipCard from 'react-native-flip-card'; 
-
-
+import { useReferenceData } from '../../components/ReferenceDataContext';
+import star from '../../images/Icon_Small_Star.png';
 const window = Dimensions.get('window');
 const backgroundImage = pp;
 
 const PetProfile = ({ navigation }) => {
   const { selectedDuck } = useContext(ReferenceDataContext);
   const [isFlipped, setIsFlipped] = useState(false); 
-  
+  const { mood } = useReferenceData();
+  const moodColor = mood === 'Happy' ? 'green' : (mood === 'OK' ? 'orange' : 'red');
+
   //Try not to spam, keeps on flipping
   const toggleFlip = () => { 
       setIsFlipped(!isFlipped); 
@@ -32,6 +32,10 @@ const PetProfile = ({ navigation }) => {
 
   const navigateToScreen2 = () => {
     navigation.navigate('PetProfile');
+  };
+
+  const getColorForSelectedDuck = () => {
+    return duckData[selectedDuck].color; // Ensure each duck has a 'color' attribute
   };
 
   return (
@@ -57,13 +61,20 @@ const PetProfile = ({ navigation }) => {
             {/* Front View */}
             <View style={styles.flipCard}>
               
-            <View style={styles.topHalf}> 
+            <View style={[styles.topHalf, { backgroundColor: getColorForSelectedDuck() }]}> 
               <Image source={ duckData[selectedDuck].imageSource } style={{position: 'absolute',zIndex: 999, width: 180, height: 180, bottom: 40, }} />
-              <Text style={styles.profileIconText}>{duckData[selectedDuck].name}
-              <TouchableOpacity >
-                <Image source={pencil} style={{width: 34, height: 41 , transform: [{ scaleX: -1 }, { scaleY: -1 }] }} />
-              </TouchableOpacity>
-              </Text>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center', top: -3 }}>
+                <Text style={styles.profileIconText}>
+                  <TouchableOpacity >
+                    <Image source={star} style={{width: 40, height: 38, top:-9, left:-5}} />
+                  </TouchableOpacity>{duckData[selectedDuck].name}
+                  <TouchableOpacity >
+                    <Image source={pencil} style={{width: 34, height: 41 , transform: [{ scaleX: -1 }, { scaleY: -1 }] }} />
+                  </TouchableOpacity>
+                </Text>
+              </View>
+              
             </View>
             
             <View style={styles.bottomHalf}>
@@ -96,19 +107,35 @@ const PetProfile = ({ navigation }) => {
             </View>
             {/* Back View */}
             <View style={styles.flipCard}>
-            <View style={styles.topHalf}> 
+            <View style={[styles.topHalf, { backgroundColor: getColorForSelectedDuck() }]}> 
               <Image source={ duckData[selectedDuck].imageSource } style={{position: 'absolute',zIndex: 999, width: 180, height: 180, bottom: 40, transform: [{ scaleX: -1 }] }} />
-              <Text style={styles.profileIconText}>{duckData[selectedDuck].name}
-              <TouchableOpacity >
-                <Image source={pencil} style={{width: 34, height: 41 , transform: [{ scaleX: -1 }, { scaleY: -1 }] }} />
-              </TouchableOpacity>
-              </Text>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center', top: -3 }}>
+                <Text style={styles.profileIconText}>
+                  <TouchableOpacity >
+                    <Image source={star} style={{width: 40, height: 38, top:-9, left:-5}} />
+                  </TouchableOpacity>{duckData[selectedDuck].name}
+                  <TouchableOpacity >
+                    <Image source={pencil} style={{width: 34, height: 41 , transform: [{ scaleX: -1 }, { scaleY: -1 }] }} />
+                  </TouchableOpacity>
+                </Text>
+              </View>
+
             </View>
             <View style={styles.bottomHalf}>
 
             <View style={styles.attributeRow}>
-                <Text style={styles.attributeNames}>Nature:  </Text>
+                <Text style={styles.attributeNames}>Nature: </Text>
                 <Text style={styles.attributeNames}>{duckData[selectedDuck].nature}</Text>
+            </View>
+            
+            <View style={styles.attributeRow}>
+            <Text style={styles.attributeNames}>Mood:  </Text>
+            <Text style={[styles.attributeNames, { color: moodColor }]}>{mood}</Text>
+            </View>
+
+            <View style={styles.attributeRow}>
+            <Text style={styles.attributeNames}>Fun Fact: {duckData[selectedDuck].fun_fact}</Text>
             </View>
 
             </View>
@@ -179,8 +206,8 @@ const styles = StyleSheet.create({
     flex: .22,
     borderTopLeftRadius: 59,
     borderTopRightRadius: 59,
-    backgroundColor: 'rgba(246, 248, 132, 1)',
-    width: '101.9%',
+    backgroundColor: 'rgba(190, 208, 232, 1)',
+    width: '101%',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
@@ -235,6 +262,12 @@ const styles = StyleSheet.create({
     color: 'red',
     fontFamily: 'NiceTango-K7XYo',
     left: 18
+  },
+  mood: {
+    zIndex: 2,
+    fontSize: 26.5,
+    marginTop: 35,
+    fontFamily: 'NiceTango-K7XYo',
   },
   attributeValues: {
     zIndex: 2,

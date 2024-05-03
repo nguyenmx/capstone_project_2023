@@ -31,12 +31,10 @@ import { useTap } from '../../components/main_game_logic/TapContext';
 import { TapProvider } from '../../components/main_game_logic/TapContext';
 // import { TouchableWithoutFeedback } from 'react-native-web';
 import zzz from '../../images/PetHouse/zzz.gif'
-import angy from '../../images/PetHouse/angy.png'
+import { useReferenceData } from '../../components/ReferenceDataContext';
 
 // Ignore specific warnings by adding the warning message to the ignored list
 LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
-
-
 
 const window = Dimensions.get('window');
 
@@ -58,6 +56,7 @@ const PetHouse = () => {
   const [isImagePressed, setIsImagePressed] = useState(false);
   const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
   const [health, setHealth] = useState(100);
+  const { setMood } = useReferenceData();
 
   const profileImages = {
     0: p3,//wave
@@ -152,7 +151,7 @@ const PetHouse = () => {
     setSound(sound);
 
     console.log('Playing Sound');
-    sound.playAsync({ isLooping: false });
+    sound.playAsync({ isLooping: true });
     sound.setVolumeAsync(volume);
   }
 
@@ -231,6 +230,7 @@ const PetHouse = () => {
   const navigateToProfile = () => {
     navigation.navigate('ProfilePage', { playSound: playSound });
   };
+  
   
   const isLandscape = windowDimensions.width > windowDimensions.height;
 
@@ -369,7 +369,12 @@ useEffect(() => {
   // No return function needed here since we want the music to continue playing
 }, [playerHealth, secondaryMusicPlaying]);
 
-
+  useEffect(() => {
+    if (healthBarRef.current) {
+      const currentMood = healthBarRef.current.getMood();
+      setMood(currentMood);
+    }
+  }, [playerHealth]);
 
 
   return (

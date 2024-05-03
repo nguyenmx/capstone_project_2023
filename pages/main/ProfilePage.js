@@ -21,7 +21,6 @@ import award4 from '../../images/ProfilePage/Achievements/ribbon.png'
 import BackArrow from '../../modules/BackArrow';
 import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { playSound } from '../../pages/main/PetHouse';
 import pencil from '../../images/ProfilePage/Icon_Pencil.png'
 import Achievements from './Achievements';
 
@@ -127,7 +126,7 @@ const ProfilePage = ({ navigation }) => {
             <Image source={settingsButton} style={styles.settings} />
           </TouchableOpacity>
 
-          <Settings Optional={{left: 145}}/>
+          <Settings/>
 
 
           <View style={styles.profileIconContainer}>

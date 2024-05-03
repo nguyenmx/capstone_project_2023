@@ -3,7 +3,6 @@ import { TouchableNativeFeedback, TouchableOpacity, Modal, View, Text, Image, Pa
 import { useCurrency } from '../../components/CurrencyContext';
 import { useTasks } from '../../components/main_game_logic/TasksContext';
 
-
 const window = Dimensions.get('window');
 
 const Inventory = ({ foodIcon, inventoryPos, Optional: styles, onItemDrop, onItemDropBy, onItemFeed }) => {

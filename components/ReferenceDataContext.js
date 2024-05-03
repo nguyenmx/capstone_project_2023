@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ReferenceDataContext = createContext({
@@ -24,6 +24,7 @@ const ReferenceDataContextProvider = ({ children }) => {
   const [selectedDuck, setSelectedDuck] = useState(0);
   const [playerHealth, setPlayerHealth] = useState(100);
   const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
+  const [mood, setMood] = useState('Happy');
 
   //Load health from AsyncStorage on component mount
   //Retrieves the player's health after opening the app
@@ -77,12 +78,16 @@ const ReferenceDataContextProvider = ({ children }) => {
         //setPlayerHealth: (newHealth) => setPlayerHealth(clampedPlayerHealth(newHealth)),
         setPlayerHealth,
         isPettingLongEnough,
-        setIsPettingLongEnough
+        setIsPettingLongEnough,
+        mood,
+        setMood
       }}
     >
       {children}
     </ReferenceDataContext.Provider>
   );
 };
+
+export const useReferenceData = () => useContext(ReferenceDataContext);
 
 export { ReferenceDataContext, ReferenceDataContextProvider };

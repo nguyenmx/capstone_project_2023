@@ -19,6 +19,16 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     loadHealth();
   }, []); // Load health when the component mounts
 
+  const getMood = () => {
+    if (health > 60) {
+      return 'Happy';
+    } else if (health > 30) {
+      return 'OK';
+    } else {
+      return 'Miserable';
+    }
+  };
+
   const saveHealth = async (value) => {
     try {
       await AsyncStorage.setItem('currentHealth', JSON.stringify(value));
@@ -102,7 +112,8 @@ const HealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, curr
     setCurrentHealth,
     //setMaxHealth: setMaxHealthValue,
     getHealth,
-    song
+    song,
+    getMood
     //getMaxHealth,
   }));
 

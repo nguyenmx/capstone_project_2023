@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReferenceDataContext } from "../../components/ReferenceDataContext";
 import { useNavigation } from '@react-navigation/native';
 import confusedDuck from '../../images/AnimalVisuals/confusedDuck.gif';
+import OK from '../../images/PremadeButtons_Check.png';
+import Del from '../../images/close.png';
 
 
 const window = Dimensions.get('window');
@@ -81,15 +83,17 @@ const NameScreen = () => {
           maxLength={MAX_NAME_LENGTH} 
         />
         <Text style={styles.text}> {name ? `${name.length}/${MAX_NAME_LENGTH}` : '0/12'}</Text>
-        <Button onPress={save} title="Save me!" style={styles.button} />
-        <Button onPress={remove} title="Delete me!" style={styles.button} />
         
       
-
-        <TouchableOpacity style={styles.button} onPress={navigateToNewScreen}>
-              <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
-            
+        <View style={styles.attributeRow}>
+          <TouchableOpacity  style={{ marginLeft: 20 }} onPress={() => { save(); navigateToNewScreen(); } }>
+            <Image source={OK} style={styles.buttonImage} />
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={remove} style={{ marginLeft: 20 }}>
+            <Image source={Del} style={styles.buttonImage} />
+          </TouchableOpacity>
+        </View>
         
 
       </KeyboardAvoidingView>
@@ -135,10 +139,19 @@ const styles = StyleSheet.create({
     borderWidth: 5, 
     borderColor: 'white',
   },
+  buttonImage: {
+    top: 10,
+    width:75,
+    height: 75
+  },
   buttonText: {
     color: '#91adfa',
     fontFamily: 'NiceTango-K7XYo',
   },
+  attributeRow: {
+    flexDirection: 'row',
+    marginRight: 10
+  },  
   backgroundImage: {
     width: '100%',
     height: '100%',

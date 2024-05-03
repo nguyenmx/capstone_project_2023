@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Modal, Text, Button } from 'react-native';
 import settingButton from '../images/settingButton.png';
 import Slider from '@react-native-community/slider';
-import { playSound } from '..//pages/main/PetHouse';
 
-const Settings = ({ playSound }) => {
+const Settings = ({ Optional: playSound }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [volume, setVolume] = useState(1);
 

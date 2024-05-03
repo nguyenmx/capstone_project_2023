@@ -12,7 +12,7 @@ export const withCurrency = (WrappedComponent) => {
 };
 
 export const CurrencyProvider = ({ children }) => {
-  const [coins, setCoins] = useState(50); // start with 50 coins
+  const [coins, setCoins] = useState(25); // start with 25 coins
   const [diamonds, setDiamonds] = useState(5); // start with 5 diamonds
   const [inventoryItems, setInventoryItems] = useState([]);
   const [purchasedItems, setPurchasedItems] = useState([]);
