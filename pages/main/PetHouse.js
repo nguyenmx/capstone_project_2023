@@ -338,25 +338,39 @@ const PetHouse = () => {
   };
 
   
-  // play main bgm
-  useEffect(() => {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ", playerHealth)
-    if(parseInt(playerHealth) > 30){
-      playSound(); 
-      return () => {
-        if (sound) {
-          sound.unloadAsync();
-        }
-      };
-    }else{
-      playSound2(); 
-      return () => {
-        if (sound) {
-          sound.unloadAsync();
-        }
-      }
+// State variable to track if secondary music is playing
+const [secondaryMusicPlaying, setSecondaryMusicPlaying] = useState(false);
+
+// Play main bgm when the component mounts
+useEffect(() => {
+  playSound(); // Play the main background music
+  return () => {
+    // Clean up function (runs when the component unmounts)
+    if (sound) {
+      sound.unloadAsync(); // Unload the main background music
     }
-  }, [playerHealth]);
+  };
+}, []);
+
+// Check for changes in playerHealth and switch to secondary bgm if health drops below 30
+useEffect(() => {
+  console.log("Health changed: ", playerHealth);
+  if (parseInt(playerHealth) <= 30 && !secondaryMusicPlaying) {
+    playSound2(); // Play the secondary background music
+    setSecondaryMusicPlaying(true); // Update state to indicate secondary music is playing
+  } else if (parseInt(playerHealth) > 30 && secondaryMusicPlaying) {
+    // If health is above 30 and secondary music is playing, stop the secondary music
+    if (sound) {
+      sound.unloadAsync(); // Unload the secondary background music
+    }
+    setSecondaryMusicPlaying(false); // Update state to indicate secondary music is not playing
+    playSound(); // Start playing the main background music again
+  }
+  // No return function needed here since we want the music to continue playing
+}, [playerHealth, secondaryMusicPlaying]);
+
+
+
 
   return (
     <ImageBackground source={backgroundImageSource} style={styles.backgroundImage}>
