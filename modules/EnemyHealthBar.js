@@ -5,7 +5,6 @@ import Heart from '../images/Heart.png';
 const window = Dimensions.get('window');
 
 const EnemyHealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100, currentHealthProp = 100, heartIconSource = Heart, deadAnimation }, ref) => {
-  //const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
   const [health, setHealth] = useState(currentHealthProp);
   const [maxHealth, setMaxHealth] = useState(maxHealthProp);
 
@@ -15,7 +14,6 @@ const EnemyHealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100,
   const decreaseHealth = () => {
     const newHealth = Math.max(0, health - 10);
     setHealth(newHealth);
-    setPlayerHealth(newHealth.toString());
   };
 
   const decreaseHealth_2 = (number) => {
@@ -26,7 +24,6 @@ const EnemyHealthBar = forwardRef(({ Optional: customStyle, maxHealthProp = 100,
   const increaseHealth = () => {
     const newHealth = Math.min(maxHealth, health + 10);
     setHealth(newHealth);
-    setPlayerHealth(newHealth.toString());
   };
 
   // const setMaxHealthValue = (newMaxHealth = 100) => {
