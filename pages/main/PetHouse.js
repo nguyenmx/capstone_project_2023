@@ -47,7 +47,7 @@ const PetHouse = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const maxHealth = 100;
-  const [isNight, setIsNight] = useState(false);
+  const { isNight, setIsNight } = useContext(ReferenceDataContext);
   const [animationLoaded, setAnimationLoaded] = useState(false);
   const playerHealthRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);

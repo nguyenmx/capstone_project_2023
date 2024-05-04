@@ -154,6 +154,13 @@ export const getSpriteFrames = duckType => {
         require('../images/CharacterSheet/CharacterSheet-35.png'),
         require('../images/CharacterSheet/CharacterSheet-36.png'),
       ],
+      sleepFrames: [
+        require('../images/CharacterSheet/CharacterSheet-2.png'),
+        require('../images/CharacterSheet/CharacterSheet-2.png'),
+        require('../images/CharacterSheet/CharacterSheet-3.png'),
+        require('../images/CharacterSheet/CharacterSheet-3.png'),
+
+      ],
 
     };
     
@@ -191,10 +198,23 @@ export const getSpriteFrames = duckType => {
         require('../images/Squid_Character/tile052.png'),
         require('../images/Squid_Character/tile052.png'),
         require('../images/Squid_Character/tile052.png'),
-
       ],
-      age: 5,
-      favorite_food: 'Salad'
+      sleepFrames: [
+        require('../images/Squid_Character/tile029.png'),
+        require('../images/Squid_Character/tile029.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile028.png'),
+        require('../images/Squid_Character/tile029.png'),
+        require('../images/Squid_Character/tile029.png'),
+      ],
     };
   } else {
     // Default frames if not a SpriteAnimation duck
@@ -203,6 +223,7 @@ export const getSpriteFrames = duckType => {
       walkFrames: [],
       celebrateFrames: [],
       deadFrames: [],
+      sleepFrames: [],
     };
   }
 };
@@ -324,6 +345,7 @@ const Duck = ({ duckType, Optional: customStyle, decreaseHealth, increaseHealth,
         walkFrames={spriteFrames.walkFrames}
         celebrateFrames={spriteFrames.celebrateFrames}
         deadFrames={spriteFrames.deadFrames}
+        sleepFrames={spriteFrames.sleepFrames}
         decreaseHealth={decreaseHealth}
         increaseHealth={increaseHealth}
         currentHealth= {currentHealth}

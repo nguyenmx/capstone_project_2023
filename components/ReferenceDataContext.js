@@ -14,6 +14,8 @@ const ReferenceDataContext = createContext({
   setPlayerHealth: () => {},
   isPettingLongEnough: false,
   setIsPettingLongEnough: () => {},
+  isNight: false, // Default value for isNight
+  setIsNight: () => {} // Setter function for isNight
   
 });
 
@@ -25,6 +27,8 @@ const ReferenceDataContextProvider = ({ children }) => {
   const [playerHealth, setPlayerHealth] = useState(100);
   const [isPettingLongEnough, setIsPettingLongEnough] = useState(false);
   const [mood, setMood] = useState('Happy');
+  const [isNight, setIsNight] = useState(false); // State to track day/night
+
 
   //Load health from AsyncStorage on component mount
   //Retrieves the player's health after opening the app
@@ -80,7 +84,9 @@ const ReferenceDataContextProvider = ({ children }) => {
         isPettingLongEnough,
         setIsPettingLongEnough,
         mood,
-        setMood
+        setMood,
+        isNight, // Provide isNight in context
+        setIsNight,
       }}
     >
       {children}

@@ -23,9 +23,11 @@ import Settings from '../../modules/Settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import pencil from '../../images/ProfilePage/Icon_Pencil.png'
 import Achievements from './Achievements';
+import { LogBox } from 'react-native';
 
 const window = Dimensions.get('window');
 const backgroundImage = pp;
+LogBox.ignoreLogs(['Non-serializable values were found in the navigation state. Check:']); // Ignore log notification by message
 
 const ProfilePage = ({ navigation }) => {
   const { name, setName, playerHealth } = useContext(ReferenceDataContext);
@@ -380,3 +382,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+

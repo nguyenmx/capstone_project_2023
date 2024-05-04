@@ -21,7 +21,7 @@ const SpriteAnimation = ({
   playCelebrate,
   decreaseHealth,
   increaseHealth,
-  isNight, // Add isNight prop
+  sleepFrames,
   currentHealth
 
 }) => {
@@ -35,44 +35,18 @@ const SpriteAnimation = ({
   const [isHGShown, setIsHGShown] = useState(false); // State to track if HG.gif is shown
   const { completeTask } = useTasks();
   const { playerHealth, setPlayerHealth } = useContext(ReferenceDataContext);
+  const { isNight } = useContext(ReferenceDataContext);
 
   const animations = {
     idle: idleFrames,
     walk: walkFrames,
     celebrate: celebrateFrames,
     dead: deadFrames,
+    sleep: sleepFrames
   };
 
-  useEffect(() => {
-    if (isNight) {
-      // If it's night, trigger the celebrate animation
-      setAnimationType('celebrate');
-      setIsCelebrating(true);
-    } else if  (!isNight){
-      // If it's not night, play the idle animation
-      setAnimationType('idle');
-      setIsPlaying(true);
-    } else {
-      // If it's not night, play the idle animation
-      setAnimationType('idle');
-      setIsPlaying(true);
-    }
-  }, [isNight]);
-  
+
   const { selectedDuck } = useContext(ReferenceDataContext);
-  const angyPosition = {
-    5: {bottom: window.height * -0.04,
-        right:window.height * 0.07, position: 'absolute'},
-    6: {bottom: window.height * -0.09,
-        right:window.height * 0.05,position: 'absolute'},
-  };
-
-  const heartPosition = {
-    5: {bottom: window.height * -0.04,
-        right:window.height * 0.07,},
-    6: {bottom: window.height * -0.09,
-        right:window.height * 0.05,},
-  };
 
   const playAnimation = (frames, loop = false) => {
     const intervalId = setInterval(() => {
@@ -90,24 +64,6 @@ const SpriteAnimation = ({
       clearInterval(intervalId);
     };
   };
-
-  function switchthoughts() {
-    const randomThought = Math.random(); 
-
-    const storyChance = 0.1; 
-    const fightChance = 0.9;
-    let nextThought;
-      if (randomThought < storyChance) {
-        nextThought = thought_story;
-        return nextThought;
-      } else if (randomThought < fightChance) {
-        nextThought = thought_fight;
-        return nextThought;
-      } 
-
-
-  };
-
 
   const switchToNextAnimation = () => {
 
@@ -153,7 +109,7 @@ const SpriteAnimation = ({
 
   useEffect(() => {
     if (isPlaying) {
-      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle' || animationType === 'walk');
+      return playAnimation(animations[animationType], animationType === 'celebrate' || animationType === 'idle' || animationType === 'walk' || animationType === 'sleep');
     }
   }, [isPlaying, animationType]);
 
@@ -180,6 +136,17 @@ const SpriteAnimation = ({
       }, 2000);
     }
   }, [playCelebrate]);
+
+  useEffect(() => {
+    console.log("Current isNight: ", isNight); // Check if it updates
+    if (isNight) {
+      setAnimationType('sleep');
+      console.log("Switched to sleep animation.");
+    } else {
+      setAnimationType('idle');
+      console.log("Switched to idle animation.");
+    }
+  }, [isNight]);
 
   const { earnCurrency } = useCurrency();
   const [panningDuration, setPanningDuration] = useState(0);
@@ -344,3 +311,4 @@ const styles = StyleSheet.create({
 });
 
 export default SpriteAnimation;
+
